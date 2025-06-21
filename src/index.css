@@ -44,8 +44,8 @@
 /* ============ */
 
 :root {
-  --primary-color: #121214;
-  --secondary-color: #171719;
+  --primary-color: #131315;
+  --secondary-color: #1C1C1E;
   --light-color: #fbfbfc;
   --text-color: #938f8f;
   --subheading-color: #6c6868;
@@ -55,7 +55,7 @@
   --green-color: #19e24f;
 
   color: var(--light-color);
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   font-family: 'Int-Regular';
 
 }

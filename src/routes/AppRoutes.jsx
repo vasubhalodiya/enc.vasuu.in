@@ -1,0 +1,26 @@
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Home from '@/pages/Home/Home';
+import Trash from '@/pages/Trash/Trash';
+import PassGenerator from '@/pages/PassGenerator/PassGenerator';
+import Settings from '@/pages/Setting/Setting';
+import Upgrade from '@/pages/Upgrade/Upgrade';
+import Profile from '@/pages/Profile/Profile';
+import Error from '@/pages/Error/Error';
+
+const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/trash" element={<Trash />} />
+      <Route path="/generator" element={<PassGenerator />} />
+      <Route path="/setting" element={<Settings />} />
+      <Route path="/upgrade" element={<Upgrade />} />
+      <Route path="/profile" element={<Profile />} />
+      
+      <Route path="*" element={<Error />} />
+    </Routes>
+  );
+};
+
+export default AppRoutes;

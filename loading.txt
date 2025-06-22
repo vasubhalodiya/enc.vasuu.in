@@ -1,0 +1,43 @@
+<div class="loader-wrapper">
+  <span class="logo">E.</span>
+  <div class="loading-bar"></div>
+</div>
+
+=============================================================
+
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  color: white;
+  font-size: 35px;
+  font-family: 'Bebas-Regular';
+  letter-spacing: 5px;
+}
+
+.loading-bar {
+  width: 200px;
+  height: 30px;
+  background: linear-gradient(135deg, #ff0000 0%, #ff6a00 14%, #ffee99 30%, #fffae1 42%, #00eaff 60%, #0070f3 78%, #0033ff 100%);
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  animation: gradientSlide 5s linear infinite;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes gradientSlide {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}

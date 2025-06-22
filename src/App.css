@@ -5,3 +5,7 @@
 .main-cnt {
   padding: 20px 30px;
 }
+
+.main-cnt.custome-align {
+  padding: 0px;
+}

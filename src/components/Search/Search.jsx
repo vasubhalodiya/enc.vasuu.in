@@ -12,21 +12,16 @@ const Search = () => {
             </span>
             <input type="text" className="search-input" placeholder="Search" />
           </div>
-          <div className="home-filter-sort">
-            <div className="home-filter">
-              <button className="filter-icon">
-                <i class="ph ph-funnel"></i>
+          <div className="search-filter-sort">
+            <div className="search-sort">
+              <button className="sort-icon">
+                <i class="ph ph-faders"></i>
               </button>
-              {/* <select className="home-filter-select">
+              {/* <select className="search-filter-select">
                   <option value="">Filter</option>
                   <option value="1">Option 1</option>
                   <option value="2">Option 2</option>
                 </select> */}
-            </div>
-            <div className="home-sort">
-              <button className="sort-icon">
-                <i class="ph ph-faders"></i>
-              </button>
             </div>
           </div>
         </div>

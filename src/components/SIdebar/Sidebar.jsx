@@ -61,7 +61,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <Search />
+      {/* <Search /> */}
     </>
   )
 }

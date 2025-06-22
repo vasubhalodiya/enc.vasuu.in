@@ -1,0 +1,83 @@
+.vaults
+{
+    width: 500px;
+    height: 100vh;
+    border-right: 1px solid var(--border-color);
+    padding: 0px 15px;
+}
+
+.vaults-search
+{
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.vaults-add-multiselect
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.vaults-multiselect
+{
+    height: 35px;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    font-size: 13px;
+    font-family: 'Int-Medium';
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: 9px;
+    border: 1px solid var(--border-color);
+}
+
+.vaults-add-btn
+{
+    height: 35px;
+    color: var(--primary-color);
+    background-color: var(--accent-color);
+    font-size: 13px;
+    font-family: 'Int-Medium';
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 9px;
+}
+
+.vaults-multiselect i,
+.vaults-add-btn i
+{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

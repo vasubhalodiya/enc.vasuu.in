@@ -65,7 +65,7 @@ h1,h2,h3,h4,h5,h6,p{margin:0px;font-weight: 400;}
 input:focus{outline:0;}
 textarea:focus{outline:0;}
 button:focus{outline:0;}
-button{cursor: pointer;background: none;border: none;}
+button{cursor: pointer;background: none;border: none;color: var(--text-color);}
 a{cursor: pointer;text-decoration:none;transition:all 0.5s ease;}
 a:focus, a:hover{text-decoration:none;outline:0;}
 .TC{text-align:center;}
@@ -103,20 +103,24 @@ li{
 }
 ::-webkit-scrollbar{width: 5px;}
 ::-webkit-scrollbar-track{background: #666666;}
-::-webkit-scrollbar-thumb{background: var(--text-color);border-radius: 10px;}
-::-webkit-scrollbar-thumb:hover{background: #d5d5d5;border-radius: 10px;}
+::-webkit-scrollbar-thumb{background: var(--text-color);border-radius: var(--border-radius);}
+::-webkit-scrollbar-thumb:hover{background: #d5d5d5;border-radius: var(--border-radius);}
 /* ============================ */
 
 :root {
   --primary-color: #141416;
   --secondary-color: #1C1C1E;
+  --other-color:  rgba(19, 20, 21, 0.293);
+  --soft-accent-color: rgba(93, 179, 255, 0.2);
   --light-color: #fbfbfc;
   --text-color: #9c9da0;
   --subheading-color: #6c6868;
   --border-color: #3a3a3a;
   --accent-color: #549eff;
-  --yellow-color: #ffd700;
-  --green-color: #19e24f;
+  --error-color: #ff7575;
+  --warning-color: #ffd700;
+  --success-color: #19e24f;
+  --border-radius: 11px;
   --border-size: 2px;
 
   color: var(--light-color);
@@ -136,7 +140,14 @@ li{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9px;
+  border-radius: var(--border-radius);
+}
+
+.master-title
+{
+  color: var(--text-color);
+  font-size: 13px;
+  margin-bottom: 10px;
 }
 
 @keyframes borderRadialAnim {

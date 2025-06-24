@@ -20,28 +20,28 @@ const Sidebar = () => {
             <div className="sidebar-list">
               <div className="sidebar-menu">
                 <div className="sidebar-list-group">
-                  <h6 className="sidebar-title">Menu</h6>
+                  <h6 className="sidebar-title master-title">Menu</h6>
                   <div className="sidebar-link-list">
                     <ul className="sidebar-links">
-                      <NavLink to="/" iconClass="ph ph-house" label="Home" />
+                      <NavLink to="/" iconClass="fa-light fa-house" label="Home" />
                       <NavLink to="/generator" iconClass="ph ph-password" label="Password Generator" />
-                      <NavLink to="/trash" iconClass="ph ph-trash" label="Trash" />
-                      <NavLink to="/setting" iconClass="ph ph-gear-six" label="Setting" />
+                      <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" />
+                      <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" />
                     </ul>
                   </div>
                 </div>
                 <div className="sidebar-list-group">
-                  <p className='sidebar-title'>Upgrade</p>
-                  <div className='sidebar-menu-links upgrade'>
-                    <NavLink to="/upgrade" iconImg={images.upgrade_star} label="Upgrade" />
+                  <p className='sidebar-title master-title'>Premium</p>
+                  <div className='sidebar-menu-links premium'>
+                    <NavLink to="/premium" iconImg={images.premium} label="Premium" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="sidebar-profile-sec">
-            <Link to="/profile" className="sidebar-profile">
-            {/* <Link to="/profile" className={`sidebar-profile ${isActive ? 'active' : ''}`}> */}
+            {/* <Link to="/profile" className="sidebar-profile"> */}
+            <Link to="/profile" className={`sidebar-profile ${isActive ? 'active' : ''}`}>
               <div className="sidebar-profile-sec-txt">
                 <img src={images.my_avtar} alt="profile" className='sidebar-profile-img' />
                 <div className="sidebar-profile-sec-name">

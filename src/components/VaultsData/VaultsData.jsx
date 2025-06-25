@@ -40,7 +40,7 @@ const VaultsData = () => {
           </div>
         </div>
         <div className="vaultsData-cnt">
-          <div className="vd-main-cnt-field vd-box">
+          <div className="vd-main-cnt-field">
             <div className="vd-input-field">
               <div className="vd-input-section">
                 <h6 className="vd-input-title">Title</h6>
@@ -49,8 +49,8 @@ const VaultsData = () => {
               </div>
             </div>
           </div>
-          <div className="vd-main-cnt-field vd-box">
-            <div className="vd-input-field">
+          <div className="vd-main-cnt-field">
+            <div className="vd-input-field vd-group-box">
               <div className="vd-icon">
                 <i class="fa-light fa-envelope"></i>
               </div>
@@ -59,7 +59,7 @@ const VaultsData = () => {
                 <input type="text" className="vd-email-input vd-input" placeholder='Enter email' />
               </div>
             </div>
-            <div className="vd-input-field">
+            <div className="vd-input-field vd-group-box">
               <div className="vd-icon">
                 <i class="fa-light fa-key"></i>
               </div>
@@ -73,7 +73,7 @@ const VaultsData = () => {
                 </button>
               </div>
             </div>
-            <div className="vd-input-field">
+            <div className="vd-input-field vd-group-box">
               <div className="vd-icon">
                 <i class="fa-light fa-user"></i>
               </div>
@@ -83,7 +83,7 @@ const VaultsData = () => {
               </div>
             </div>
           </div>
-          <div className="vd-main-cnt-field vd-box">
+          <div className="vd-main-cnt-field">
             <div className="vd-input-field">
               <div className="vd-icon">
                 <i class="fa-light fa-earth-americas"></i>
@@ -94,7 +94,7 @@ const VaultsData = () => {
               </div>
             </div>
           </div>
-          <div className="vd-main-cnt-field vd-box">
+          <div className="vd-main-cnt-field">
             <div className="vd-input-field">
               <div className="vd-icon">
                 <i class="fa-light fa-note-sticky"></i>

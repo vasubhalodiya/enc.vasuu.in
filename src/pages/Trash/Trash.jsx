@@ -1,8 +1,18 @@
 import React from 'react'
+import './Trash.css'
+import Vaults from '@/components/Vaults/Vaults'
+import VaultsData from '@/components/VaultsData/VaultsData'
 
 const Trash = () => {
   return (
-    <div>Trash</div>
+    <>
+      <div className="trash">
+        <div className="trash-cnt">
+          <Vaults />
+          <VaultsData />
+        </div>
+      </div>
+    </>
   )
 }
 

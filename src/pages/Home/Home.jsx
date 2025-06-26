@@ -1,6 +1,7 @@
 import React from 'react'
 import './Home.css'
 import Vaults from '../../components/Vaults/Vaults'
+import VaultsDataCreate from '../../components/VaultsDataCreate/VaultsDataCreate'
 import VaultsData from '../../components/VaultsData/VaultsData'
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
         <div className="home-cnt">
           <Vaults />
           <VaultsData />
+          {/* <VaultsDataCreate /> */}
         </div>
       </div>
     </>

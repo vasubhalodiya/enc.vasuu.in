@@ -14,7 +14,7 @@ const Search = () => {
           </div>
           <div className="search-filter-sort">
             <div className="search-sort">
-              <button className="sort-icon">
+              <button className="sort-icon mini-master-btn">
                 <i class="fa-light fa-sliders"></i>
               </button>
               {/* <select className="search-filter-select">

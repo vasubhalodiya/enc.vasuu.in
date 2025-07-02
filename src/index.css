@@ -124,8 +124,8 @@ input:-webkit-autofill {
   --subheading-color: #686a6c;
   --border-color: #3a3a3a;
   --error-color: #ff7575;
-  --warning-color: #ffd700;
-  --success-color: #19e24f;
+  --warning-color: #ffb84d;
+  --success-color: #75dc90;
   --border-radius: 11px;
   --border-size: 2px;
 
@@ -192,6 +192,11 @@ input:-webkit-autofill {
   bottom: 100px !important;
 }
 
+.master-cnt {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 500px 1fr;
+}
 
 
 

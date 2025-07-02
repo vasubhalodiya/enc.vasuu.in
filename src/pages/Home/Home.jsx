@@ -8,10 +8,10 @@ const Home = () => {
   return (
     <>
       <div className="home">
-        <div className="home-cnt">
+        <div className="home-cnt master-cnt">
           <Vaults />
-          <VaultsData />
-          {/* <VaultsDataCreate /> */}
+          {/* <VaultsData /> */}
+          <VaultsDataCreate />
         </div>
       </div>
     </>

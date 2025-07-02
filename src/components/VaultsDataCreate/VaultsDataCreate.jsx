@@ -11,6 +11,8 @@ const vaultsData = () => {
   const websiteInputRef = useRef(null);
 
   const [focusedField, setFocusedField] = useState(null);
+  const [password, setPassword] = useState('');
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const handleInput = () => {
     const textarea = textareaRef.current;
@@ -56,9 +58,9 @@ const vaultsData = () => {
             <button className="vd-close-btn"><i className="fa-regular fa-xmark"></i></button>
           </div>
           <div className="vd-sec">
-            <div className="vd-folder">
+            {/* <div className="vd-folder">
               <h4 className="vd-folder-btn">Folder<i className="fa-regular fa-chevron-down"></i></h4>
-            </div>
+            </div> */}
             <div className="vd-create">
               <button className="vd-create-btn">Create Login</button>
             </div>
@@ -107,9 +109,18 @@ const vaultsData = () => {
                   ref={passwordInputRef}
                   type="text"
                   className="vd-password-input vd-input"
-                  placeholder='Enter password'
-                  onFocus={() => handleFieldFocus('password')}
-                  onBlur={handleFieldBlur}
+                  placeholder="Enter password"
+                  value={isPasswordFocused ? password : password ? '********' : ''}
+                  readOnly={!isPasswordFocused}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => {
+                    handleFieldFocus('password');
+                    setIsPasswordFocused(true);
+                  }}
+                  onBlur={() => {
+                    handleFieldBlur();
+                    setIsPasswordFocused(false);
+                  }}
                 />
               </div>
               <div>
@@ -141,7 +152,7 @@ const vaultsData = () => {
                 <i className="fa-light fa-earth-americas"></i>
               </div>
               <div className="vd-input-section">
-                <h6 className="vd-website-title">Websites</h6>
+                <h6 className="vd-input-title">Websites</h6>
                 <input
                   ref={websiteInputRef}
                   type="text"

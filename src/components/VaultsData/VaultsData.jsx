@@ -3,6 +3,8 @@ import '@/common/VaultsCommon.css'
 import toast from 'react-hot-toast';
 
 const VaultsData = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const copyToClipboard = async (text, fieldName) => {
     try {
@@ -60,11 +62,17 @@ const VaultsData = () => {
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Password</h6>
-              <p className="vd-password-input vd-input">************</p>
+              <p className="vd-password-input vd-input">{showPassword ? 'MySecretPassword123' : '************'}</p>
             </div>
-            <div>
-              <button className="vd-pass-generate-icon">
-                <i className="fa-light fa-arrows-rotate"></i>
+            <div className="vd-pass-btns">
+              <button
+                className="vd-pass-show-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowPassword(!showPassword);
+                  toast.dismiss();
+                }}>
+                <i className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eyes'}`}></i>
               </button>
             </div>
           </div>

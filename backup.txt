@@ -1,0 +1,114 @@
+<div className="password-generator-container">
+        <div className="password-generator-card">
+          <div className="header">
+            <h1 className="title">Password Generator</h1>
+            <div className="button-row">
+              <button 
+                onClick={copyToClipboard}
+                className="btn btn-primary"
+              >
+                <i className="fas fa-copy"></i>
+                Fill Password
+              </button>
+              <button 
+                onClick={generatePassword}
+                className="btn btn-success"
+              >
+                <i className="fas fa-sync-alt"></i>
+                Random Password
+              </button>
+            </div>
+          </div>
+
+          <div className="password-section">
+            <div className="password-display">
+              <div className="password-header">
+                <span className="password-label">Generated Password</span>
+                <button 
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="visibility-toggle"
+                >
+                  {showPassword ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+                </button>
+              </div>
+              <div className="password-output">
+                {showPassword ? renderPasswordWithColors(password) : '••••••••••••'}
+              </div>
+            </div>
+            
+            <div className="strength-indicator">
+              <span className="strength-label">Strength:</span>
+              <span className={`strength-badge ${passwordStrength.toLowerCase()}`}>
+                {passwordStrength}
+              </span>
+            </div>
+          </div>
+
+          <div className="length-section">
+            <div className="length-header">
+              <label className="length-label">Password Length</label>
+              <span className="length-value">{length} characters</span>
+            </div>
+            <input
+              type="range"
+              min="8"
+              max="20"
+              value={length}
+              onChange={(e) => setLength(parseInt(e.target.value))}
+              className="length-slider"
+            />
+            <div className="length-marks">
+              <span>8</span>
+              <span>20</span>
+            </div>
+          </div>
+
+          <div className="options-section">
+            <div className="option-item">
+              <label className="option-label">Capital letters (A-Z)</label>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={includeUppercase}
+                  onChange={(e) => setIncludeUppercase(e.target.checked)}
+                  className="toggle-input"
+                />
+                <div className="toggle-slider"></div>
+              </label>
+            </div>
+
+            <div className="option-item">
+              <label className="option-label">Include numbers (0-9)</label>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={includeNumbers}
+                  onChange={(e) => setIncludeNumbers(e.target.checked)}
+                  className="toggle-input"
+                />
+                <div className="toggle-slider"></div>
+              </label>
+            </div>
+
+            <div className="option-item">
+              <label className="option-label">Special characters (!&*)</label>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={includeSpecialChars}
+                  onChange={(e) => setIncludeSpecialChars(e.target.checked)}
+                  className="toggle-input"
+                />
+                <div className="toggle-slider"></div>
+              </label>
+            </div>
+          </div>
+
+          <div className="history-section">
+            <div className="history-header">
+              <span className="history-label">Password History</span>
+              <span className="coming-soon">Coming Soon</span>
+            </div>
+          </div>
+        </div>
+      </div>

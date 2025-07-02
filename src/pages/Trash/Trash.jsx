@@ -7,7 +7,7 @@ const Trash = () => {
   return (
     <>
       <div className="trash">
-        <div className="trash-cnt">
+        <div className="trash-cnt master-cnt">
           <Vaults />
           <VaultsData />
         </div>

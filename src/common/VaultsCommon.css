@@ -191,7 +191,17 @@
     line-height: 20px;
 }
 
-.vd-pass-generate-icon
+.vd-pass-btns
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+    margin: 0px 0px 0px 12px;
+}
+
+.vd-pass-generate-icon,
+.vd-pass-show-icon
 {
     width: 35px;
     height: 35px;
@@ -202,12 +212,12 @@
     justify-content: center;
     cursor: pointer;
     border-radius: var(--border-radius);
-    margin: 0px 0px 0px 12px;
 }
 
-.vd-pass-generate-icon i
+.vd-pass-generate-icon i,
+.vd-pass-show-icon
 {
-    font-size: 15px;
+    font-size: 14px;
     transition: all 0.3s ease-in-out;
 }
 

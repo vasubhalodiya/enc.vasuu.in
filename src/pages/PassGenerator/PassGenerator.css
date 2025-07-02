@@ -334,6 +334,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.click-to-copy-img
+{
+  width: 170px;
+  position: absolute;
+  top: -15px;
+  right: 90px;
+  rotate: 345deg;
+  opacity: 0.5;
 }
 
 .pass-main
@@ -342,6 +353,18 @@
   font-family: monospace;
   letter-spacing: 1px;
   margin-bottom: 20px;
+}
+
+.clickable-password {
+  transition: all 0.3s ease-in-out;
+  padding: 5px 7px;
+  border-radius: 10px;
+}
+
+.clickable-password:hover {
+  background-color: rgb(144, 151, 255, 0.14);
+  transform: scale(1.01);
+  cursor: pointer;
 }
 
 .strength-badge {
@@ -519,19 +542,6 @@
   transform: translateX(21px);
   background-color: var(--accent-color);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './PassGenerator.css';
+import toast from 'react-hot-toast';
+import images from '../../utils/Images'
 
 const PasswordGenerator = () => {
   const [password, setPassword] = useState('');
@@ -9,6 +11,7 @@ const PasswordGenerator = () => {
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
   const [showPassword, setShowPassword] = useState(true);
   const [passwordStrength, setPasswordStrength] = useState('');
+  const [copyFeedback, setCopyFeedback] = useState('');
 
   const generatePassword = () => {
     const lowercase = 'abcdefghijklmnopqrstuvwxyz';
@@ -117,9 +120,12 @@ const PasswordGenerator = () => {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(password);
-      // You could add a toast notification here
+      toast.success('Copied to clipboard!', { icon: null });
+      setTimeout(() => setCopyFeedback(''), 3000);
     } catch (err) {
       console.error('Failed to copy password:', err);
+      toast.error('Failed to copy!', { icon: null });
+      setTimeout(() => setCopyFeedback(''), 3000);
     }
   };
 
@@ -162,7 +168,11 @@ const PasswordGenerator = () => {
         <div className="pass-cnt-parent">
           <div className="pass-cnt">
             <div className="pass-output">
-              <h5 className='pass-main'>{showPassword ? renderPasswordWithColors(password) : 'No password generated'}</h5>
+              <img src={images.click_to_copy} alt="click to copy image" className='click-to-copy-img' />
+              <h5 className='pass-main clickable-password' onClick={copyToClipboard}>
+                {showPassword ? renderPasswordWithColors(password) : 'No password generated'}
+              </h5>
+              {copyFeedback && <span className="copy-feedback">{copyFeedback}</span>}
               <div className={`strength-badge ${passwordStrength.toLowerCase()}`}>
                 {getStrengthIcon(passwordStrength)}
                 <h5>{passwordStrength}</h5>

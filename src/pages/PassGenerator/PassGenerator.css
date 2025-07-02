@@ -151,34 +151,6 @@
   color: #9ca3af;
 }
 
-.length-slider {
-  width: 100%;
-  height: 0.5rem;
-  background-color: #374151;
-  border-radius: 0.5rem;
-  appearance: none;
-  cursor: pointer;
-  outline: none;
-}
-
-.length-slider::-webkit-slider-thumb {
-  appearance: none;
-  height: 1.25rem;
-  width: 1.25rem;
-  border-radius: 50%;
-  background: #3b82f6;
-  cursor: pointer;
-  border: none;
-}
-
-.length-slider::-moz-range-thumb {
-  height: 1.25rem;
-  width: 1.25rem;
-  border-radius: 50%;
-  background: #3b82f6;
-  cursor: pointer;
-  border: none;
-}
 
 .length-marks {
   display: flex;
@@ -293,7 +265,7 @@
 }
 
 .pass-cnt {
-  width: 100%;
+  width: 650px;
   height: 100%;
   border-radius: 20px;
   padding: 20px;
@@ -327,18 +299,18 @@
 }
 
 .pass-fill-btn {
-   height: 35px;
-   color: var(--primary-color);
-   background-color: var(--accent-color);
-   font-size: 13px;
-   font-family: 'Int-Medium';
-   padding: 0 15px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   gap: 7px;
-   border-radius: var(--border-radius);
- }
+  height: 35px;
+  color: var(--primary-color);
+  background-color: var(--accent-color);
+  font-size: 13px;
+  font-family: 'Int-Medium';
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: var(--border-radius);
+}
 
 .pass-random-generate-icon i {
   width: 40px;
@@ -354,17 +326,31 @@
   margin-bottom: -2px;
 }
 
+.pass-output
+{
+  width: 100%;
+  padding: 70px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .pass-main
 {
   font-size: 25px;
   font-family: monospace;
   letter-spacing: 1px;
+  margin-bottom: 20px;
 }
-
 
 .strength-badge {
   font-size: 15px;
   font-family: 'Int-Regular';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
 }
 
 .strength-badge.vulnerable {
@@ -391,21 +377,148 @@
   color: #75dc90;
 }
 
+.pass-length-sec
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
+.pass-length-header
+{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
 
+.pass-length-slider {
+  width: 100%;
+  height: 9px;
+  background-color: #c1c4ee4b;
+  border-radius: 3px;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+}
 
+.pass-length-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 7px;
+  background: var(--accent-color);
+  cursor: pointer;
+  border: none;
+}
 
+.pass-length-slider::-webkit-slider-thumb:hover{transform: scale(1.1);}
+.pass-length-slider::-moz-range-thumb:hover {transform: scale(1.1);}
 
+.pass-length-slider::-moz-range-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 7px;
+  background: var(--accent-color);
+  cursor: pointer;
+  border: none;
+}
 
+.pass-length-label,
+.pass-length-value {
+  color: var(--light-color);
+  font-size: 15px;
+  font-family: 'Int-Regular';
+  margin-bottom: 5px;
+}
 
+.pass-length-marks
+{
+  width: 100%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
 
+.pass-length-marks h5
+{
+  color: var(--text-color);
+  font-size: 15px;
+}
 
+.pass-options-sec
+{
+  width: 100%;
+  margin-top: 50px;
+}
 
+.pass-option-item
+{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
 
+.pass-option-label
+{
+  color: var(--light-color);
+  font-size: 15px;
+  font-family: 'Int-Regular';
+}
 
+.pass-toggle-switch {
+  width: 50px;
+  height: 28px;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+}
 
+.pass-toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
+.pass-toggle-slider {
+  background-color: transparent;
+  transition: 0.3s;
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 
+.pass-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 23px;
+  width: 23px;
+  left: 2px;
+  bottom: 1.5px;
+  background-color: #686a6c;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.pass-toggle-input:checked + .pass-toggle-slider {
+  background-color: var(--soft-accent-color);
+}
+
+.pass-toggle-input:checked + .pass-toggle-slider:before {
+  transform: translateX(21px);
+  background-color: var(--accent-color);
+}
 
 
 

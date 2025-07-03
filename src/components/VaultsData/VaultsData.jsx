@@ -62,7 +62,7 @@ const VaultsData = () => {
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Password</h6>
-              <p className="vd-password-input vd-input">{showPassword ? 'MySecretPassword123' : '************'}</p>
+              <p className="vd-password-input vd-input">{showPassword ? 'MySecretPassword123' : '*************'}</p>
             </div>
             <div className="vd-pass-btns">
               <button

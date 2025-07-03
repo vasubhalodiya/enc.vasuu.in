@@ -110,7 +110,7 @@ const vaultsData = () => {
                   type="text"
                   className="vd-password-input vd-input"
                   placeholder="Enter password"
-                  value={isPasswordFocused ? password : password ? '********' : ''}
+                  value={isPasswordFocused ? password : password ? '*************' : ''}
                   readOnly={!isPasswordFocused}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => {

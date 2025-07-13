@@ -33,13 +33,13 @@ const Vaults = () => {
     };
   }, []);
 
-  const items = Array(62).fill().map((_, i) => `auth pass ${i + 1}`);
+  const items = Array(20).fill().map((_, i) => `auth pass ${i + 1}`);
 
   return (
     <div className="vaults" ref={vaultsRef}>
       <div className="vaults-cnt">
         <div className="vaults-add-multiselect">
-          <button className="vaults-multiselect"><i className="fa-light fa-check-double"></i>Multiple Select</button>
+          <button className="vaults-multiselect"><i className="fa-light fa-check-double"></i>Multiselect</button>
           <button className="vaults-filter"><i className="fa-regular fa-clock"></i>Recent</button>
         </div>
 

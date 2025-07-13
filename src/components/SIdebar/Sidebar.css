@@ -279,12 +279,15 @@
 }
 
 .bottom-menu-mobile {
+  width: calc(100% - 45px);
   background-color: var(--primary-color);
   padding: 10px 10px;
   border-radius: 17px;
   display: flex;
   gap: 10px;
   position: fixed;
+  align-items: center;
+  justify-content: space-between;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);

@@ -44,10 +44,10 @@ const Sidebar = () => {
                   <h6 className="sidebar-title master-title">Menu</h6>
                   <div className="sidebar-link-list">
                     <ul className="sidebar-links">
-                        <NavLink to="/" iconClass="fa-light fa-house" label="Home"  onClick={closeSidebar}/>
-                        <NavLink to="/generator" iconClass="ph ph-password" label="Password Generator"  onClick={closeSidebar}/>
-                        <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash"  onClick={closeSidebar}/>
-                        <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting"  onClick={closeSidebar}/>
+                        <NavLink to="/" iconClass="fa-light fa-house" label="Home" onClick={closeSidebar}/>
+                        <NavLink to="/generator" iconClass="ph ph-password" label="Password Generator" onClick={closeSidebar}/>
+                        <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" onClick={closeSidebar}/>
+                        <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" onClick={closeSidebar}/>
                     </ul>
                   </div>
                 </div>
@@ -95,9 +95,7 @@ const Sidebar = () => {
         isTablet={isTablet}
         onToggle={toggleSidebar}
         isOpen={isOpen}
-        closeSidebar={closeSidebar}
-      />
-      
+        closeSidebar={closeSidebar}/>
       {isTablet && isOpen && (
         <div
           className="sidebar-overlay"
@@ -105,8 +103,7 @@ const Sidebar = () => {
           role="button"
           tabIndex={0}
           aria-label="Close Sidebar"
-          onKeyDown={(e) => { if (e.key === 'Escape') closeSidebar(); }}
-        />
+          onKeyDown={(e) => { if (e.key === 'Escape') closeSidebar(); }}/>
       )}
     </>
   )

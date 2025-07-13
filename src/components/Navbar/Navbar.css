@@ -5,6 +5,7 @@
     position: fixed;
     top: 0;
     background: var(--secondary-color);
+    z-index: 9999999999999999999;
 }
 
 .navbar-cnt
@@ -14,12 +15,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 15px;
     padding: 0px 15px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .search-box {
-    width: 470px;
+    width: 100%;
     height: 70px;
     position: relative;
     display: flex;
@@ -54,9 +56,51 @@
     outline: 3px solid #4ab4ff4d;
 }
 
+.navbar-part
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 0px;
+}
 
+.navbar-toggle-btn
+{
+    color: var(--light-color);
+    font-size: 19px;
+    display: none;
+}
 
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
 
+.navbar-logo .logo {
+  width: 23px;
+  margin-top: 0;
+}
+
+.navbar-logo-text {
+  font-size: 25px;
+  font-family: 'Bebas-Regular';
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  margin: 0;
+  background: linear-gradient( 240deg, #ff3d3d, #ff8732, #ffee99, #fffae1, #00eaff, #288cff, #0033ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.navbar-logo .logo,
+.navbar-logo-text {
+  display: none;
+}
 
 
 

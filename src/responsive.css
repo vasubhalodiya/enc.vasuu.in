@@ -77,6 +77,27 @@
   .bottom-menu-mobile{gap: 5px;}
   .navbar-logo .logo{display: block;}
   .navbar-part, .navbar-cnt{gap: 10px;}
+  .vaultsData{display: none;}
+  .vaults-menu-list{padding-bottom: 75px;}
+  .vaults-add-multiselect{display: none;}
+  .vaults-list-group{padding-top: 15px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,7 +105,8 @@
 
 @media screen and (max-width:480px) 
 {
-
+  .vaults-add-btn span{display: none;}
+  .vaults-add-btn{width: 35px;}
 
 
 
@@ -96,8 +118,7 @@
 
 @media screen and (max-width:375px) 
 {
-  .vaults-add-btn span{display: none;}
-  .vaults-add-btn{width: 35px;}
+
 
 }
 

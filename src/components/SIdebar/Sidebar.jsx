@@ -17,6 +17,7 @@ const Sidebar = () => {
             <div className="sidebar-logo">
               <img src={images.logo} alt="encrypt-logo" className='logo' />
               <h3 className='sidebar-logo-text'>Encrypt</h3>
+              <button>close</button>
             </div>
             <div className="sidebar-list">
               <div className="sidebar-menu">
@@ -63,11 +64,13 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className="bottom-menu-mobile">
-        <NavLink to="/" iconClass="fa-light fa-house" />
-        <NavLink to="/generator" iconClass="ph ph-password" />
-        <NavLink to="/trash" iconClass="fa-regular fa-sparkles" />
-        <NavLink to="/setting" iconClass="fa-regular fa-gear" />
+      <div className="mobile-menu">
+        <div className="bottom-menu-mobile">
+          <NavLink to="/" iconClass="fa-light fa-house" />
+          <NavLink to="/generator" iconClass="ph ph-password" />
+          <NavLink to="/trash" iconClass="fa-regular fa-sparkles" />
+          <NavLink to="/setting" iconClass="fa-regular fa-gear" />
+        </div>
       </div>
       <Navbar />
     </>

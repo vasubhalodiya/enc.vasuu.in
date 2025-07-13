@@ -6,6 +6,7 @@ const Navbar = () => {
     <>
       <div className="navbar">
         <div className="navbar-cnt">
+          <button>toggle</button>
           <div className="search-box">
             <span className="search-icon">
               <i class="fa-light fa-magnifying-glass"></i>

@@ -5,7 +5,7 @@ import images from '../../utils/Images'
 
 const PasswordGenerator = () => {
   const [password, setPassword] = useState('');
-  const [length, setLength] = useState(12);
+  const [length, setLength] = useState(16);
   const [includeUppercase, setIncludeUppercase] = useState(true);
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);

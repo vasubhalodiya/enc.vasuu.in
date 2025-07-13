@@ -55,7 +55,7 @@ const vaultsData = () => {
       <div className="vaultsData">
         <div className="vd-header">
           <div className="vd-close">
-            <button className="vd-close-btn"><i className="fa-regular fa-xmark"></i></button>
+            <button className="vd-close-btn mini-master-btn"><i className="fa-regular fa-xmark"></i></button>
           </div>
           <div className="vd-sec">
             {/* <div className="vd-folder">

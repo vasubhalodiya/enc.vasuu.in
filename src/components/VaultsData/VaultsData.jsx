@@ -38,7 +38,7 @@ const VaultsData = () => {
         </div>
         <div className="vd-sec">
           <div className="vd-create">
-            <div><button className="vd-create-btn"><i className="fa-regular fa-pen"></i>Edit</button></div>
+            <div><button className="vd-edit-btn"><i className="fa-regular fa-pen"></i>Edit</button></div>
             <div><button className="vd-three-dot-btn mini-master-btn"><i className="fa-regular fa-ellipsis-vertical"></i></button></div>
           </div>
         </div>

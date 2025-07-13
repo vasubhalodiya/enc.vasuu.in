@@ -1,9 +1,55 @@
 .vaults
 {
     /* width: 500px; */
-    height: 100vh;
+    height: calc(100vh - 70px);
+    border-right: 1px solid var(--border-color);
+    overflow-y: scroll;
+}
+
+.vaults::-webkit-scrollbar
+{
+    display: none;
+}
+
+.vaults-scroll-down-txt {
+    width: 500px;
+    height: 50px;
+    color: var(--text-color);
+    background: linear-gradient( to top, var(--secondary-color) 0%, var(--secondary-color) 40%, rgba(28, 28, 30, 0.5) 70%, rgba(28, 28, 30, 0.1) 90%, transparent 100%);
+    font-size: 12px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: end;
+    padding-bottom: 10px;
+    position: fixed;
+    bottom: 0px;
+    left: 300px;
     border-right: 1px solid var(--border-color);
 }
+
+.vaults-scroll-down-txt i {
+  display: inline-block;
+  animation: arrowJump 1s infinite;
+  transition: transform 0.3s ease;
+}
+
+/* Animation keyframes */
+@keyframes arrowJump {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(3px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 
 .vaults-cnt
 {
@@ -19,9 +65,15 @@
 
 .vaults-add-multiselect
 {
+    width: 100%;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: var(--secondary-color);
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .vaults-multiselect
@@ -38,6 +90,21 @@
     gap: 7px;
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
+}
+
+.vaults-filter
+{
+    height: 35px;
+    color: var(--accent-color);
+    background-color: var(--soft-accent-color);
+    font-size: 13px;
+    font-family: 'Int-Medium';
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: var(--border-radius);
 }
 
 .vaults-add-btn
@@ -62,11 +129,6 @@
     font-weight: 500;
 }
 
-.vaults-list-group
-{
-    margin-top: 15px;
-}
-
 .vaults-title h6
 {
     color: var(--text-color);
@@ -79,6 +141,7 @@
     display: flex;
     flex-direction: column;
     gap: 7px;
+    padding-bottom: 25px;
 }
 
 .vaults-menu-item

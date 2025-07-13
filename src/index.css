@@ -113,11 +113,11 @@ input:-webkit-autofill {
 
 :root {
   --primary-color: #141416;
-  --secondary-color: #1C1C1E;
+  --secondary-color: #1c1c1e;
   --other-color:  rgba(19, 20, 21, 0.293);
   --accent-color: #9097ff;
   --accent-color-rgb: 144, 151, 255;
-  --soft-accent-color: rgba(var(--accent-color-rgb), 0.18);
+  --soft-accent-color: rgba(var(--accent-color-rgb), 0.15);
   --mini-color: #c1c4ee;
   --light-color: #eeeef0;
   --text-color: #9c9da0;
@@ -128,6 +128,8 @@ input:-webkit-autofill {
   --success-color: #75dc90;
   --border-radius: 11px;
   --border-size: 2px;
+  --scroll-thumb: var(--border-color);
+  --scroll-track: rgba(19, 20, 21, 0.5);
 
   color: var(--light-color);
   background-color: var(--secondary-color);
@@ -171,8 +173,8 @@ input:-webkit-autofill {
 }
 
 .mini-master-btn {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   color: var(--light-color);
   background-color: var(--other-color);
   font-size: 14px;

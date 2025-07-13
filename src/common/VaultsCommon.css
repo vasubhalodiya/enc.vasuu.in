@@ -16,7 +16,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
     padding: 0px 15px;
 }
 
@@ -26,21 +25,6 @@
     align-items: center;
     justify-content: right;
     gap: 10px;
-}
-
-.vd-close-btn i
-{
-    width: 40px;
-    height: 40px;
-    color: var(--light-color);
-    background-color: var(--other-color);
-    font-size: 15px;
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--border-radius);
-    margin-bottom: -2px;
 }
 
 .vd-folder-btn
@@ -83,6 +67,11 @@
     padding: 0px 15px;
     white-space: nowrap;
     letter-spacing: 0.3px;
+}
+
+.vd-create-btn i
+{
+    font-size: 12px;
 }
 
 /* .vd-box
@@ -294,6 +283,20 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.vd-edit-btn {
+    height: 35px;
+    color: var(--primary-color);
+    background-color: var(--accent-color);
+    font-size: 13px;
+    font-family: 'Int-Medium';
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: var(--border-radius);
 }
 
 .vd-website-input

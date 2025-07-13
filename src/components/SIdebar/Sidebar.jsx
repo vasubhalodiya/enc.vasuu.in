@@ -4,13 +4,14 @@ import images from '../../utils/Images'
 import NavLink from '@/components/NavLink/NavLink';
 import { Link, useLocation } from 'react-router-dom';
 import Search from '../Search/Search';
+import Navbar from '../Navbar/Navbar';
 
 const Sidebar = () => {
   const location = useLocation();
   const isActive = location.pathname === '/profile';
   return (
     <>
-      <div className="sidebar">
+      <div className="sidebar desktop-menu">
         <div className="sidebar-cnt">
           <div className="sidebar-sec">
             <div className="sidebar-logo">
@@ -33,7 +34,8 @@ const Sidebar = () => {
                 <div className="sidebar-list-group">
                   <p className='sidebar-title master-title'>Premium</p>
                   <div className='sidebar-menu-links premium'>
-                    <NavLink to="/premium" iconImg={images.premium} label="Premium" />
+                    {/* <NavLink to="/premium" iconImg={images.premium} label="Premium" /> */}
+                    <NavLink to="/premium" iconClass="fa-regular fa-sparkles" label="Premium" />
                   </div>
                 </div>
               </div>
@@ -61,7 +63,13 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      {/* <Search /> */}
+      <div className="bottom-menu-mobile">
+        <NavLink to="/" iconClass="fa-light fa-house" />
+        <NavLink to="/generator" iconClass="ph ph-password" />
+        <NavLink to="/trash" iconClass="fa-regular fa-sparkles" />
+        <NavLink to="/setting" iconClass="fa-regular fa-gear" />
+      </div>
+      <Navbar />
     </>
   )
 }

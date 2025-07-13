@@ -32,10 +32,12 @@ const Sidebar = () => {
         <div className="sidebar-cnt">
           <div className="sidebar-sec">
             <div className="sidebar-logo">
-              <img src={images.logo} alt="encrypt-logo" className='logo' />
-              <h3 className='sidebar-logo-text'>Encrypt</h3>
+              <div className='sidebar-logo-cnt'>
+                <img src={images.logo} alt="encrypt-logo" className='logo' />
+                <h3 className='sidebar-logo-text'>Encrypt</h3>
+              </div>
               {isTablet && isOpen && (
-                <button onClick={closeSidebar}>close</button>
+                <button onClick={closeSidebar} className='navbar-toggle-btn'><i className="fa-light fa-sidebar"></i></button>
               )}
             </div>
             <div className="sidebar-list">
@@ -54,9 +56,7 @@ const Sidebar = () => {
                 <div className="sidebar-list-group">
                   <p className='sidebar-title master-title'>Premium</p>
                   <div className='sidebar-menu-links premium'>
-                    <div onClick={closeSidebar}>
-                      <NavLink to="/premium" iconClass="fa-regular fa-sparkles" label="Premium" />
-                    </div>
+                    <NavLink to="/premium" iconClass="fa-regular fa-sparkles" label="Premium" onClick={closeSidebar}/>
                   </div>
                 </div>
               </div>
@@ -87,8 +87,10 @@ const Sidebar = () => {
         <div className="bottom-menu-mobile">
           <NavLink to="/" iconClass="fa-light fa-house" />
           <NavLink to="/generator" iconClass="ph ph-password" />
-          <NavLink to="/trash" iconClass="fa-regular fa-sparkles" />
-          <NavLink to="/setting" iconClass="fa-regular fa-gear" />
+          <div className='sidebar-menu-links premium'>
+            <NavLink to="/trash" iconClass="fa-regular fa-sparkles" />
+          </div>
+          <NavLink to="/profile" iconClass="fa-regular fa-user" />
         </div>
       </div>
       <Navbar 

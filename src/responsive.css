@@ -77,11 +77,11 @@
   .bottom-menu-mobile{gap: 5px;}
   .navbar-logo .logo{display: block;}
   .navbar-part, .navbar-cnt{gap: 10px;}
-  .vaultsData{display: none;}
   .vaults-menu-list{padding-bottom: 75px;}
   .vaults-add-multiselect{display: none;}
   .vaults-list-group{padding-top: 15px;}
-
+  .vaults-add{gap: 10px;}
+  .vaults-three-dot-btn.mini-master-btn{display: block;}
 
 
 

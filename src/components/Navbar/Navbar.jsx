@@ -26,7 +26,7 @@ const Navbar = ({ isTablet, onToggle, isOpen, closeSidebar }) => {
           </div>
           <div className="vaults-add">
             <button className="vaults-add-btn"><i class="fa-regular fa-plus"></i><span>Create</span></button>
-            <div><button className="vd-three-dot-btn mini-master-btn"><i className="fa-regular fa-ellipsis-vertical"></i></button></div>
+            <div><button className="vaults-three-dot-btn mini-master-btn"><i className="fa-regular fa-ellipsis-vertical"></i></button></div>
           </div>
         </div>
       </div>

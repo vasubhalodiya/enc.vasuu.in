@@ -85,16 +85,16 @@
 }
 
 .navbar-logo-text {
+  /* color: var(--light-color); */
+  background: linear-gradient( 240deg, #ff3d3d, #ff8732, #ffee99, #fffae1, #00eaff, #288cff, #0033ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 25px;
   font-family: 'Bebas-Regular';
   font-weight: 400;
   letter-spacing: 1.5px;
   margin: 0;
-  background: linear-gradient( 240deg, #ff3d3d, #ff8732, #ffee99, #fffae1, #00eaff, #288cff, #0033ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
 }
 
 .navbar-logo .logo,
@@ -107,9 +107,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 0px;
 }
 
+.vaults-three-dot-btn.mini-master-btn{display: none;}
 
 
 

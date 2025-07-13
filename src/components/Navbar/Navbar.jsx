@@ -1,12 +1,16 @@
 import React from 'react'
 import './Navbar.css'
 
-const Navbar = () => {
+const Navbar = ({ isTablet, onToggle, isOpen, closeSidebar }) => {
   return (
     <>
-      <div className="navbar">
+      <div className={`navbar ${isTablet && isOpen ? "shifted" : ""}`}>
         <div className="navbar-cnt">
-          <button>toggle</button>
+          {isTablet && (
+            <button className="navbar-toggle-btn" onClick={onToggle}>
+              <i className="fa-light fa-sidebar"></i>
+            </button>
+          )}
           <div className="search-box">
             <span className="search-icon">
               <i class="fa-light fa-magnifying-glass"></i>

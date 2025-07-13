@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Sidebar.css'
 import images from '../../utils/Images'
 import NavLink from '@/components/NavLink/NavLink';
@@ -9,15 +9,34 @@ import Navbar from '../Navbar/Navbar';
 const Sidebar = () => {
   const location = useLocation();
   const isActive = location.pathname === '/profile';
+  const [isOpen, setIsOpen] = useState(false);
+  const [isTablet, setIsTablet] = useState(window.innerWidth < 1240);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const tablet = window.innerWidth < 1240;
+      setIsTablet(tablet);
+      if (!tablet) setIsOpen(false);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleSidebar = () => setIsOpen(!isOpen);
+  const closeSidebar = () => setIsOpen(false);
   return (
     <>
-      <div className="sidebar desktop-menu">
+      <div className={`sidebar desktop-menu ${isTablet && isOpen ? 'open' : ''}`}>
         <div className="sidebar-cnt">
           <div className="sidebar-sec">
             <div className="sidebar-logo">
               <img src={images.logo} alt="encrypt-logo" className='logo' />
               <h3 className='sidebar-logo-text'>Encrypt</h3>
-              <button>close</button>
+              {isTablet && isOpen && (
+                <button onClick={closeSidebar}>close</button>
+              )}
             </div>
             <div className="sidebar-list">
               <div className="sidebar-menu">
@@ -25,26 +44,26 @@ const Sidebar = () => {
                   <h6 className="sidebar-title master-title">Menu</h6>
                   <div className="sidebar-link-list">
                     <ul className="sidebar-links">
-                      <NavLink to="/" iconClass="fa-light fa-house" label="Home" />
-                      <NavLink to="/generator" iconClass="ph ph-password" label="Password Generator" />
-                      <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" />
-                      <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" />
+                        <NavLink to="/" iconClass="fa-light fa-house" label="Home"  onClick={closeSidebar}/>
+                        <NavLink to="/generator" iconClass="ph ph-password" label="Password Generator"  onClick={closeSidebar}/>
+                        <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash"  onClick={closeSidebar}/>
+                        <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting"  onClick={closeSidebar}/>
                     </ul>
                   </div>
                 </div>
                 <div className="sidebar-list-group">
                   <p className='sidebar-title master-title'>Premium</p>
                   <div className='sidebar-menu-links premium'>
-                    {/* <NavLink to="/premium" iconImg={images.premium} label="Premium" /> */}
-                    <NavLink to="/premium" iconClass="fa-regular fa-sparkles" label="Premium" />
+                    <div onClick={closeSidebar}>
+                      <NavLink to="/premium" iconClass="fa-regular fa-sparkles" label="Premium" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="sidebar-profile-sec">
-            {/* <Link to="/profile" className="sidebar-profile"> */}
-            <Link to="/profile" className={`sidebar-profile ${isActive ? 'active' : ''}`}>
+            <Link to="/profile" className={`sidebar-profile ${isActive ? 'active' : ''}`} onClick={closeSidebar}>
               <div className="sidebar-profile-sec-txt">
                 <img src={images.my_avtar} alt="profile" className='sidebar-profile-img' />
                 <div className="sidebar-profile-sec-name">
@@ -72,7 +91,23 @@ const Sidebar = () => {
           <NavLink to="/setting" iconClass="fa-regular fa-gear" />
         </div>
       </div>
-      <Navbar />
+      <Navbar 
+        isTablet={isTablet}
+        onToggle={toggleSidebar}
+        isOpen={isOpen}
+        closeSidebar={closeSidebar}
+      />
+      
+      {isTablet && isOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={closeSidebar}
+          role="button"
+          tabIndex={0}
+          aria-label="Close Sidebar"
+          onKeyDown={(e) => { if (e.key === 'Escape') closeSidebar(); }}
+        />
+      )}
     </>
   )
 }

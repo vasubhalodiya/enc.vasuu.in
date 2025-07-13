@@ -11,19 +11,6 @@
   z-index: 99999999999999;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -33,38 +20,6 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 998;
   display: none;
-}
-
-@media (max-width: 768px) {
-  .sidebar.desktop-menu {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 280px;
-    height: 100vh;
-    z-index: 999;
-    transition: left 0.3s ease;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .sidebar.desktop-menu.sidebar-open {
-    left: 0;
-  }
-
-  .sidebar-overlay {
-    display: block;
-  }
-}
-
-@media (min-width: 769px) {
-  .sidebar.desktop-menu {
-    position: relative;
-    left: 0;
-  }
-  
-  .sidebar-overlay {
-    display: none !important;
-  }
 }
 
 .sidebar-cnt {
@@ -330,10 +285,10 @@
   display: flex;
   gap: 10px;
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 9999999999999;
+  z-index: 999999999999999999999;
   transition: all 0.3s ease;
 }
 

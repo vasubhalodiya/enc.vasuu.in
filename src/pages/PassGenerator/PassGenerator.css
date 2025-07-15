@@ -262,6 +262,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 40px;
 }
 
 .pass-cnt {
@@ -315,10 +316,10 @@
 .pass-random-generate-icon i {
   width: 40px;
   height: 40px;
-  color: var(--light-color);
-  background-color: var(--other-color);
+  color: var(--accent-color);
+  background-color: var(--soft-accent-color);
   font-size: 15px;
-  border: 1px solid var(--border-color);
+  /* border: 1px solid var(--border-color); */
   display: flex;
   align-items: center;
   justify-content: center;

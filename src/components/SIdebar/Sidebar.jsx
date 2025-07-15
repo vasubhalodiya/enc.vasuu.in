@@ -47,7 +47,7 @@ const Sidebar = () => {
                   <div className="sidebar-link-list">
                     <ul className="sidebar-links">
                         <NavLink to="/" iconClass="fa-light fa-house" label="Home" onClick={closeSidebar}/>
-                        <NavLink to="/generator" iconClass="ph ph-password" label="Password Generator" onClick={closeSidebar}/>
+                        <NavLink to="/generator" iconClass="ph ph-password" label="Generate Password" onClick={closeSidebar}/>
                         <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" onClick={closeSidebar}/>
                         <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" onClick={closeSidebar}/>
                     </ul>
@@ -88,7 +88,7 @@ const Sidebar = () => {
           <NavLink to="/" iconClass="fa-light fa-house" />
           <NavLink to="/generator" iconClass="ph ph-password" />
           <div className='sidebar-menu-links premium'>
-            <NavLink to="/trash" iconClass="fa-regular fa-sparkles" />
+            <NavLink to="/premium" iconClass="fa-regular fa-sparkles" />
           </div>
           <NavLink to="/profile" iconClass="fa-regular fa-user" />
         </div>

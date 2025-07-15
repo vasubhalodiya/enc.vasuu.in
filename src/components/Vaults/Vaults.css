@@ -110,6 +110,7 @@
 {
     height: 35px;
     color: var(--primary-color);
+    /* background: linear-gradient(90deg, #7f88ff, #a777ff, #f58ae0); */
     background-color: var(--accent-color);
     font-size: 13px;
     font-family: 'Int-Medium';
@@ -141,6 +142,14 @@
     flex-direction: column;
     gap: 7px;
     padding-bottom: 25px;
+}
+
+.vaults-menu-item-group
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .vaults-menu-item
@@ -179,6 +188,19 @@
     background: var(--other-color);
 }
 
+.vaults-menu-three-dot-btn
+{
+  width: 35px;
+  height: 35px;
+  color: var(--light-color);
+  /* background-color: var(--other-color); */
+  font-size: 16px;
+  /* border: 1px solid var(--border-color); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+}
 
 
 

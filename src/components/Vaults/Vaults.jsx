@@ -48,10 +48,15 @@ const Vaults = () => {
           <div className="vaults-menu">
             <ul className="vaults-menu-list" ref={listRef}>
               {items.map((label, i) => (
-                <li key={i}>
+                <li key={i} className="vaults-menu-item-group">
                   <button className="vaults-menu-item">
                     <i className="fa-light fa-user"></i>{label}
                   </button>
+                  <div>
+                    <button className="vaults-menu-three-dot-btn">
+                      <i className="fa-regular fa-ellipsis-vertical"></i>
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>

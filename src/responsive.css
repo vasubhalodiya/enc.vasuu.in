@@ -50,12 +50,6 @@
   .master-cnt{grid-template-columns: 1fr;}
   .vaults-scroll-down-txt{width: 100%; border-right: none;}
   .sidebar-link{height: 40px;margin-bottom: 0;}
-  /* .bottom-menu-mobile
-  {
-    width: calc(100% - 45px);
-    align-items: center;
-    justify-content: space-between;
-  } */
   .mobile-menu{
     width: 100%;
     height: 75px;
@@ -69,7 +63,6 @@
     z-index: 9999;
     transition: all 0.3s ease;
   }
-  .pass-cnt-parent{margin-top: 40px;}
   .click-to-copy-img{right: 0;}
   .main-cnt{padding: 20px;}
   .sidebar-link{width: 60px;display: flex;align-items: center;justify-content: center; margin-bottom: 0;}
@@ -82,7 +75,8 @@
   .vaults-list-group{padding-top: 15px;}
   .vaults-add{gap: 10px;}
   .vaults-three-dot-btn.mini-master-btn{display: block;}
-
+  .pass-fill-btn{display: none;}
+  
 
 
 
@@ -107,8 +101,6 @@
 {
   .vaults-add-btn span{display: none;}
   .vaults-add-btn{width: 35px;}
-
-
 
 
 

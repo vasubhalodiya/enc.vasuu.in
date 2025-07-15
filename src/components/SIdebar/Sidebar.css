@@ -254,7 +254,7 @@
   left: calc(-1 * var(--border-size));
   right: calc(-1 * var(--border-size));
   bottom: calc(-1 * var(--border-size));
-  background: radial-gradient(circle, #ff3d3d 0%, #ff8732 14%, #ffee99 30%, #fffae1 42%, #00eaff 60%, #288cff 78%, #0033ff 100%);
+  background: var(--radial-gradient-color);
   background-size: 300% 300%;
   animation: borderRadialAnim 10s ease infinite;
   border-radius: calc(var(--border-radius) + var(--border-size));

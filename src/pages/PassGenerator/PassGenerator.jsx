@@ -158,7 +158,7 @@ const PasswordGenerator = () => {
     <>
       <div className="pass">
         <div className="pass-header">
-          <h5 className="pass-head-txt">Password Generator</h5>
+          <h5 className="pass-head-txt">Generate Password</h5>
           <div className="pass-btn-row">
             <button onClick={copyToClipboard} className="pass-fill-btn">Fill Password</button>
             <button onClick={generatePassword} className="pass-random-generate-icon"><i className="fa-light fa-arrows-rotate"></i></button>

@@ -8,14 +8,14 @@ const Search = () => {
         <div className="search-cnt">
           <div className="search-box">
             <span className="search-icon">
-              <i class="fa-light fa-magnifying-glass"></i>
+              <i className="fa-light fa-magnifying-glass"></i>
             </span>
             <input type="text" className="search-input" placeholder="Search" />
           </div>
           <div className="search-filter-sort">
             <div className="search-sort">
               <button className="sort-icon mini-master-btn">
-                <i class="fa-light fa-sliders"></i>
+                <i className="fa-light fa-sliders"></i>
               </button>
               {/* <select className="search-filter-select">
                   <option value="">Filter</option>

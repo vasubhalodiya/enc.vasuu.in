@@ -116,10 +116,10 @@ input:-webkit-autofill {
   --primary-color: #141416;
   --secondary-color: #1c1c1e;
   --other-color:  rgba(19, 20, 21, 0.293);
-  --accent-color: #9097ff;
+  --accent-color: #868aff;
   --accent-color-rgb: 144, 151, 255;
   --soft-accent-color: rgba(var(--accent-color-rgb), 0.15);
-  --gradient-color: #7780fe 25%, #b590ff, #acffcd;
+  --gradient-color: #868aff 25%, #b590ff, #acffcd;
   --linear-gradient-color: linear-gradient(200deg, var(--gradient-color));
   --radial-gradient-color: radial-gradient(circle, var(--gradient-color));
   --mini-color: #c1c4ee;

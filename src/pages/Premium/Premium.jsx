@@ -9,7 +9,7 @@ const Premium = () => {
       <div className="premium">
         <div className="premium-logo">
           <Link to="/" className='back-to-home'>
-            <i class="fa-regular fa-arrow-left"></i>
+            <i className="fa-regular fa-arrow-left"></i>
           </Link>
           <Link to="/">
             <h3 className="encrypt-logo">Encrypt</h3>
@@ -25,7 +25,7 @@ const Premium = () => {
           <div className="premium-card-group">
             <div className="premium-card">
               <div className="premium-card-header">
-                <h3 className='premium-card-header-plan-name'><i class="fa-solid fa-user"></i>Personal</h3>
+                <h3 className='premium-card-header-plan-name'><i className="fa-solid fa-user"></i>Personal</h3>
                 <h3 className='premium-card-header-plan-highlight'>Basic</h3>
               </div>
               <div className="premium-price-sec">
@@ -36,10 +36,10 @@ const Premium = () => {
               </div>
               <div className="premium-plan-lists">
                 <ul className='premium-plan-list'>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>10 logins, notes and credit cards</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>5 vaults</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Secure storage</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Fast support</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>10 logins, notes and credit cards</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>5 vaults</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Secure storage</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Fast support</li>
                 </ul>
               </div>
               <div className="premium-btn-sec">
@@ -48,7 +48,7 @@ const Premium = () => {
             </div>
             <div className="premium-card">
               <div className="premium-card-header">
-                <h3 className='premium-card-header-plan-name'><i class="fa-solid fa-briefcase"></i>Business</h3>
+                <h3 className='premium-card-header-plan-name'><i className="fa-solid fa-briefcase"></i>Business</h3>
                 <h3 className='premium-card-header-plan-highlight'>Best Value</h3>
               </div>
               <div className="premium-price-sec">
@@ -59,10 +59,10 @@ const Premium = () => {
               </div>
               <div className="premium-plan-lists">
                 <ul className='premium-plan-list'>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>20 logins, notes and credit cards</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>25 vaults</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Integrated 2FA authenticator</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Priority support</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>20 logins, notes and credit cards</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>25 vaults</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Integrated 2FA authenticator</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Priority support</li>
                 </ul>
               </div>
               <div className="premium-btn-sec">
@@ -71,7 +71,7 @@ const Premium = () => {
             </div>
             <div className="premium-card">
               <div className="premium-card-header">
-                <h3 className='premium-card-header-plan-name'><i class="fa-solid fa-apartment"></i>Enterprise</h3>
+                <h3 className='premium-card-header-plan-name'><i className="fa-solid fa-apartment"></i>Enterprise</h3>
                 <h3 className='premium-card-header-plan-highlight'>Advanced</h3>
               </div>
               <div className="premium-price-sec">
@@ -82,10 +82,10 @@ const Premium = () => {
               </div>
               <div className="premium-plan-lists">
                 <ul className='premium-plan-list'>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Unlimited logins, notes and credit cards</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Unlimited vaults</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Integrated 2FA authenticator</li>
-                  <li className='premium-plan-list-item'><i class="fa-solid fa-check"></i>Data breach monitoring</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Unlimited logins, notes and credit cards</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Unlimited vaults</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Integrated 2FA authenticator</li>
+                  <li className='premium-plan-list-item'><i className="fa-solid fa-check"></i>Data breach monitoring</li>
                 </ul>
               </div>
               <div className="premium-btn-sec">

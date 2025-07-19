@@ -19,13 +19,13 @@ const Navbar = ({ isTablet, onToggle, isOpen }) => {
             </div>
             <div className="search-box">
               <span className="search-icon">
-                <i class="fa-light fa-magnifying-glass"></i>
+                <i className="fa-light fa-magnifying-glass"></i>
               </span>
               <input type="text" className="search-input" placeholder="Search" />
             </div>
           </div>
           <div className="vaults-add">
-            <button className="vaults-add-btn"><i class="fa-regular fa-plus"></i><span>Create</span></button>
+            <button className="vaults-add-btn"><i className="fa-regular fa-plus"></i><span>Create</span></button>
             <div><button className="vaults-three-dot-btn mini-master-btn"><i className="fa-regular fa-ellipsis-vertical"></i></button></div>
           </div>
         </div>

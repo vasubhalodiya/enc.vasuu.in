@@ -85,8 +85,7 @@
 }
 
 .navbar-logo-text {
-  /* color: var(--light-color); */
-  background: linear-gradient( 240deg, #ff3d3d, #ff8732, #ffee99, #fffae1, #00eaff, #288cff, #0033ff);
+  background: var(--linear-gradient-color);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

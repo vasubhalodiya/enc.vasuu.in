@@ -2,7 +2,7 @@ import React from 'react'
 import './Navbar.css'
 import images from '../../utils/Images'
 
-const Navbar = ({ isTablet, onToggle, isOpen, closeSidebar }) => {
+const Navbar = ({ isTablet, onToggle, isOpen }) => {
   return (
     <>
       <div className={`navbar ${isTablet && isOpen ? "shifted" : ""}`}>

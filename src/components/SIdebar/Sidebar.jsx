@@ -49,7 +49,7 @@ const Sidebar = () => {
                         <NavLink to="/" iconClass="fa-light fa-house" label="Home" onClick={closeSidebar}/>
                         <NavLink to="/generator" iconClass="ph ph-password" label="Generate Password" onClick={closeSidebar}/>
                         <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" onClick={closeSidebar}/>
-                        <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" onClick={closeSidebar}/>
+                        {/* <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" onClick={closeSidebar}/> */}
                     </ul>
                   </div>
                 </div>

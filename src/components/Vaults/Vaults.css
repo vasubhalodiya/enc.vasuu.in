@@ -149,7 +149,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 0px;
 }
 
 .vaults-menu-item
@@ -196,7 +196,7 @@
   /* background-color: var(--other-color); */
   font-size: 16px;
   /* border: 1px solid var(--border-color); */
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   border-radius: var(--border-radius);

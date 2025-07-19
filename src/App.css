@@ -3,10 +3,25 @@
   margin-top: 70px;
 }
 
+.navbar-none-layout
+{
+  margin-top: 0px;
+}
+
 .main-cnt {
   padding: 20px 30px;
 }
 
 .main-cnt.custome-align {
   padding: 0px;
+}
+
+.reset-css .app-layout {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.reset-css .main-cnt {
+  padding: 30px;
 }

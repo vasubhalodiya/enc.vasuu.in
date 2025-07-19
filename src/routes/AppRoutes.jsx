@@ -14,7 +14,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/trash" element={<Trash />} />
       <Route path="/generator" element={<PassGenerator />} />
-      <Route path="/setting" element={<Settings />} />
+      {/* <Route path="/setting" element={<Settings />} /> */}
       <Route path="/premium" element={<Premium />} />
       <Route path="/profile" element={<Profile />} />
       

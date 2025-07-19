@@ -38,6 +38,7 @@
 {
   .master-cnt {grid-template-columns: 280px 1fr;}
   .vaults-scroll-down-txt{width: 280px;}
+  .reset-css .main-cnt{padding: 25px;}
 
 }
 
@@ -76,15 +77,15 @@
   .vaults-add{gap: 10px;}
   .vaults-three-dot-btn.mini-master-btn{display: block;}
   .pass-fill-btn{display: none;}
-  
-
-
-
-
-
-
-
-
+  .premium-big-txt{font-size: 25px;}
+  .premium-small-txt{font-size: 13px;}
+  .encrypt-logo{font-size: 30px;}
+  .reset-css .main-cnt{padding: 20px;}
+  .premium-card-head{margin-bottom: 30px;}
+  .premium-card{width: 100%;padding: 20px;}
+  .premium-plan-list{gap: 15px;}
+  .vaults-menu-three-dot-btn{display: flex;}
+  .vaults-menu-item-group{gap: 10px;}
 
 
 
@@ -110,7 +111,8 @@
 
 @media screen and (max-width:375px) 
 {
-
+  .premium-access-premium{font-size: 12px;}
+  .premium-big-txt{font-size: 23px;}
 
 }
 

@@ -119,8 +119,8 @@ input:-webkit-autofill {
   --accent-color: #9097ff;
   --accent-color-rgb: 144, 151, 255;
   --soft-accent-color: rgba(var(--accent-color-rgb), 0.15);
-  --gradient-color: #7e87ff, #b990ff, #acffcd;
-  --linear-gradient-color: linear-gradient(90deg, var(--gradient-color));
+  --gradient-color: #7780fe 25%, #b590ff, #acffcd;
+  --linear-gradient-color: linear-gradient(200deg, var(--gradient-color));
   --radial-gradient-color: radial-gradient(circle, var(--gradient-color));
   --mini-color: #c1c4ee;
   --light-color: #eeeef0;
@@ -139,6 +139,12 @@ input:-webkit-autofill {
   background-color: var(--secondary-color);
   font-family: 'Int-Regular';
   font-weight: 400 !important;
+}
+
+body.reset-css {
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
 }
 
 .master-btn

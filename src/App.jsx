@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './App.css'
-import Sidebar from './components/Sidebar/Sidebar'
+import Sidebar from './components/SidebarNew/Sidebar'
 import Home from './pages/Home/Home'
 import { useLocation } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes'

@@ -14,7 +14,7 @@
 
 .profile-cnt
 {
-    width: 60%;
+    width: 750px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -214,13 +214,72 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.profile-unlock-head-txt
+.profile-unlock-head-txt,
+.profile-auto-lock-title
 {
     width: 100%;
     color: var(--light-color);
     font-size: 16px;
     font-family: 'Int-SemiBold';
     margin-bottom: 10px;
+    padding: 0px 7px;
+}
+
+.profile-unlock-options
+{
+    padding: 20px 7px 10px 7px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 15px;
+}
+
+.profile-unlock-field
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.profile-unlock-field:hover .profile-unlock-icon
+{
+    color: var(--mini-color);
+    transition: all 0.3s ease;
+}
+
+.profile-unlock-icon
+{
+    font-size: 18px;
+}
+
+.profile-unlock-field-txt-sec
+{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 3px;
+}
+
+.profile-unlock-field-txt-title
+{
+    color: var(--light-color);
+    font-size: 15px;
+    font-family: 'Int-Medium';
+}
+
+.profile-unlock-field-txt-title-desc
+{
+    color: var(--text-color);
+    font-size: 13px;
+    font-family: 'Int-Regular';
+    letter-spacing: 0.2px;
 }
 
 
@@ -236,35 +295,110 @@
 
 
 
+.profile-auto-lock-dropd {
+    width: 100%;
+    position: relative;
+}
 
+.profile-auto-lock-select {
+    color: var(--light-color);
+    background: var(--other-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 13px 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
 
+.dropdown-options {
+    width: 100%;
+    background: #1a1a1b;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin-top: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    padding: 7px;
+}
 
+.dropdown-item {
+    color: var(--light-color);
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
 
+.dropdown-item:last-child {margin-bottom: 0;}
 
+.dropdown-item:hover {
+    color: var(--mini-color);
+    background: var(--soft-accent-color);
+    border-radius: 10px;
+}
 
+.dropdown-item.active {
+    color: var(--primary-color);
+    background: var(--accent-color);
+    border-radius: 10px;
+}
 
+.profile-auto-lock-select i {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
 
+/* ============= about ============= */
 
+.profile-about
+{
+    width: 100%;
+    height: calc(100vh - 165px);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+}
 
+.about-field
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    margin-bottom: 15px;
+}
 
+.about-field-title
+{
+    width: 100px;
+    color: var(--light-color);
+    font-size: 15px;
+    font-family: 'Int-Medium';
+}
 
+.about-field-link a
+{
+    color: var(--accent-color);
+    font-size: 14px;
+    font-family: 'Int-Regular';
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.profile-about-inspired
+{
+    color: var(--text-color);
+    font-size: 10px;
+}
 
 

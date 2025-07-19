@@ -8,7 +8,7 @@
 {
   .master-cnt {grid-template-columns: 380px 1fr;}
   .vaults-scroll-down-txt{width: 380px;}
-
+  .profile-cnt{width: 100%;}
 
 
 }

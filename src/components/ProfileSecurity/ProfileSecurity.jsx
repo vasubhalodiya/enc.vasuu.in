@@ -26,6 +26,10 @@ const ProfileSecurity = ({ profileTab }) => {
     setShowPopup(true);
   };
 
+  const options = ['1 minute', '2 minutes', '5 minutes', '10 minutes', '30 minutes', '1 hour'];
+  const [selected, setSelected] = useState(options[0]);
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       {profileTab === 'security' && (
@@ -56,7 +60,7 @@ const ProfileSecurity = ({ profileTab }) => {
                         {selectedOption === option.title ? (
                           <i className="fa-solid fa-square-check"></i>
                         ) : (
-                          <i className="fa-regular fa-square"></i>
+                          <i className="fa-light fa-square"></i>
                         )}
                       </div>
                       <div className="profile-unlock-field-txt-sec">
@@ -68,7 +72,7 @@ const ProfileSecurity = ({ profileTab }) => {
 
                   {showPopup && <Popup onClose={() => setShowPopup(false)} />}
                 </div>
-                <div className="profile-auto-lock">
+                {/* <div className="profile-auto-lock">
                   <h5>Auto-lock after</h5>
                   <div className="profile-auto-lock-dropd">
                     <select className='profile-auto-lock-select'>
@@ -79,6 +83,32 @@ const ProfileSecurity = ({ profileTab }) => {
                       <option value="30">30 minutes</option>
                       <option value="60">1 hour</option>
                     </select>
+                  </div>
+                </div> */}
+                <div className="profile-auto-lock">
+                  <h5 className='profile-auto-lock-title'>Auto-lock after</h5>
+                  <div className="profile-auto-lock-dropd">
+                    <div className="profile-auto-lock-select" onClick={() => setOpen(!open)}>
+                      <span>{selected}</span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+
+                    {open && (
+                      <ul className="dropdown-options">
+                        {options.map((opt) => (
+                          <li
+                            key={opt}
+                            className={`dropdown-item ${selected === opt ? 'active' : ''}`}
+                            onClick={() => {
+                              setSelected(opt);
+                              setOpen(false);
+                            }}
+                          >
+                            {opt}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
               </div>

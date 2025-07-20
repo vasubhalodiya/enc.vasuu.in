@@ -5,12 +5,21 @@ import NavLink from '@/components/NavLink/NavLink';
 import { Link, useLocation } from 'react-router-dom';
 import Search from '../Search/Search';
 import Navbar from '../Navbar/Navbar';
+import LoginCreate from '../LoginCreate/LoginCreate';
+import CardCreate from '../CardCreate/CardCreate';
 
 const Sidebar = () => {
   const location = useLocation();
   const isActive = location.pathname === '/profile';
   const [isOpen, setIsOpen] = useState(false);
   const [isTablet, setIsTablet] = useState(window.innerWidth < 1240);
+  const [selectedDrawer, setSelectedDrawer] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleDrawerSelect = (type) => {
+    setSelectedDrawer(type);
+    setIsDrawerOpen(true); // open the drawer
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,17 +55,17 @@ const Sidebar = () => {
                   <h6 className="sidebar-title master-title">Menu</h6>
                   <div className="sidebar-link-list">
                     <ul className="sidebar-links">
-                        <NavLink to="/" iconClass="fa-light fa-house" label="Home" onClick={closeSidebar}/>
-                        <NavLink to="/generator" iconClass="ph ph-password" label="Generate Password" onClick={closeSidebar}/>
-                        <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" onClick={closeSidebar}/>
-                        {/* <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" onClick={closeSidebar}/> */}
+                      <NavLink to="/" iconClass="fa-light fa-house" label="Home" onClick={closeSidebar} />
+                      <NavLink to="/generator" iconClass="ph ph-password" label="Generate Password" onClick={closeSidebar} />
+                      <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" onClick={closeSidebar} />
+                      {/* <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" onClick={closeSidebar}/> */}
                     </ul>
                   </div>
                 </div>
                 <div className="sidebar-list-group">
                   <p className='sidebar-title master-title'>Premium</p>
                   <div className='sidebar-menu-links premium'>
-                    <NavLink to="/premium" iconClass="fa-regular fa-sparkles" label="Premium" onClick={closeSidebar}/>
+                    <NavLink to="/premium" iconClass="fa-regular fa-sparkles" label="Premium" onClick={closeSidebar} />
                   </div>
                 </div>
               </div>
@@ -93,11 +102,12 @@ const Sidebar = () => {
           <NavLink to="/profile" iconClass="fa-regular fa-user" />
         </div>
       </div>
-      <Navbar 
+      <Navbar
         isTablet={isTablet}
         onToggle={toggleSidebar}
         isOpen={isOpen}
-        closeSidebar={closeSidebar}/>
+        closeSidebar={closeSidebar}
+        onDrawerSelect={handleDrawerSelect} />
       {isTablet && isOpen && (
         <div
           className="sidebar-overlay"
@@ -105,8 +115,18 @@ const Sidebar = () => {
           role="button"
           tabIndex={0}
           aria-label="Close Sidebar"
-          onKeyDown={(e) => { if (e.key === 'Escape') closeSidebar(); }}/>
+          onKeyDown={(e) => { if (e.key === 'Escape') closeSidebar(); }} />
       )}
+      {isDrawerOpen && selectedDrawer === 'login' && (
+        <LoginCreate onClose={() => setIsDrawerOpen(false)} />
+      )}
+      {isDrawerOpen && selectedDrawer === 'credit' && (
+        <CardCreate onClose={() => setIsDrawerOpen(false)} />
+      )}
+      {isDrawerOpen && selectedDrawer === 'secureNote' && (
+        <NoteCreate onClose={() => setIsDrawerOpen(false)} />
+      )}
+
     </>
   )
 }

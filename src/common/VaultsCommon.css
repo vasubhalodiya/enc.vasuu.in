@@ -405,6 +405,39 @@
     text-decoration: underline;
 }
 
+.login-create-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 99999999999999999999;
+    pointer-events: all;
+}
+
+.login-create-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999999999;
+    pointer-events: all;
+}
+
+.ContainerCreate {
+    max-width: 48%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: #1e1e1e;
+    z-index: 999999999999999999999;
+    transform: translateX(100%);
+    animation: slideInDrawer 0.3s forwards;
+    pointer-events: all;
+}
+
+@keyframes slideInDrawer {
+    to {
+        transform: translateX(0%);
+    }
+}
 
 
 

@@ -1,16 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Navbar.css'
 import images from '../../utils/Images'
 
-const Navbar = ({ isTablet, onToggle, isOpen }) => {
+const Navbar = ({ isTablet, onToggle, isOpen, onDrawerSelect }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Create');
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
 
   const dropdownOptions = [
-  { key: 'login', label: 'Login', icon: 'fa-light fa-user' },
-  { key: 'credit', label: 'Credit Card', icon: 'fa-light fa-credit-card' },
-  { key: 'secureNote', label: 'Secure Note', icon: 'fa-light fa-notes' },
-];
+    { key: 'login', label: 'Login', icon: 'fa-light fa-user' },
+    { key: 'credit', label: 'Credit Card', icon: 'fa-light fa-credit-card' },
+    { key: 'secureNote', label: 'Secure Note', icon: 'fa-light fa-notes' },
+  ];
+
+  const handleOptionClick = (opt) => {
+    setOpenDropdown(false);
+    onDrawerSelect(opt.key);
+  };
 
   return (
     <>
@@ -34,24 +49,20 @@ const Navbar = ({ isTablet, onToggle, isOpen }) => {
             </div>
           </div>
           <div className="vaults-add">
-            {/* <button className="vaults-add-btn"><i className="fa-regular fa-plus"></i><span>Create</span></button> */}
-            <div className="vaults-create-dropdown">
+            <div className="vaults-create-dropdown"  ref={dropdownRef}>
               <button
                 className="vaults-add-btn"
                 onClick={() => setOpenDropdown(!openDropdown)}>
                 <i className="fa-regular fa-plus"></i>
-                <span className='white-space-none'>{selectedOption}</span>
+                <span className='white-space-none'>Create</span>
               </button>
               {openDropdown && (
                 <ul className="dropdown-options">
                   {dropdownOptions.map(opt => (
                     <li
                       key={opt.key}
-                      className={`dropdown-item`}
-                      onClick={() => {
-                        setSelectedOption(opt.label);
-                        setOpenDropdown(false);
-                      }}>
+                      className="dropdown-item"
+                      onClick={() => handleOptionClick(opt)}>
                       <i className={opt.icon}></i>
                       <h5>{opt.label}</h5>
                     </li>
@@ -68,3 +79,6 @@ const Navbar = ({ isTablet, onToggle, isOpen }) => {
 }
 
 export default Navbar
+
+
+

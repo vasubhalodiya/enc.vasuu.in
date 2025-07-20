@@ -41,16 +41,6 @@ const ProfileSecurity = ({ profileTab }) => {
                   <h2 className='profile-unlock-head-txt'>Unlock with</h2>
                 </div>
                 <div className="profile-unlock-options">
-                  {/* <div className="profile-unlock-field">
-                    <div className="profile-unlock-icon">
-                      <i class="fa-regular fa-square"></i>
-                      <i class="fa-solid fa-square-check"></i>
-                    </div>
-                    <div className="profile-unlock-field-txt-sec">
-                      <p className='profile-unlock-field-txt-title'>None</p>
-                      <p className='profile-unlock-field-txt-title-desc'>Proton Pass will always be accessible</p>
-                    </div>
-                  </div> */}
                   {unlockOptions.map((option) => (
                     <div
                       key={option.title}

@@ -151,8 +151,8 @@
 
 .vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(2) i
 {
-    color: #89cbc3;
-    background: rgb(137, 203, 195, 0.15);
+    color: #93edbd;
+    background: rgb(147, 237, 189, 0.15);
 }
 
 .vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(3) i
@@ -169,7 +169,7 @@
 }
 
 .vaults-create-dropdown .dropdown-item:hover h5{color: var(--accent-color);}
-.vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(2):hover h5{color: #89cbc3;}
+.vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(2):hover h5{color: #93edbd;}
 .vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(3):hover h5{color: #ffdaad;}
 
 .white-space-none

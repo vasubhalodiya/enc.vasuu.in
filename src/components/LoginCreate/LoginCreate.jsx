@@ -2,7 +2,7 @@ import React from 'react'
 import '@/common/VaultsCommon.css'
 import { useRef, useEffect, useState } from 'react';
 
-const LoginCreate = () => {
+const LoginCreate = ({ onClose }) => {
   const textareaRef = useRef(null);
   const titleInputRef = useRef(null);
   const emailInputRef = useRef(null);
@@ -55,7 +55,7 @@ const LoginCreate = () => {
       <div className="vaultsData LoginCreate">
         <div className="vd-header">
           <div className="vd-close">
-            <button className="vd-close-btn mini-master-btn"><i className="fa-regular fa-xmark"></i></button>
+            <button className="vd-close-btn mini-master-btn" onClick={onClose}><i className="fa-regular fa-xmark"></i></button>
           </div>
           <div className="vd-sec">
             {/* <div className="vd-folder">

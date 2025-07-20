@@ -1,6 +1,6 @@
 @media screen and (max-width:1400px) 
 {
-
+  .ContainerCreate{max-width: calc(100vw - 800px);}
 
 }
 
@@ -9,6 +9,7 @@
   .master-cnt {grid-template-columns: 380px 1fr;}
   .vaults-scroll-down-txt{width: 380px;}
   .profile-cnt{width: 100%;}
+  .ContainerCreate{max-width: calc(100vw - 680px);}
 
 
 }
@@ -20,6 +21,7 @@
   .vaults-scroll-down-txt{left: 0;}
   .master-cnt {grid-template-columns: 450px 1fr;}
   .vaults-scroll-down-txt{width: 450px;}
+  .ContainerCreate{max-width: calc(100vw - 450px);}
   
 
 }
@@ -28,6 +30,7 @@
 {
   .master-cnt {grid-template-columns: 370px 1fr;}
   .vaults-scroll-down-txt{width: 370px;}
+  .ContainerCreate{max-width: calc(100vw - 370px);}
   
 
 
@@ -39,6 +42,7 @@
   .master-cnt {grid-template-columns: 280px 1fr;}
   .vaults-scroll-down-txt{width: 280px;}
   .reset-css .main-cnt{padding: 25px;}
+  .ContainerCreate{max-width: calc(100vw - 280px);}
 
 }
 
@@ -89,6 +93,7 @@
   .profile-label{width: 200px;}
   .profile-about{height: calc(100vh - 320px);}
   .profile-button-main-cnt{width: 100%;}
+  .ContainerCreate{max-width: 100%;}
 
 
 

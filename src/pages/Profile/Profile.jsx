@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Profile.css';
 import ProfileAccount from '../../components/ProfileAccount/ProfileAccount';
 import ProfileSecurity from '../../components/ProfileSecurity/ProfileSecurity';
@@ -10,6 +10,20 @@ const Profile = () => {
   const [openTabDropdown, setOpenTabDropdown] = useState(false);
   const [selectedTabLabel, setSelectedTabLabel] = useState('Account');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const dropdownRef = useRef();
+
+
+  useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setOpenTabDropdown(false);
+    }
+  };
+  document.addEventListener("click", handleClickOutside);
+  return () => document.removeEventListener("click", handleClickOutside);
+}, []);
+
+
 
   const tabOptions = [
     { key: 'account', label: 'Account' },
@@ -50,7 +64,7 @@ const Profile = () => {
           </div>
 
         ) : (
-          <div className="profile-tab-dropdown">
+          <div className="profile-tab-dropdown" ref={dropdownRef}>
             <div className="profile-tab-select" onClick={() => setOpenTabDropdown(!openTabDropdown)}>
               <span>{selectedTabLabel}</span>
               <i className="fa-solid fa-chevron-down"></i>

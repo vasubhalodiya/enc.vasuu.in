@@ -7,19 +7,17 @@ import Search from '../Search/Search';
 import Navbar from '../Navbar/Navbar';
 import LoginCreate from '../LoginCreate/LoginCreate';
 import CardCreate from '../CardCreate/CardCreate';
+import NoteCreate from '../NoteCreate/NoteCreate';
 
 const Sidebar = () => {
   const location = useLocation();
   const isActive = location.pathname === '/profile';
   const [isOpen, setIsOpen] = useState(false);
   const [isTablet, setIsTablet] = useState(window.innerWidth < 1240);
-  const [selectedDrawer, setSelectedDrawer] = useState(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const handleDrawerSelect = (type) => {
-    setSelectedDrawer(type);
-    setIsDrawerOpen(true); // open the drawer
-  };
+  // const [selectedDrawer, setSelectedDrawer] = useState(null);
+  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedDrawer, setSelectedDrawer] = useState('login');
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,6 +30,11 @@ const Sidebar = () => {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleDrawerSelect = (type) => {
+    setSelectedDrawer(type);
+    setIsDrawerOpen(true);
+  };
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
@@ -58,7 +61,6 @@ const Sidebar = () => {
                       <NavLink to="/" iconClass="fa-light fa-house" label="Home" onClick={closeSidebar} />
                       <NavLink to="/generator" iconClass="ph ph-password" label="Generate Password" onClick={closeSidebar} />
                       <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" onClick={closeSidebar} />
-                      {/* <NavLink to="/setting" iconClass="fa-regular fa-gear" label="Setting" onClick={closeSidebar}/> */}
                     </ul>
                   </div>
                 </div>

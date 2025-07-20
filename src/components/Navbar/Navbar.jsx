@@ -49,7 +49,7 @@ const Navbar = ({ isTablet, onToggle, isOpen, onDrawerSelect }) => {
             </div>
           </div>
           <div className="vaults-add">
-            <div className="vaults-create-dropdown"  ref={dropdownRef}>
+            <div className="vaults-create-dropdown" ref={dropdownRef}>
               <button
                 className="vaults-add-btn"
                 onClick={() => setOpenDropdown(!openDropdown)}>

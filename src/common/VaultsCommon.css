@@ -413,24 +413,24 @@
 }
 
 .login-create-overlay {
+    background: rgba(0, 0, 0, 0.5);
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
     z-index: 999999999;
     pointer-events: all;
 }
 
 .ContainerCreate {
     max-width: 48%;
+    height: 100%;
+    background-color: var(--secondary-color);
+    pointer-events: all;
     position: absolute;
     top: 0;
     right: 0;
-    height: 100%;
-    background-color: #1e1e1e;
     z-index: 999999999999999999999;
     transform: translateX(100%);
     animation: slideInDrawer 0.3s forwards;
-    pointer-events: all;
 }
 
 @keyframes slideInDrawer {

@@ -27,7 +27,7 @@ const ProfileAboutProject = ({ profileTab }) => {
               </div>
             </div>
             <div className="profile-about-part">
-              <p className='profile-about-inspired'>Inspired by Proton Pass, built with a personal touch for better privacy and simplicity.</p>
+              <p className='profile-about-inspired'>Inspired by <span>Proton Pass</span>, built with a personal touch for better privacy and simplicity.</p>
             </div>
           </div>
         </div>

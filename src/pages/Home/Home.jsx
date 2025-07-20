@@ -1,8 +1,8 @@
 import React from 'react'
 import './Home.css'
 import Vaults from '../../components/Vaults/Vaults'
-import VaultsDataCreate from '../../components/VaultsDataCreate/VaultsDataCreate'
 import VaultsData from '../../components/VaultsData/VaultsData'
+import LoginCreate from '../../components/LoginCreate/LoginCreate'
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
         <div className="home-cnt master-cnt">
           <Vaults />
           {/* <VaultsData /> */}
-          <VaultsDataCreate />
+          <LoginCreate />
         </div>
       </div>
     </>

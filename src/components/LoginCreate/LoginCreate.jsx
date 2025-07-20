@@ -2,7 +2,7 @@ import React from 'react'
 import '@/common/VaultsCommon.css'
 import { useRef, useEffect, useState } from 'react';
 
-const vaultsData = () => {
+const LoginCreate = () => {
   const textareaRef = useRef(null);
   const titleInputRef = useRef(null);
   const emailInputRef = useRef(null);
@@ -52,7 +52,7 @@ const vaultsData = () => {
 
   return (
     <>
-      <div className="vaultsData">
+      <div className="vaultsData LoginCreate">
         <div className="vd-header">
           <div className="vd-close">
             <button className="vd-close-btn mini-master-btn"><i className="fa-regular fa-xmark"></i></button>
@@ -189,6 +189,6 @@ const vaultsData = () => {
   )
 }
 
-export default vaultsData
+export default LoginCreate
 
 

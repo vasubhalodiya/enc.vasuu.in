@@ -124,6 +124,7 @@ input:-webkit-autofill {
   --radial-gradient-color: radial-gradient(circle, var(--gradient-color));
   --mini-color: #c1c4ee;
   --light-color: #eeeef0;
+  --low-light-color: #cbc9c9;
   --text-color: #9c9da0;
   --subheading-color: #686a6c;
   --border-color: #3a3a3a;

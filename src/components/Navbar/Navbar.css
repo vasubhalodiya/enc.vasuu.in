@@ -111,9 +111,71 @@
 
 .vaults-three-dot-btn.mini-master-btn{display: none;}
 
+.vaults-create-dropdown
+{
+    position: relative;
+}
 
+.vaults-create-dropdown .dropdown-options
+{
+    width: 170px;
+    left: unset;
+    box-shadow: rgba(20, 20, 22, 0.24) 0px 5px 10px;
+}
 
+.vaults-create-dropdown .dropdown-item
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
 
+.vaults-create-dropdown .dropdown-item:hover
+{
+    background: #2e2e2e4d;
+}
+
+.vaults-create-dropdown .dropdown-item i
+{
+    width: 33px;
+    height: 33px;
+    color: var(--accent-color);
+    background: var(--soft-accent-color);
+    border-radius: 8px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(2) i
+{
+    color: #89cbc3;
+    background: rgb(137, 203, 195, 0.15);
+}
+
+.vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(3) i
+{
+    color: #ffdaad;
+    background: rgb(255, 218, 173, 0.15);
+}
+
+.vaults-create-dropdown .dropdown-item h5
+{
+    color: var(--text-color);
+    font-size: 14px;
+    font-family: 'Int-Medium';
+}
+
+.vaults-create-dropdown .dropdown-item:hover h5{color: var(--accent-color);}
+.vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(2):hover h5{color: #89cbc3;}
+.vaults-create-dropdown .dropdown-options .dropdown-item:nth-child(3):hover h5{color: #ffdaad;}
+
+.white-space-none
+{
+    white-space: nowrap;
+}
 
 
 

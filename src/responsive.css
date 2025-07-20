@@ -86,11 +86,9 @@
   .premium-plan-list{gap: 15px;}
   .vaults-menu-three-dot-btn{display: flex;}
   .vaults-menu-item-group{gap: 10px;}
-
-
-
-
-
+  .profile-label{width: 200px;}
+  .profile-about{height: calc(100vh - 320px);}
+  .profile-button-main-cnt{width: 100%;}
 
 
 
@@ -102,7 +100,7 @@
 {
   .vaults-add-btn span{display: none;}
   .vaults-add-btn{width: 35px;}
-
+  .profile-label{width: 170px;}
 
 
 
@@ -113,6 +111,9 @@
 {
   .premium-access-premium{font-size: 12px;}
   .premium-big-txt{font-size: 23px;}
+  .profile-label{width: 110px;}
+  .profile-account-details{padding-left: 8px;}
+
 
 }
 

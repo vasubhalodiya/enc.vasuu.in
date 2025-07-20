@@ -10,15 +10,15 @@ const ProfileAccount = ({profileTab, dangerZone, setDangerZone }) => {
               <h6 className="profile-title master-title">General</h6>
               <div className="profile-account-details">
                 <div className="profile-account-item">
-                  <h4 className="profile-label">Email</h4>
+                  <h4 className="profile-label">Email :</h4>
                   <div className="profile-label-data profile-email">vasu@gmail.com</div>
                 </div>
                 <div className="profile-account-item">
-                  <h4 className="profile-label">Display name</h4>
+                  <h4 className="profile-label">Username :</h4>
                   <div className="profile-label-data profile-username"><button>Edit</button></div>
                 </div>
                 <div className="profile-account-item">
-                  <h4 className="profile-label">Password</h4>
+                  <h4 className="profile-label">Password :</h4>
                   <div className="profile-label-data profile-password">Change Pasword</div>
                 </div>
               </div>

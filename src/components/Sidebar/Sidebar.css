@@ -219,7 +219,7 @@
 }
 
 .sidebar-link:hover i {
-  color: #a7cdff;
+  color: var(--mini-color);
 }
 
 .sidebar-link i {

@@ -19,6 +19,46 @@ const LoginCreate = ({ onClose }) => {
   const [titleError, setTitleError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const editableFields = [
+    {
+      key: 'email',
+      label: 'Email',
+      icon: 'fa-envelope',
+      ref: emailInputRef,
+      inputClass: 'vd-email-input',
+      placeholder: 'Enter email',
+      error: emailError,
+      onChange: (e) => {
+        if (emailError) {
+          emailInputRef.current.value = e.target.value;
+          validateInputs();
+        }
+      },
+    },
+    {
+      key: 'password',
+      label: 'Password',
+      icon: 'fa-key',
+      ref: passwordInputRef,
+      inputClass: 'vd-password-input',
+      placeholder: 'Enter password',
+      isPassword: true,
+      error: passwordError,
+      onChange: (e) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+        if (passwordError) validateInputs(newPassword);
+      },
+    },
+    {
+      key: 'username',
+      label: 'Username',
+      icon: 'fa-user',
+      ref: usernameInputRef,
+      inputClass: 'vd-username-input',
+      placeholder: 'Enter username',
+    },
+  ];
 
 
   const handleInput = () => {
@@ -180,102 +220,68 @@ const LoginCreate = ({ onClose }) => {
         </div>
       </div>
 
-      {/* Email */}
       <div className="vd-main-cnt-field">
-        <div className={`vd-input-field vd-group-box ${focusedField === 'email' ? 'vd-input-field-focused' : ''}`} onClick={(e) => handleContainerClick(e, 'email')}>
-          <div className="vd-icon">
-            <i className="fa-light fa-envelope"></i>
-          </div>
-          <div className="vd-input-section">
-            <h6 className="vd-input-title">Email</h6>
-            <input
-              ref={emailInputRef}
-              type="text"
-              className="vd-email-input vd-input"
-              placeholder="Enter email"
-              onFocus={() => handleFieldFocus('email')}
-              onBlur={handleFieldBlur}
-              onChange={(e) => {
-                if (emailError) {
-                  emailInputRef.current.value = e.target.value;
-                  validateInputs();
+        {editableFields.map((field, index) => (
+          <div
+            key={field.key}
+            className={[
+              'vd-input-field',
+              'vd-group-box',
+              focusedField === field.key && 'vd-input-field-focused',
+              index === 0 && 'vd-top-rounded',
+              index === editableFields.length - 1 && 'vd-bottom-rounded',
+              index > 0 && index < editableFields.length - 1 && 'vd-no-rounded'
+            ].filter(Boolean).join(' ')}
+            onClick={(e) => handleContainerClick(e, field.key)}
+          >
+            <div className="vd-icon">
+              <i className={`fa-light ${field.icon}`}></i>
+            </div>
+
+            <div className="vd-input-section">
+              <h6 className="vd-input-title">{field.label}</h6>
+              <input
+                ref={field.ref}
+                type="text"
+                className={`${field.inputClass} vd-input`}
+                placeholder={field.placeholder}
+                onFocus={() => {
+                  handleFieldFocus(field.key);
+                  if (field.key === 'password') setIsPasswordFocused(true);
+                }}
+                onBlur={() => {
+                  handleFieldBlur();
+                  if (field.key === 'password') setIsPasswordFocused(false);
+                }}
+                value={
+                  field.key === 'password'
+                    ? isPasswordFocused
+                      ? password : password ? '*************' : ''
+                    : undefined
                 }
-              }}
-            />
-            {emailError && (
-              <div className="vd-error">
-                <p className='vd-error-txt'>
-                  <i className="ph-fill ph-warning-circle"></i>{emailError}
-                </p>
-              </div>
-            )}
+                readOnly={field.key === 'password' && !isPasswordFocused}
+                onChange={field.onChange}
+              />
 
-          </div>
-        </div>
+              {field.error && (
+                <div className="vd-error">
+                  <p className="vd-error-txt">
+                    <i className="ph-fill ph-warning-circle"></i> {field.error}
+                  </p>
+                </div>
+              )}
+            </div>
 
-        {/* Password */}
-        <div className={`vd-input-field vd-group-box ${focusedField === 'password' ? 'vd-input-field-focused' : ''}`} onClick={(e) => handleContainerClick(e, 'password')}>
-          <div className="vd-icon">
-            <i className="fa-light fa-key"></i>
-          </div>
-          <div className="vd-input-section">
-            <h6 className="vd-input-title">Password</h6>
-            <input
-              ref={passwordInputRef}
-              type="text"
-              className="vd-password-input vd-input"
-              placeholder="Enter password"
-              value={isPasswordFocused ? password : password ? '*************' : ''}
-              readOnly={!isPasswordFocused}
-              onChange={(e) => {
-                const newPassword = e.target.value;
-                setPassword(newPassword);
-
-                if (passwordError) {
-                  validateInputs(newPassword);
-                }
-              }}
-              onFocus={() => {
-                handleFieldFocus('password');
-                setIsPasswordFocused(true);
-              }}
-              onBlur={() => {
-                handleFieldBlur();
-                setIsPasswordFocused(false);
-              }}
-            />
-            {passwordError && (
-              <div className="vd-error">
-                <p className='vd-error-txt'>
-                  <i className="ph-fill ph-warning-circle"></i>{passwordError}
-                </p>
+            {/* Optional password button */}
+            {field.key === 'password' && (
+              <div>
+                <button className="vd-pass-generate-icon">
+                  <i className="fa-light fa-arrows-rotate"></i>
+                </button>
               </div>
             )}
           </div>
-          <div>
-            <button className="vd-pass-generate-icon">
-              <i className="fa-light fa-arrows-rotate"></i>
-            </button>
-          </div>
-        </div>
-
-        {/* Username */}
-        <div className={`vd-input-field vd-group-box ${focusedField === 'username' ? 'vd-input-field-focused' : ''}`} onClick={(e) => handleContainerClick(e, 'username')}>
-          <div className="vd-icon">
-            <i className="fa-light fa-user"></i>
-          </div>
-          <div className="vd-input-section">
-            <h6 className="vd-input-title">Username</h6>
-            <input
-              ref={usernameInputRef}
-              type="text"
-              className="vd-username-input vd-input"
-              placeholder='Enter username'
-              onFocus={() => handleFieldFocus('username')}
-              onBlur={handleFieldBlur}
-            />
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Website */}

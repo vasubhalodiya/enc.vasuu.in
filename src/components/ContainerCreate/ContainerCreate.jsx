@@ -1,6 +1,6 @@
 import '@/common/VaultsCommon.css';
 
-const ContainerCreate = ({ onClose, title, children }) => {
+const ContainerCreate = ({ onClose, onCreate, title, children }) => {
   return (
     <div className="login-create-wrapper">
       <div className="login-create-overlay"></div>
@@ -13,7 +13,7 @@ const ContainerCreate = ({ onClose, title, children }) => {
           </div>
           <div className="vd-sec">
             <div className="vd-create">
-              <button className="vd-create-btn">{title}</button>
+              <button className="vd-create-btn" onClick={onCreate}>{title}</button>
             </div>
           </div>
         </div>

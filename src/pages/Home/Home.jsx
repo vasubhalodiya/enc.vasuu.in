@@ -2,12 +2,12 @@ import './Home.css'
 import Vaults from '../../components/Vaults/Vaults'
 import VaultsData from '../../components/VaultsData/VaultsData'
 
-const Home = () => {
+const Home = ({ searchQuery }) => {
   return (
     <>
       <div className="home">
         <div className="home-cnt master-cnt">
-          <Vaults />
+          <Vaults searchQuery={searchQuery} />
           <VaultsData />
         </div>
       </div>

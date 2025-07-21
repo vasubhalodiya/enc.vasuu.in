@@ -9,15 +9,15 @@ import LoginCreate from '../LoginCreate/LoginCreate';
 import CardCreate from '../CardCreate/CardCreate';
 import NoteCreate from '../NoteCreate/NoteCreate';
 
-const Sidebar = () => {
+const Sidebar = ({ searchQuery, setSearchQuery }) => {
   const location = useLocation();
   const isActive = location.pathname === '/profile';
   const [isOpen, setIsOpen] = useState(false);
   const [isTablet, setIsTablet] = useState(window.innerWidth < 1240);
-  // const [selectedDrawer, setSelectedDrawer] = useState(null);
-  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedDrawer, setSelectedDrawer] = useState('login');
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+  const [selectedDrawer, setSelectedDrawer] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // const [selectedDrawer, setSelectedDrawer] = useState('login');
+  // const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -109,7 +109,9 @@ const Sidebar = () => {
         onToggle={toggleSidebar}
         isOpen={isOpen}
         closeSidebar={closeSidebar}
-        onDrawerSelect={handleDrawerSelect} />
+        onDrawerSelect={handleDrawerSelect}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery} />
       {isTablet && isOpen && (
         <div
           className="sidebar-overlay"

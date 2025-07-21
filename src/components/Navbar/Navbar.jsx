@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './Navbar.css'
 import images from '../../utils/Images'
 
-const Navbar = ({ isTablet, onToggle, isOpen, onDrawerSelect }) => {
+const Navbar = ({ isTablet, onToggle, isOpen, onDrawerSelect, searchQuery, setSearchQuery }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef();
 
@@ -45,7 +45,13 @@ const Navbar = ({ isTablet, onToggle, isOpen, onDrawerSelect }) => {
               <span className="search-icon">
                 <i className="fa-light fa-magnifying-glass"></i>
               </span>
-              <input type="text" className="search-input" placeholder="Search" />
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
           </div>
           <div className="vaults-add">

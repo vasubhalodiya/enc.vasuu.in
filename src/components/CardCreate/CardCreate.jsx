@@ -163,7 +163,7 @@ const CardCreate = ({ onClose }) => {
       <div className="vd-main-cnt-field">
         <div className={`vd-input-field ${focusedField === 'note' ? 'vd-input-field-focused' : ''}`} onClick={(e) => handleContainerClick(e, 'note')}>
           <div className="vd-icon">
-            <i className="fa-light fa-note-sticky"></i>
+            <i className="fa-light fa-notes"></i>
           </div>
           <div className="vd-input-section">
             <h6 className="vd-input-title">Note</h6>

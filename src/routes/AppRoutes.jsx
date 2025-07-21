@@ -8,10 +8,10 @@ import Premium from '@/pages/Premium/Premium';
 import Profile from '@/pages/Profile/Profile';
 import Error from '@/pages/Error/Error';
 
-const AppRoutes = () => {
+const AppRoutes = ({ searchQuery }) => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home searchQuery={searchQuery} />} />
       <Route path="/trash" element={<Trash />} />
       <Route path="/generator" element={<PassGenerator />} />
       {/* <Route path="/setting" element={<Settings />} /> */}

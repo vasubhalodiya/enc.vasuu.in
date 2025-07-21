@@ -92,7 +92,29 @@
     align-items: center;
     gap: 5px;
     margin-top: 7px;
-    display: none;
+    /* display: none; */
+}
+
+.vd-error-txt:nth-last-child(1)
+{
+    align-items: start;
+}
+
+.password-error-message {
+  margin-left: 15px;
+}
+
+.password-error-message li {
+  margin: 4px 0;
+  list-style: disc !important;
+}
+
+.valid {
+  color: var(--success-color);
+}
+
+.invalid {
+  color: var(--error-color);
 }
 
 .vd-error-txt i

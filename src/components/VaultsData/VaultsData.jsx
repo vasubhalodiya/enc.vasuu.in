@@ -103,7 +103,7 @@ const VaultsData = () => {
         <div className="vd-main-cnt-field">
           <div className="vd-input-field vd-clickable" onClick={() => handleFieldClick('this is testing note', 'note')}>
             <div className="vd-icon">
-              <i className="fa-light fa-note-sticky"></i>
+              <i className="fa-light fa-notes"></i>
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Note</h6>

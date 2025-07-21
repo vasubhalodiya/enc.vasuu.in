@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import Home from './pages/Home/Home'
@@ -12,6 +12,16 @@ const App = () => {
   const isCustomAlign = currentPath === '/' || currentPath === '/trash';
   const hideSidebarRoutes = ["/premium", "/login", "/signup"];
   const isResetLayout = hideSidebarRoutes.includes(location.pathname);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const existingKey = localStorage.getItem("encryptionKey");
+    if (!existingKey) {
+      const newKey = crypto.randomUUID();
+      localStorage.setItem("encryptionKey", newKey);
+      console.log("Encryption key generated:", newKey);
+    }
+  }, []);
 
   useEffect(() => {
     if (isResetLayout) {
@@ -25,10 +35,10 @@ const App = () => {
 
   return (
     <>
-      {!isResetLayout && <Sidebar />}
+      {!isResetLayout && <Sidebar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />}
       <div className="app-layout">
         <main className={`main-cnt ${isCustomAlign ? 'custome-align' : ''}`}>
-          <AppRoutes />
+          <AppRoutes searchQuery={searchQuery} />
           {/* <Home /> */}
           <Toaster
             position="bottom-center"
@@ -38,6 +48,7 @@ const App = () => {
             }}
             containerStyle={{
               bottom: '30px',
+              zIndex: 999999999999999n,
             }} />
         </main>
       </div>

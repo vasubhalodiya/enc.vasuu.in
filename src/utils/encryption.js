@@ -1,23 +1,12 @@
-export async function encryptPassword(password, key) {
-  const encoded = new TextEncoder().encode(password);
-  const keyBytes = new TextEncoder().encode(key).slice(0, 16); // AES needs 16-byte key
+import CryptoJS from 'crypto-js';
 
-  const cryptoKey = await crypto.subtle.importKey(
-    "raw",
-    keyBytes,
-    { name: "AES-CBC" },
-    false,
-    ["encrypt"]
-  );
-  const iv = crypto.getRandomValues(new Uint8Array(16));
-  const encrypted = await crypto.subtle.encrypt(
-    { name: "AES-CBC", iv },
-    cryptoKey,
-    encoded
-  );
-  const encryptedBytes = new Uint8Array(encrypted);
-  const combined = new Uint8Array(iv.length + encryptedBytes.length);
-  combined.set(iv);
-  combined.set(encryptedBytes, iv.length);
-  return btoa(String.fromCharCode(...combined));
-}
+const secretKey = import.meta.env.VITE_SECRET_KEY;
+
+export const encryptPassword = (plainTextPassword) => {
+  return CryptoJS.AES.encrypt(plainTextPassword, secretKey).toString();
+};
+
+export const decryptPassword = (cipherText) => {
+  const bytes = CryptoJS.AES.decrypt(cipherText, secretKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};

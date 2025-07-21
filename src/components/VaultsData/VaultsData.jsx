@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/firebase';
+import { encryptPassword, decryptPassword } from '@/utils/encryption';
 
 const VaultsData = () => {
   const { vaultId } = useParams();
@@ -20,15 +21,21 @@ const VaultsData = () => {
   useEffect(() => {
     const fetchVault = async () => {
       if (!vaultId) return;
-      
+
       try {
         const q = query(collection(db, 'vaults'), where('vaultId', '==', vaultId));
         const querySnapshot = await getDocs(q);
-        
+
         if (!querySnapshot.empty) {
           const doc = querySnapshot.docs[0];
           const data = doc.data();
-          setVaultData({ ...data, id: doc.id });
+          const decrypted = decryptPassword(data.password);
+          setVaultData({
+            ...data,
+            password: decrypted,
+            id: doc.id,
+          });
+
         } else {
           console.log('No vault found with vaultId:', vaultId);
           setVaultData(null);
@@ -41,7 +48,6 @@ const VaultsData = () => {
 
     fetchVault();
   }, [vaultId]);
-
 
   if (!vaultData) return <div className="vaultsData">Loading...</div>;
 

@@ -58,9 +58,6 @@ const LoginCreate = ({ onClose }) => {
   };
 
   const handleCreateVault = async () => {
-    const encryptionKey = localStorage.getItem('encryptionKey');
-    if (!encryptionKey) return toast.error("Encryption key missing");
-
     if (!validateInputs()) return;
 
     const title = titleInputRef.current.value.trim();
@@ -70,7 +67,7 @@ const LoginCreate = ({ onClose }) => {
     const note = textareaRef.current.value.trim();
 
     try {
-      const encryptedPass = await encryptPassword(password, encryptionKey);
+      const encryptedPass = encryptPassword(password); // 🔐 updated method
       const data = {
         vaultId: crypto.randomUUID(),
         type: "login",
@@ -92,6 +89,7 @@ const LoginCreate = ({ onClose }) => {
       toast.error("Failed to save login credentials. Please try again.");
     }
   };
+
 
   const validateInputs = (currentPassword = password) => {
     let isValid = true;
@@ -145,8 +143,6 @@ const LoginCreate = ({ onClose }) => {
       );
       isValid = false;
     }
-
-
     return isValid;
   };
 

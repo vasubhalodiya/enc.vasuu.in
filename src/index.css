@@ -148,6 +148,13 @@ body.reset-css {
   background-color: var(--primary-color);
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: none;
+  -webkit-text-fill-color: var(--light-color);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
 .master-btn
 {
   width: auto;

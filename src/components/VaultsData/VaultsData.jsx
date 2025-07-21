@@ -112,9 +112,6 @@ const VaultsData = () => {
     return `${fullDate}, ${timeStr}`;
   };
 
-
-
-
   return (
     <div className="vaultsData">
       <div className="vd-header">
@@ -140,6 +137,7 @@ const VaultsData = () => {
                 'vd-clickable',
                 index === 0 ? 'vd-top-rounded' : '',
                 index === visibleFields.length - 1 ? 'vd-bottom-rounded' : '',
+                index > 0 && index < visibleFields.length - 1 && 'vd-no-rounded'
               ].filter(Boolean).join(' ')}
               onClick={() => handleFieldClick(field.value, field.key)}
             >

@@ -12,7 +12,7 @@ const AppRoutes = ({ searchQuery }) => {
   return (
     <Routes>
       <Route path="/" element={<Home searchQuery={searchQuery} />} />
-      <Route path="/:vaultId" element={<Home searchQuery={searchQuery} />} />
+      <Route path="/vault/:vaultId" element={<Home searchQuery={searchQuery} />} />
       <Route path="/trash" element={<Trash />} />
       <Route path="/generator" element={<PassGenerator />} />
       {/* <Route path="/setting" element={<Settings />} /> */}

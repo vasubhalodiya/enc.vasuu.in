@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast';
 const App = () => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const isVaultDetailPage = /^\/[^/]+$/.test(currentPath);
+  const isVaultDetailPage = /^\/vault\/[^/]+$/.test(currentPath);
   const isCustomAlign =
     currentPath === '/' ||
     currentPath === '/trash' ||

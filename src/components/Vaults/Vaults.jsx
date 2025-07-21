@@ -12,11 +12,16 @@ const Vaults = ({ searchQuery }) => {
   const navigate = useNavigate();
   const { vaultId } = useParams();
   const handleVaultClick = (vault) => {
-  const urlVaultId = vault.vaultId || vault.id;
-  if (urlVaultId !== vaultId) {
-    navigate(`/${urlVaultId}`);
-  }
-};
+    const urlVaultId = vault.vaultId || vault.id;
+    if (urlVaultId !== vaultId) {
+      navigate(`/vault/${urlVaultId}`);
+    }
+    useEffect(() => {
+    if (urlVaultId && urlVaultId !== vaultId) {
+      navigate(`/vault/${urlVaultId}`);
+    }
+  }, []);
+  };
 
   const filteredVaults = useMemo(() => {
     if (!searchQuery || searchQuery.trim() === '') {
@@ -110,26 +115,26 @@ const Vaults = ({ searchQuery }) => {
                       className={`vaults-menu-item ${vault.type} ${vaultId === urlVaultId ? 'active' : ''}`}
                       onClick={() => handleVaultClick(vault)}
                     >
-                    <div className="vaults-group-list">
-                      <div className='vaults-menu-type'>
-                        <i className={`${getIconClass(vault.type)} ${['login', 'card', 'note'].includes(vault.type) ? vault.type : 'error'}`}></i>
+                      <div className="vaults-group-list">
+                        <div className='vaults-menu-type'>
+                          <i className={`${getIconClass(vault.type)} ${['login', 'card', 'note'].includes(vault.type) ? vault.type : 'error'}`}></i>
+                        </div>
+                        <h4>{vault.title}</h4>
                       </div>
-                      <h4>{vault.title}</h4>
-                    </div>
-                    <div className="vaults-group-error">
-                      {
-                        !['login', 'card', 'note'].includes(vault.type) && (
-                          <h6 className="vault-list-error-txt">Error</h6>
-                        )
-                      }
-                    </div>
-                  </button>
-                  <div>
-                    <button className="vaults-menu-three-dot-btn">
-                      <i className="fa-regular fa-ellipsis-vertical"></i>
+                      <div className="vaults-group-error">
+                        {
+                          !['login', 'card', 'note'].includes(vault.type) && (
+                            <h6 className="vault-list-error-txt">Error</h6>
+                          )
+                        }
+                      </div>
                     </button>
-                  </div>
-                </li>
+                    <div>
+                      <button className="vaults-menu-three-dot-btn">
+                        <i className="fa-regular fa-ellipsis-vertical"></i>
+                      </button>
+                    </div>
+                  </li>
                 );
               })}
             </ul>

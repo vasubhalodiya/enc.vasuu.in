@@ -2,12 +2,21 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './Vaults.css';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/firebase';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Vaults = ({ searchQuery }) => {
   const vaultsRef = useRef(null);
   const listRef = useRef(null);
   const [showArrow, setShowArrow] = useState(false);
   const [vaultItems, setVaultItems] = useState([]);
+  const navigate = useNavigate();
+  const { vaultId } = useParams();
+  const handleVaultClick = (vault) => {
+  const urlVaultId = vault.vaultId || vault.id;
+  if (urlVaultId !== vaultId) {
+    navigate(`/${urlVaultId}`);
+  }
+};
 
   const filteredVaults = useMemo(() => {
     if (!searchQuery || searchQuery.trim() === '') {
@@ -81,7 +90,6 @@ const Vaults = ({ searchQuery }) => {
         return 'fa-light fa-hexagon-exclamation';
     }
   };
-
   return (
     <div className="vaults" ref={vaultsRef}>
       <div className="vaults-cnt">
@@ -94,9 +102,14 @@ const Vaults = ({ searchQuery }) => {
           <h6 className="vaults-title master-title">Vaults</h6>
           <div className="vaults-menu">
             <ul className="vaults-menu-list" ref={listRef}>
-              {filteredVaults.map(vault => (
-                <li key={vault.id} className="vaults-menu-item-group">
-                  <button className={`vaults-menu-item ${vault.type}`}>
+              {filteredVaults.map(vault => {
+                const urlVaultId = vault.vaultId || vault.id;
+                return (
+                  <li key={vault.id} className="vaults-menu-item-group">
+                    <button
+                      className={`vaults-menu-item ${vault.type} ${vaultId === urlVaultId ? 'active' : ''}`}
+                      onClick={() => handleVaultClick(vault)}
+                    >
                     <div className="vaults-group-list">
                       <div className='vaults-menu-type'>
                         <i className={`${getIconClass(vault.type)} ${['login', 'card', 'note'].includes(vault.type) ? vault.type : 'error'}`}></i>
@@ -117,7 +130,8 @@ const Vaults = ({ searchQuery }) => {
                     </button>
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           </div>
         </div>

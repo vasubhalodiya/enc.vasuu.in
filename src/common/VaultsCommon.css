@@ -179,6 +179,19 @@
     margin-bottom: 5px;
 }
 
+.vd-password-input
+{
+    max-width: 20ch;
+    /* 20 character after ... */
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 20 character after line break */
+    /* word-wrap: break-word;
+    white-space: normal; */
+}
+
 .vd-input
 {
     width: 100%;

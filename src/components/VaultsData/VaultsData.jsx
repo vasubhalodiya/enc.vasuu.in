@@ -1,10 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '@/common/VaultsCommon.css'
 import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/firebase';
 
 const VaultsData = () => {
+  const { vaultId } = useParams();
+  const [vaultData, setVaultData] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const email = vaultData?.email;
+  const password = vaultData?.password;
+  const username = vaultData?.username;
+  const website = vaultData?.website;
+  const note = vaultData?.note;
+  const createdAt = vaultData?.createdAt;
+  const updatedAt = vaultData?.updatedAt;
 
+  useEffect(() => {
+    const fetchVault = async () => {
+      if (!vaultId) return;
+      
+      try {
+        const q = query(collection(db, 'vaults'), where('vaultId', '==', vaultId));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+          const doc = querySnapshot.docs[0];
+          const data = doc.data();
+          setVaultData({ ...data, id: doc.id });
+        } else {
+          console.log('No vault found with vaultId:', vaultId);
+          setVaultData(null);
+        }
+      } catch (error) {
+        console.error('Error fetching vault:', error);
+        setVaultData(null);
+      }
+    };
+
+    fetchVault();
+  }, [vaultId]);
+
+
+  if (!vaultData) return <div className="vaultsData">Loading...</div>;
 
   const copyToClipboard = async (text, fieldName) => {
     try {
@@ -46,23 +85,23 @@ const VaultsData = () => {
 
       <div className="vaultsData-cnt">
         <div className="vd-main-cnt-field">
-          <div className="vd-input-field vd-group-box vd-clickable" onClick={() => handleFieldClick('vasu@gmail.com', 'email')}>
+          <div className="vd-input-field vd-group-box vd-clickable" onClick={() => handleFieldClick(email, 'email')}>
             <div className="vd-icon">
               <i className="fa-light fa-envelope"></i>
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Email</h6>
-              <p className="vd-email-input vd-input">vasu@gmail.com</p>
+              <p className="vd-email-input vd-input">{email}</p>
             </div>
           </div>
 
-          <div className="vd-input-field vd-group-box vd-clickable" onClick={() => handleFieldClick('MySecretPassword123', 'password')}>
+          <div className="vd-input-field vd-group-box vd-clickable" onClick={() => handleFieldClick(password, 'password')}>
             <div className="vd-icon">
               <i className="fa-light fa-key"></i>
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Password</h6>
-              <p className="vd-password-input vd-input">{showPassword ? 'MySecretPassword123' : '*************'}</p>
+              <p className="vd-password-input vd-input">{showPassword ? password : '*************'}</p>
             </div>
             <div className="vd-pass-btns">
               <button
@@ -77,37 +116,37 @@ const VaultsData = () => {
             </div>
           </div>
 
-          <div className="vd-input-field vd-group-box vd-clickable" onClick={() => handleFieldClick('vasu', 'username')}>
+          <div className="vd-input-field vd-group-box vd-clickable" onClick={() => handleFieldClick(username, 'username')}>
             <div className="vd-icon">
               <i className="fa-light fa-user"></i>
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Username</h6>
-              <p className="vd-username-input vd-input">vasu</p>
+              <p className="vd-username-input vd-input">{username}</p>
             </div>
           </div>
         </div>
 
         <div className="vd-main-cnt-field">
-          <div className="vd-input-field vd-clickable vd-website-field" onClick={() => handleFieldClick('https://vasuu.in', 'website')}>
+          <div className="vd-input-field vd-clickable vd-website-field" onClick={() => handleFieldClick(website, 'website')}>
             <div className="vd-icon">
               <i className="fa-light fa-earth-americas"></i>
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Websites</h6>
-              <p className="vd-website-input vd-input">https://vasuu.in</p>
+              <p className="vd-website-input vd-input">{website}</p>
             </div>
           </div>
         </div>
 
         <div className="vd-main-cnt-field">
-          <div className="vd-input-field vd-clickable" onClick={() => handleFieldClick('this is testing note', 'note')}>
+          <div className="vd-input-field vd-clickable" onClick={() => handleFieldClick(note, 'note')}>
             <div className="vd-icon">
               <i className="fa-light fa-notes"></i>
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Note</h6>
-              <p className="vd-note-input vd-input">this is testing note</p>
+              <p className="vd-note-input vd-input">{note}</p>
             </div>
           </div>
         </div>
@@ -119,7 +158,8 @@ const VaultsData = () => {
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Last Modified</h6>
-              <p className="vd-note-input vd-input">Today at 10:15 PM</p>
+              {/* <p className="vd-note-input vd-input">{updatedAt}</p> */}
+              {/* Today at 10:15 PM - this formate */}
             </div>
           </div>
           <div className="vd-last-modified-field">
@@ -128,7 +168,7 @@ const VaultsData = () => {
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Created</h6>
-              <p className="vd-note-input vd-input">Last Tuesday at 9:21 PM</p>
+              {/* <p className="vd-note-input vd-input">{createdAt}</p> */}
             </div>
           </div>
         </div>

@@ -9,7 +9,11 @@ import { Toaster } from 'react-hot-toast';
 const App = () => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const isCustomAlign = currentPath === '/' || currentPath === '/trash';
+  const isVaultDetailPage = /^\/[^/]+$/.test(currentPath);
+  const isCustomAlign =
+    currentPath === '/' ||
+    currentPath === '/trash' ||
+    isVaultDetailPage;
   const hideSidebarRoutes = ["/premium", "/login", "/signup"];
   const isResetLayout = hideSidebarRoutes.includes(location.pathname);
   const [searchQuery, setSearchQuery] = useState('');

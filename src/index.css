@@ -115,7 +115,7 @@ input:-webkit-autofill {
 :root {
   --primary-color: #141416;
   --secondary-color: #1c1c1e;
-  --other-color:  rgba(19, 20, 21, 0.293);
+  --other-color:  rgba(19, 20, 21, 0.3);
   --accent-color: #868aff;
   --accent-color-rgb: 144, 151, 255;
   --soft-accent-color: rgba(var(--accent-color-rgb), 0.15);

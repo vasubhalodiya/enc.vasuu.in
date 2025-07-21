@@ -224,7 +224,7 @@
 
 .vaults-menu-item:hover
 {
-    background: var(--other-color);
+    background: rgba(19, 20, 21, 0.35);
 }
 
 .vault-list-error-txt {

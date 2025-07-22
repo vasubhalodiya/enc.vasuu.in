@@ -1,0 +1,283 @@
+.auth {
+  width: 100%;
+  height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.auth-heading
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.auth-heading-title
+{
+  color: var(--light-color);
+  font-size: 26px;
+  font-family: 'Int-SemiBold';
+}
+
+.auth-already-account
+{
+  color: var(--text-color);
+  font-size: 14px;
+  font-family: 'Int-Regular';
+  letter-spacing: 0.5px;
+}
+
+.auth-main-cnt-field {
+  width: 400px;
+}
+
+.auth-input-field {
+  width: 100%;
+  background-color: var(--other-color);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  display: flex;
+  align-items: start;
+  padding: 13px 16px;
+  cursor: pointer;
+}
+
+.auth-clickable {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.auth-icon {
+  margin-top: 10px;
+}
+
+.auth-icon i {
+  width: 100%;
+  color: var(--text-color);
+  font-size: 16px;
+  padding: 0px 16px 0px 0px;
+}
+
+.auth-input-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0px;
+}
+
+.auth-input-title {
+  font-size: 13px;
+  color: var(--mini-color);
+  font-family: 'Int-Regular';
+  letter-spacing: 0.3px;
+  margin-bottom: 5px;
+}
+
+.auth-input {
+  width: 100%;
+  color: var(--light-color);
+  background: none;
+  font-size: 14px;
+  font-family: 'Int-Medium';
+  border: none;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.auth-pass-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  margin: 0px 0px 0px 12px;
+}
+
+.auth-pass-show-icon {
+  width: 35px;
+  height: 35px;
+  color: var(--accent-color);
+  background-color: var(--soft-accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+.auth-top-rounded {
+  border-radius: 0;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.auth-no-rounded {
+  border-radius: 0px !important;
+  margin-top: -1px;
+}
+
+.auth-bottom-rounded {
+  border-radius: 0;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin-top: -1px;
+}
+
+.auth-error-txt {
+  font-size: 13px;
+  color: var(--error-color);
+  font-family: 'Int-SemiBold';
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+/* .auth-input-field.auth-group-box.auth-clickable.auth-bottom-rounded {
+  width: 100%;
+  height: 50px;
+  background: var(--linear-gradient-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border: none;
+} */
+
+.auth-input-field.auth-group-box.auth-clickable.auth-bottom-rounded {
+  width: 100%;
+  height: 50px;
+  background: var(--linear-gradient-color);
+  background-size: 170% 200%;
+  background-position: left center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border: none;
+  transition: background-position 0.6s ease-in-out;
+}
+
+.auth-input-field.auth-group-box.auth-clickable.auth-bottom-rounded:hover {
+  background-position: right center;
+}
+
+.auth-input-field.auth-group-box.auth-clickable.auth-bottom-rounded .auth-icon {
+  display: none;
+}
+
+.auth-btn-full {
+  width: auto !important;
+}
+
+.auth-btn-full .auth-input-title {
+  color: var(--primary-color);
+  font-size: 14px;
+  font-family: 'Int-Medium';
+  margin-bottom: 0;
+}
+
+.auth-already-account-txt
+{
+  color: var(--text-color);
+  font-size: 14px;
+  font-family: 'Int-Regular';
+  letter-spacing: 0.5px;
+}
+
+.auth-already-account-link
+{
+  color: var(--accent-color);
+  font-size: 14px;
+  font-family: 'Int-Medium';
+  letter-spacing: 0.5px;
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -116,7 +116,7 @@ const VaultsData = () => {
     <div className="vaultsData">
       <div className="vd-header">
         <div className="vd-head-title">
-          <h4 className="vd-head-title-txt">My Password</h4>
+          <h4 className="vd-head-title-txt">{vaultData?.title || 'My Password'}</h4>
         </div>
         <div className="vd-sec">
           <div className="vd-create">

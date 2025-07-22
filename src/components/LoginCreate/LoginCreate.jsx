@@ -232,8 +232,7 @@ const LoginCreate = ({ onClose }) => {
               index === editableFields.length - 1 && 'vd-bottom-rounded',
               index > 0 && index < editableFields.length - 1 && 'vd-no-rounded'
             ].filter(Boolean).join(' ')}
-            onClick={(e) => handleContainerClick(e, field.key)}
-          >
+            onClick={(e) => handleContainerClick(e, field.key)}>
             <div className="vd-icon">
               <i className={`fa-light ${field.icon}`}></i>
             </div>

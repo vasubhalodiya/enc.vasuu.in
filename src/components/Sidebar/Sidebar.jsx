@@ -60,7 +60,6 @@ const Sidebar = ({ searchQuery, setSearchQuery }) => {
                     <ul className="sidebar-links">
                       <NavLink to="/" iconClass="fa-light fa-house" label="Home" onClick={closeSidebar} />
                       <NavLink to="/generator" iconClass="ph ph-password" label="Generate Password" onClick={closeSidebar} />
-                      <NavLink to="/trash" iconClass="fa-light fa-trash-can" label="Trash" onClick={closeSidebar} />
                     </ul>
                   </div>
                 </div>

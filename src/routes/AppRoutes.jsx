@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '@/pages/Home/Home';
-import Trash from '@/pages/Trash/Trash';
 import PassGenerator from '@/pages/PassGenerator/PassGenerator';
 import Premium from '@/pages/Premium/Premium';
 import Profile from '@/pages/Profile/Profile';
@@ -17,7 +16,6 @@ const AppRoutes = ({ searchQuery }) => {
       <Routes>
         <Route path="/" element={<Home searchQuery={searchQuery} />} />
         <Route path="/vault/:vaultId" element={<Home searchQuery={searchQuery} />} />
-        <Route path="/trash" element={<Trash />} />
         <Route path="/generator" element={<PassGenerator />} />
         <Route path="/premium" element={<Premium />} />
         <Route path="/profile" element={<Profile />} />

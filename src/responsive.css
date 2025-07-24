@@ -16,7 +16,7 @@
 
 @media screen and (max-width:1024px) 
 {
-  .app-layout{margin-left: 0px;}
+  .main-cnt{margin-left: 0px;}
   .navbar{width: 100%; margin-left: 0;}
   .vaults-scroll-down-txt{left: 0;}
   .master-cnt {grid-template-columns: 450px 1fr;}
@@ -48,7 +48,7 @@
 
 @media screen and (max-width:575px) 
 {
-  .app-layout{margin-left: 0;}
+  .main-cnt{margin-left: 0;}
   .sidebar.desktop-menu{display: none;}
   .mobile-menu{display: block;}
   .navbar-toggle-btn {display: none;}
@@ -118,7 +118,8 @@
   .premium-big-txt{font-size: 23px;}
   .profile-label{width: 110px;}
   .profile-account-details{padding-left: 8px;}
-
+  .profile-btn.active{width: 50%;}
+  .profile-btn.danger-zone{padding: 0px 10px 10px 10px; white-space: nowrap;}
 
 }
 

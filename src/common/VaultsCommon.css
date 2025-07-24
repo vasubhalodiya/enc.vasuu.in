@@ -380,7 +380,7 @@
 }
 
 .vd-clickable:hover {
-    background-color: rgba(var(--accent-color-rgb), 0.05) !important;
+    background-color: rgba(var(--accent-color-rgb), 0.04) !important;
 }
 
 .copy-notification {
@@ -479,4 +479,8 @@
     to {
         transform: translateX(0%);
     }
+}
+
+.vd-input-field.vd-active-field {
+    background-color: rgba(var(--accent-color-rgb), 0.1) !important;
 }

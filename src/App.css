@@ -1,6 +1,12 @@
 .app-layout {
-  margin-left: 300px;
-  margin-top: 70px;
+  /* margin-left: 300px;
+  margin-top: 70px; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin-top: 0;
 }
 
 .navbar-none-layout
@@ -9,11 +15,20 @@
 }
 
 .main-cnt {
+  width: 100%;
   padding: 20px 30px;
+  margin-left: 300px;
+  margin-top: 70px;
 }
 
 .main-cnt.custome-align {
+  width: 100%;
   padding: 0px;
+}
+
+.main-cnt.hide-sidebar {
+  margin-left: 0px;
+  margin-top: 0px;
 }
 
 .reset-css .app-layout {

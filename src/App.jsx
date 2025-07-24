@@ -12,9 +12,9 @@ const App = () => {
   const isVaultDetailPage = /^\/vault\/[^/]+$/.test(currentPath);
   const isCustomAlign =
     currentPath === '/' ||
-    currentPath === '/trash' ||
     isVaultDetailPage;
   const hideSidebarRoutes = ["/premium", "/login", "/signup"];
+  const isHideSidebar = hideSidebarRoutes.includes(currentPath);
   const isResetLayout = hideSidebarRoutes.includes(location.pathname);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -41,7 +41,11 @@ const App = () => {
     <>
       {!isResetLayout && <Sidebar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />}
       <div className="app-layout">
-        <main className={`main-cnt ${isCustomAlign ? 'custome-align' : ''}`}>
+        <main
+          className={`main-cnt 
+            ${isCustomAlign ? 'custome-align' : ''} 
+            ${isHideSidebar ? 'hide-sidebar' : ''}`}
+        >
           <AppRoutes searchQuery={searchQuery} />
           {/* <Home /> */}
           <Toaster

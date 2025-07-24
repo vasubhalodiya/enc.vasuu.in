@@ -1,19 +1,49 @@
-.auth {
+.auth-cnt {
   width: 100%;
-  height: calc(100vh - 60px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.auth-content {
-  width: 100%;
-  height: 100%;
+  height: calc(100vh - 110px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 20px;
+}
+
+.auth-logo
+{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-logo .back-to-home i {
+  width: 35px;
+  height: 35px;
+  color: var(--light-color);
+  background-color: var(--soft-accent-color);
+  font-size: 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.encrypt-logo
+{
+  width: 120px;
+  background: var(--linear-gradient-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 35px;
+  font-family: 'Bebas-Regular';
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  margin-left: -35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .auth-heading
@@ -212,6 +242,14 @@
   text-decoration: underline;
 }
 
+.auth-input-field-focused {
+  border: 1px solid var(--accent-color) !important;
+  position: relative;
+  z-index: 2;
+}
+.auth-input-field {
+  transition: border 0.2s ease-in-out;
+}
 
 
 

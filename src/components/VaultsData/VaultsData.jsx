@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import '@/common/VaultsCommon.css'
+import '@/common/VaultsCommon.css';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { decryptPassword } from '@/utils/encryption';
+import { decryptPassword, encryptPassword } from '@/utils/encryption';
 
 const VaultsData = () => {
   const { vaultId } = useParams();
   const [vaultData, setVaultData] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const email = vaultData?.email;
-  const password = vaultData?.password;
-  const username = vaultData?.username;
-  const website = vaultData?.website;
-  const note = vaultData?.note;
-  const createdAt = vaultData?.createdAt?.toDate();
-  const updatedAt = vaultData?.updatedAt;
-  const fields = [
-    { key: 'email', icon: 'fa-envelope', label: 'Email', value: email },
-    { key: 'password', icon: 'fa-key', label: 'Password', value: password, isPassword: true },
-    { key: 'username', icon: 'fa-user', label: 'Username', value: username },
-  ];
-  const visibleFields = fields.filter(field => field.value?.trim());
+  const [isEditable, setIsEditable] = useState(false);
+  const [editedData, setEditedData] = useState({});
+  const [activeField, setActiveField] = useState(null);
 
   useEffect(() => {
     const fetchVault = async () => {
@@ -33,15 +23,21 @@ const VaultsData = () => {
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
-          const doc = querySnapshot.docs[0];
-          const data = doc.data();
+          const docSnap = querySnapshot.docs[0];
+          const data = docSnap.data();
           const decrypted = decryptPassword(data.password);
           setVaultData({
             ...data,
             password: decrypted,
-            id: doc.id,
+            id: docSnap.id,
           });
-
+          setEditedData({
+            email: data.email || '',
+            password: decrypted || '',
+            username: data.username || '',
+            website: data.website || '',
+            note: data.note || ''
+          });
         } else {
           console.log('No vault found with vaultId:', vaultId);
           setVaultData(null);
@@ -57,7 +53,7 @@ const VaultsData = () => {
 
   if (!vaultData) return <div className="vaultsData">Loading...</div>;
 
-  const copyToClipboard = async (text, fieldName) => {
+  const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
       toast.dismiss();
@@ -70,13 +66,15 @@ const VaultsData = () => {
   };
 
   const handleFieldClick = (content, fieldName) => {
-    if (fieldName === 'website') {
-      if (content && content.trim()) {
-        window.open(content, '_blank');
-      }
-    } else {
-      if (content && content.trim()) {
-        copyToClipboard(content, fieldName);
+    if (!isEditable) {
+      if (fieldName === 'website') {
+        if (content && content.trim()) {
+          window.open(content, '_blank');
+        }
+      } else {
+        if (content && content.trim()) {
+          copyToClipboard(content);
+        }
       }
     }
   };
@@ -112,6 +110,33 @@ const VaultsData = () => {
     return `${fullDate}, ${timeStr}`;
   };
 
+  const handleSave = async () => {
+    try {
+      const vaultRef = doc(db, 'vaults', vaultData.id);
+      await updateDoc(vaultRef, {
+        email: editedData.email,
+        password: editedData.password ? encryptPassword(editedData.password) : '',
+        username: editedData.username,
+        website: editedData.website,
+        note: editedData.note,
+        lastEditedAt: new Date()
+      });
+      toast.success('Vault updated successfully!');
+      setIsEditable(false);
+      setVaultData((prev) => ({ ...prev, ...editedData }));
+    } catch (error) {
+      console.error('Error updating vault:', error);
+      toast.error('Failed to update vault!');
+    }
+  };
+
+  const fields = [
+    { key: 'email', icon: 'fa-envelope', label: 'Email' },
+    { key: 'password', icon: 'fa-key', label: 'Password', isPassword: true },
+    { key: 'username', icon: 'fa-user', label: 'Username' },
+  ];
+  const visibleFields = fields.filter((field) => (editedData[field.key] || '').trim());
+
   return (
     <div className="vaultsData">
       <div className="vd-header">
@@ -120,8 +145,24 @@ const VaultsData = () => {
         </div>
         <div className="vd-sec">
           <div className="vd-create">
-            <div><button className="vd-edit-btn"><i className="fa-regular fa-pen"></i>Edit</button></div>
-            <div><button className="vd-three-dot-btn mini-master-btn"><i className="fa-regular fa-ellipsis-vertical"></i></button></div>
+            {!isEditable ? (
+              <div>
+                <button className="vd-edit-btn" onClick={() => setIsEditable(true)}>
+                  <i className="fa-regular fa-pen"></i>Edit
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button className="vd-edit-btn" onClick={handleSave}>
+                  Save
+                </button>
+              </div>
+            )}
+            <div>
+              <button className="vd-three-dot-btn mini-master-btn">
+                <i className="fa-regular fa-ellipsis-vertical"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -137,22 +178,44 @@ const VaultsData = () => {
                 'vd-clickable',
                 index === 0 ? 'vd-top-rounded' : '',
                 index === visibleFields.length - 1 ? 'vd-bottom-rounded' : '',
-                index > 0 && index < visibleFields.length - 1 && 'vd-no-rounded'
+                index > 0 && index < visibleFields.length - 1 && 'vd-no-rounded',
+                isEditable && activeField === field.key ? 'vd-active-field' : ''
               ].filter(Boolean).join(' ')}
-              onClick={() => handleFieldClick(field.value, field.key)}
+              onClick={(e) => {
+                if (isEditable) {
+                  const input = e.currentTarget.querySelector('input');
+                  input?.focus();
+                  setActiveField(field.key);
+                } else {
+                  handleFieldClick(editedData[field.key], field.key);
+                }
+              }}
             >
               <div className="vd-icon">
                 <i className={`fa-light ${field.icon}`}></i>
               </div>
               <div className="vd-input-section">
                 <h6 className="vd-input-title">{field.label}</h6>
-
                 {field.isPassword ? (
-                  <p className="vd-password-input vd-input">
-                    {showPassword ? password : '*************'}
-                  </p>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    className="vd-password-input vd-input"
+                    value={editedData.password}
+                    onChange={(e) =>
+                      setEditedData((prev) => ({ ...prev, password: e.target.value }))
+                    }
+                    readOnly={!isEditable}
+                  />
                 ) : (
-                  <p className={`vd-${field.key}-input vd-input`}>{field.value}</p>
+                  <input
+                    type="text"
+                    className={`vd-${field.key}-input vd-input`}
+                    value={editedData[field.key]}
+                    onChange={(e) =>
+                      setEditedData((prev) => ({ ...prev, [field.key]: e.target.value }))
+                    }
+                    readOnly={!isEditable}
+                  />
                 )}
               </div>
 
@@ -166,37 +229,87 @@ const VaultsData = () => {
                       toast.dismiss();
                     }}
                   >
-                    <i className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eyes'}`}></i>
+                    <i
+                      className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eyes'}`}
+                    ></i>
                   </button>
                 </div>
               )}
+
             </div>
           ))}
         </div>
 
-        {website && (
+        {editedData.website && (
           <div className="vd-main-cnt-field">
-            <div className="vd-input-field vd-clickable vd-website-field" onClick={() => handleFieldClick(website, 'website')}>
+            <div
+              className={[
+                "vd-input-field",
+                "vd-clickable",
+                "vd-website-field",
+                isEditable && activeField === "website" ? "vd-active-field" : ""
+              ].join(" ")}
+              onClick={(e) => {
+                if (isEditable) {
+                  const input = e.currentTarget.querySelector("input");
+                  input?.focus();
+                  setActiveField("website");
+                } else {
+                  handleFieldClick(editedData.website, "website");
+                }
+              }}
+            >
               <div className="vd-icon">
                 <i className="fa-light fa-earth-americas"></i>
               </div>
               <div className="vd-input-section">
                 <h6 className="vd-input-title">Websites</h6>
-                <p className="vd-website-input vd-input">{website}</p>
+                <input
+                  type="text"
+                  className="vd-website-input vd-input"
+                  value={editedData.website}
+                  onChange={(e) =>
+                    setEditedData((prev) => ({ ...prev, website: e.target.value }))
+                  }
+                  readOnly={!isEditable}
+                />
               </div>
             </div>
           </div>
         )}
 
-        {note && (
+        {editedData.note && (
           <div className="vd-main-cnt-field">
-            <div className="vd-input-field vd-clickable" onClick={() => handleFieldClick(note, 'note')}>
+            <div
+              className={[
+                "vd-input-field",
+                "vd-clickable",
+                isEditable && activeField === "note" ? "vd-active-field" : ""
+              ].join(" ")}
+              onClick={(e) => {
+                if (isEditable) {
+                  const input = e.currentTarget.querySelector("input");
+                  input?.focus();
+                  setActiveField("note");
+                } else {
+                  handleFieldClick(editedData.note, "note");
+                }
+              }}
+            >
               <div className="vd-icon">
                 <i className="fa-light fa-notes"></i>
               </div>
               <div className="vd-input-section">
                 <h6 className="vd-input-title">Note</h6>
-                <p className="vd-note-input vd-input">{note}</p>
+                <input
+                  type="text"
+                  className="vd-note-input vd-input"
+                  value={editedData.note}
+                  onChange={(e) =>
+                    setEditedData((prev) => ({ ...prev, note: e.target.value }))
+                  }
+                  readOnly={!isEditable}
+                />
               </div>
             </div>
           </div>
@@ -209,8 +322,9 @@ const VaultsData = () => {
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Last Modified</h6>
-              <p className="vd-note-input vd-input">{formatDateTime(updatedAt || vaultData?.lastEditedAt)}</p>
-              {/* Today at 10:15 PM - this formate */}
+              <p className="vd-note-input vd-input">
+                {formatDateTime(vaultData?.lastEditedAt)}
+              </p>
             </div>
           </div>
           <div className="vd-last-modified-field">
@@ -219,7 +333,9 @@ const VaultsData = () => {
             </div>
             <div className="vd-input-section">
               <h6 className="vd-input-title">Created</h6>
-              <p className="vd-note-input vd-input">{formatDateTime(createdAt)}</p>
+              <p className="vd-note-input vd-input">
+                {formatDateTime(vaultData?.createdAt?.toDate())}
+              </p>
             </div>
           </div>
         </div>

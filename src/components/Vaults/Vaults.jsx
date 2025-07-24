@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './Vaults.css';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -11,23 +11,33 @@ const Vaults = ({ searchQuery }) => {
   const [vaultItems, setVaultItems] = useState([]);
   const navigate = useNavigate();
   const { vaultId } = useParams();
+
   const handleVaultClick = (vault) => {
     const urlVaultId = vault.vaultId || vault.id;
     if (urlVaultId !== vaultId) {
       navigate(`/vault/${urlVaultId}`);
     }
-    useEffect(() => {
-    if (urlVaultId && urlVaultId !== vaultId) {
-      navigate(`/vault/${urlVaultId}`);
-    }
-  }, []);
   };
+
+  // 🔥 Real-time listener with ordering (new vaults always at bottom)
+  useEffect(() => {
+    const q = query(collection(db, 'vaults'), orderBy('createdAt', 'asc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs
+        .filter(doc => doc.id !== 'default')
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+      setVaultItems(data);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const filteredVaults = useMemo(() => {
     if (!searchQuery || searchQuery.trim() === '') {
       return vaultItems;
     }
-
     const query = searchQuery.toLowerCase().trim();
     return vaultItems.filter(vault =>
       vault.title?.toLowerCase().includes(query) ||
@@ -38,28 +48,8 @@ const Vaults = ({ searchQuery }) => {
   }, [vaultItems, searchQuery]);
 
   useEffect(() => {
-    const fetchVaults = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'vaults')); // 🔁 Your Firestore collection name
-        const data = querySnapshot.docs
-          .filter(doc => doc.id !== 'default')
-          .map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-        setVaultItems(data);
-      } catch (error) {
-        console.error('Error fetching vaults:', error);
-      }
-    };
-
-    fetchVaults();
-  }, []);
-
-  useEffect(() => {
     const container = vaultsRef.current;
     const list = listRef.current;
-
     if (!container || !list) return;
 
     const updateArrowVisibility = () => {
@@ -69,7 +59,6 @@ const Vaults = ({ searchQuery }) => {
     };
 
     updateArrowVisibility();
-
     container.addEventListener('scroll', updateArrowVisibility);
     window.addEventListener('resize', updateArrowVisibility);
 
@@ -95,6 +84,7 @@ const Vaults = ({ searchQuery }) => {
         return 'fa-light fa-hexagon-exclamation';
     }
   };
+
   return (
     <div className="vaults" ref={vaultsRef}>
       <div className="vaults-cnt">
@@ -122,11 +112,9 @@ const Vaults = ({ searchQuery }) => {
                         <h4>{vault.title}</h4>
                       </div>
                       <div className="vaults-group-error">
-                        {
-                          !['login', 'card', 'note'].includes(vault.type) && (
-                            <h6 className="vault-list-error-txt">Error</h6>
-                          )
-                        }
+                        {!['login', 'card', 'note'].includes(vault.type) && (
+                          <h6 className="vault-list-error-txt">Error</h6>
+                        )}
                       </div>
                     </button>
                     <div>

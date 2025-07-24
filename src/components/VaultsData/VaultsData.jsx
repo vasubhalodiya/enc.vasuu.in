@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '@/common/VaultsCommon.css';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
@@ -13,6 +13,17 @@ const VaultsData = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [activeField, setActiveField] = useState(null);
+  const passwordRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (passwordRef.current && !passwordRef.current.contains(e.target)) {
+        setShowPassword(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const fetchVault = async () => {
@@ -146,11 +157,19 @@ const VaultsData = () => {
         <div className="vd-sec">
           <div className="vd-create">
             {!isEditable ? (
-              <div>
-                <button className="vd-edit-btn" onClick={() => setIsEditable(true)}>
-                  <i className="fa-regular fa-pen"></i>Edit
-                </button>
-              </div>
+              <button
+                className="vd-edit-btn"
+                onClick={() => {
+                  setIsEditable(true);
+                  setActiveField(visibleFields[0]?.key);
+                  setTimeout(() => {
+                    const firstInput = document.querySelector('.vd-main-cnt-field input');
+                    firstInput?.focus();
+                  }, 0);
+                }}
+              >
+                <i className="fa-regular fa-pen"></i>Edit
+              </button>
             ) : (
               <div>
                 <button className="vd-edit-btn" onClick={handleSave}>
@@ -169,44 +188,83 @@ const VaultsData = () => {
 
       <div className="vaultsData-cnt">
         <div className="vd-main-cnt-field">
-          {visibleFields.map((field, index) => (
-            <div
-              key={field.key}
-              className={[
-                'vd-input-field',
-                'vd-group-box',
-                'vd-clickable',
-                index === 0 ? 'vd-top-rounded' : '',
-                index === visibleFields.length - 1 ? 'vd-bottom-rounded' : '',
-                index > 0 && index < visibleFields.length - 1 && 'vd-no-rounded',
-                isEditable && activeField === field.key ? 'vd-active-field' : ''
-              ].filter(Boolean).join(' ')}
-              onClick={(e) => {
-                if (isEditable) {
-                  const input = e.currentTarget.querySelector('input');
-                  input?.focus();
-                  setActiveField(field.key);
-                } else {
-                  handleFieldClick(editedData[field.key], field.key);
-                }
-              }}
-            >
-              <div className="vd-icon">
-                <i className={`fa-light ${field.icon}`}></i>
-              </div>
-              <div className="vd-input-section">
-                <h6 className="vd-input-title">{field.label}</h6>
-                {field.isPassword ? (
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    className="vd-password-input vd-input"
-                    value={editedData.password}
-                    onChange={(e) =>
-                      setEditedData((prev) => ({ ...prev, password: e.target.value }))
+          {visibleFields.map((field, index) => {
+            const fieldClasses = [
+              'vd-input-field',
+              'vd-group-box',
+              'vd-clickable',
+              index === 0 ? 'vd-top-rounded' : '',
+              index === visibleFields.length - 1 ? 'vd-bottom-rounded' : '',
+              index > 0 && index < visibleFields.length - 1 && 'vd-no-rounded',
+              isEditable && activeField === field.key ? 'vd-active-field' : ''
+            ].filter(Boolean).join(' ');
+
+            if (field.isPassword) {
+              return (
+                <div
+                  key={field.key}
+                  ref={passwordRef} // <-- only password field has ref
+                  className={fieldClasses}
+                  onClick={(e) => {
+                    if (isEditable) {
+                      const input = e.currentTarget.querySelector('input');
+                      input?.focus();
+                      setActiveField(field.key);
+                    } else {
+                      handleFieldClick(editedData[field.key], field.key);
                     }
-                    readOnly={!isEditable}
-                  />
-                ) : (
+                  }}
+                >
+                  <div className="vd-icon">
+                    <i className={`fa-light ${field.icon}`}></i>
+                  </div>
+                  <div className="vd-input-section">
+                    <h6 className="vd-input-title">{field.label}</h6>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      className="vd-password-input vd-input"
+                      value={editedData.password}
+                      onChange={(e) =>
+                        setEditedData((prev) => ({ ...prev, password: e.target.value }))
+                      }
+                      readOnly={!isEditable}
+                    />
+                  </div>
+                  <div className="vd-pass-btns">
+                    <button
+                      className="vd-pass-show-icon"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowPassword(!showPassword);
+                        toast.dismiss();
+                      }}
+                    >
+                      <i className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eyes'}`}></i>
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <div
+                key={field.key}
+                className={fieldClasses}
+                onClick={(e) => {
+                  if (isEditable) {
+                    const input = e.currentTarget.querySelector('input');
+                    input?.focus();
+                    setActiveField(field.key);
+                  } else {
+                    handleFieldClick(editedData[field.key], field.key);
+                  }
+                }}
+              >
+                <div className="vd-icon">
+                  <i className={`fa-light ${field.icon}`}></i>
+                </div>
+                <div className="vd-input-section">
+                  <h6 className="vd-input-title">{field.label}</h6>
                   <input
                     type="text"
                     className={`vd-${field.key}-input vd-input`}
@@ -216,28 +274,10 @@ const VaultsData = () => {
                     }
                     readOnly={!isEditable}
                   />
-                )}
-              </div>
-
-              {field.isPassword && (
-                <div className="vd-pass-btns">
-                  <button
-                    className="vd-pass-show-icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowPassword(!showPassword);
-                      toast.dismiss();
-                    }}
-                  >
-                    <i
-                      className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eyes'}`}
-                    ></i>
-                  </button>
                 </div>
-              )}
-
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
 
         {editedData.website && (

@@ -130,7 +130,6 @@ const LoginCreate = ({ onClose }) => {
     }
   };
 
-
   const validateInputs = (currentPassword = password) => {
     let isValid = true;
 
@@ -185,7 +184,6 @@ const LoginCreate = ({ onClose }) => {
     }
     return isValid;
   };
-
 
   return (
     <ContainerCreate title="Create Login" onClose={onClose} onCreate={handleCreateVault}>

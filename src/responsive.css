@@ -16,7 +16,7 @@
 
 @media screen and (max-width:1024px) 
 {
-  .main-cnt{margin-left: 0px;}
+  .main-cnt{width: 100%; height: calc(100vh - 70px); margin-left: 0px;}
   .navbar{width: 100%; margin-left: 0;}
   .vaults-scroll-down-txt{left: 0;}
   .master-cnt {grid-template-columns: 450px 1fr;}
@@ -48,7 +48,7 @@
 
 @media screen and (max-width:575px) 
 {
-  .main-cnt{margin-left: 0;}
+  .main-cnt{width: 100%; height: calc(100vh - 70px); margin-left: 0;}
   .sidebar.desktop-menu{display: none;}
   .mobile-menu{display: block;}
   .navbar-toggle-btn {display: none;}
@@ -77,7 +77,6 @@
   .navbar-part, .navbar-cnt{gap: 10px;}
   .vaults-menu-list{padding-bottom: 75px;}
   .vaults-add-multiselect{display: none;}
-  .vaults-list-group{padding-top: 15px;}
   .vaults-add{gap: 10px;}
   .vaults-three-dot-btn.mini-master-btn{display: block;}
   .pass-fill-btn{display: none;}
@@ -94,7 +93,8 @@
   .profile-about{height: calc(100vh - 320px);}
   .profile-button-main-cnt{width: 100%;}
   .ContainerCreate{max-width: 100%;}
-
+  .vaults{height: calc(100vh - 90px); border-right: none;}
+  .vaults-cnt{padding: 0;}
 
 
 

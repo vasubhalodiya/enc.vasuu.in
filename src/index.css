@@ -218,7 +218,17 @@ input:-webkit-autofill {
   grid-template-columns: 500px 1fr;
 }
 
-
+.back-to-home i {
+  width: 35px;
+  height: 35px;
+  color: var(--light-color);
+  background-color: var(--soft-accent-color);
+  font-size: 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 

@@ -17,6 +17,12 @@
     padding: 0px 15px;
 }
 
+.vd-head-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .vd-sec {
     display: flex;
     align-items: center;
@@ -483,4 +489,7 @@
 
 .vd-input-field.vd-active-field {
     background-color: rgba(var(--accent-color-rgb), 0.1) !important;
+}
+.vaults-menu-item.active {
+  background-color: rgba(19, 20, 21, 0.5) !important;
 }

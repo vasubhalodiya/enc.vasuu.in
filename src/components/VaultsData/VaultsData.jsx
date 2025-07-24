@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '@/common/VaultsCommon.css';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { decryptPassword, encryptPassword } from '@/utils/encryption';
 
 const VaultsData = () => {
   const { vaultId } = useParams();
-  const [vaultData, setVaultData] = useState(null);
+  const [vaultData, setVaultData] = useState(undefined); // default undefined for loading
   const [showPassword, setShowPassword] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const [editedData, setEditedData] = useState({});
@@ -27,10 +27,25 @@ const VaultsData = () => {
 
   useEffect(() => {
     const fetchVault = async () => {
-      if (!vaultId) return;
-
       try {
-        const q = query(collection(db, 'vaults'), where('vaultId', '==', vaultId));
+        let finalVaultId = vaultId;
+        if (!finalVaultId) {
+          finalVaultId = sessionStorage.getItem('selectedVaultId');
+        }
+
+        if (!finalVaultId) {
+          // check if vaults exist
+          const snapshot = await getDocs(collection(db, 'vaults'));
+          if (snapshot.empty) {
+            setVaultData(null); // no vault at all
+            return;
+          }
+          // vaults exist but no vault selected -> show message
+          setVaultData(null);
+          return;
+        }
+
+        const q = query(collection(db, 'vaults'), where('vaultId', '==', finalVaultId));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
@@ -49,8 +64,12 @@ const VaultsData = () => {
             website: data.website || '',
             note: data.note || ''
           });
+
+          // save this vault as selected
+          sessionStorage.setItem('selectedVaultId', finalVaultId);
+
         } else {
-          console.log('No vault found with vaultId:', vaultId);
+          console.log('No vault found with vaultId:', finalVaultId);
           setVaultData(null);
         }
       } catch (error) {
@@ -62,8 +81,16 @@ const VaultsData = () => {
     fetchVault();
   }, [vaultId]);
 
-  if (!vaultData) return <div className="vaultsData">Loading...</div>;
+  // ---------- Return conditions ----------
+  if (vaultData === undefined) {
+    return <div className="vaultsData">Loading...</div>;
+  }
 
+  if (vaultData === null) {
+    return <div className="vaultsData">No vault found. Please create one.</div>;
+  }
+
+  // ---------- Helper functions ----------
   const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -92,15 +119,12 @@ const VaultsData = () => {
 
   const formatDateTime = (rawDate) => {
     if (!rawDate) return '';
-
-    const date =
-      typeof rawDate?.toDate === 'function' ? rawDate.toDate() : new Date(rawDate);
+    const date = typeof rawDate?.toDate === 'function' ? rawDate.toDate() : new Date(rawDate);
     if (isNaN(date)) return '';
 
     const now = new Date();
     const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
     const diffInDays = Math.floor((nowOnly - dateOnly) / (1000 * 60 * 60 * 24));
 
     const timeStr = date.toLocaleTimeString('en-US', {
@@ -152,6 +176,9 @@ const VaultsData = () => {
     <div className="vaultsData">
       <div className="vd-header">
         <div className="vd-head-title">
+          <Link to="/" className='back-to-home'>
+            <i className="fa-regular fa-arrow-left"></i>
+          </Link>
           <h4 className="vd-head-title-txt">{vaultData?.title || 'My Password'}</h4>
         </div>
         <div className="vd-sec">
@@ -203,7 +230,7 @@ const VaultsData = () => {
               return (
                 <div
                   key={field.key}
-                  ref={passwordRef} // <-- only password field has ref
+                  ref={passwordRef}
                   className={fieldClasses}
                   onClick={(e) => {
                     if (isEditable) {

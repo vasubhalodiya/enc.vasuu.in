@@ -106,9 +106,15 @@
   .vaults-add-btn span{display: none;}
   .vaults-add-btn{width: 35px;}
   .profile-label{width: 170px;}
+  .auth-heading-title{font-size: 24px;}
 
 
 
+}
+
+@media screen and (max-width:425px) 
+{
+  .auth-main-cnt-field{width: 350px;}
 
 }
 
@@ -120,6 +126,7 @@
   .profile-account-details{padding-left: 8px;}
   .profile-btn.active{width: 50%;}
   .profile-btn.danger-zone{padding: 0px 10px 10px 10px; white-space: nowrap;}
+  .auth-main-cnt-field{width: 300px;}
 
 }
 

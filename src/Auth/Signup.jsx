@@ -3,13 +3,10 @@ import './Auth.css';
 import { useState, useRef } from 'react';
 import { db } from '@/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 const Signup = () => {
   const navigate = useNavigate();
-
-  const usernameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -88,6 +85,7 @@ const Signup = () => {
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });
+      toast.success('Account created successfully');
       navigate('/login');
     } catch (error) {
       console.error('Error adding document:', error);

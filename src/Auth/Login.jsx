@@ -3,6 +3,7 @@ import './Auth.css';
 import { useState, useRef } from 'react';
 import { db } from '@/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -37,24 +38,34 @@ const Login = () => {
 
   const handleLogin = async () => {
     // blank check
-    if (!formData.email) setEmailError('Email is required');
-    if (!formData.password) setPasswordError('Password is required');
+    let emailErr = '';
+    let passErr = '';
 
-    if (emailError || passwordError || !formData.email || !formData.password) return;
+    if (!formData.email.trim()) emailErr = 'Email is required';
+    if (!formData.password.trim()) passErr = 'Password is required';
+
+    setEmailError(emailErr);
+    setPasswordError(passErr);
+
+    if (emailErr || passErr) return;
 
     try {
       const q = query(
         collection(db, 'users'),
-        where('email', '==', formData.email),
-        where('password', '==', formData.password)
+        where('email', '==', formData.email)
       );
       const snapshot = await getDocs(q);
 
       if (!snapshot.empty) {
-        // valid user
-        navigate('/');
+        const user = snapshot.docs[0].data();
+        if (user.password === formData.password) {
+          toast.success('Login successfully');
+          navigate('/');
+        } else {
+          setPasswordError('Invalid password');
+        }
       } else {
-        setGeneralError('Invalid email or password');
+        setEmailError('Invalid email');
       }
     } catch (error) {
       console.error(error);

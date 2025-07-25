@@ -19,7 +19,6 @@ const Vaults = ({ searchQuery }) => {
     }
   };
 
-  // 🔥 Real-time listener with ordering (new vaults always at bottom)
   useEffect(() => {
     const q = query(collection(db, 'vaults'), orderBy('createdAt', 'asc'));
     const unsubscribe = onSnapshot(q, (snapshot) => {

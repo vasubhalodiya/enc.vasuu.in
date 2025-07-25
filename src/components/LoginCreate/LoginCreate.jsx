@@ -209,7 +209,7 @@ const LoginCreate = ({ onClose }) => {
             {titleError && (
               <div className="vd-error">
                 <p className='vd-error-txt'>
-                  <i className="ph-fill ph-warning-circle"></i>{titleError}
+                  <i class="fa-solid fa-hexagon-exclamation"></i>{titleError}
                 </p>
               </div>
             )}
@@ -263,7 +263,7 @@ const LoginCreate = ({ onClose }) => {
               {field.error && (
                 <div className="vd-error">
                   <p className="vd-error-txt">
-                    <i className="ph-fill ph-warning-circle"></i> {field.error}
+                    <i class="fa-solid fa-hexagon-exclamation"></i> {field.error}
                   </p>
                 </div>
               )}

@@ -93,7 +93,7 @@
     /* display: none; */
 }
 
-.vd-error-txt:nth-last-child(1) {
+.vd-error-txt:last-child {
     align-items: start;
 }
 
@@ -115,7 +115,7 @@
 }
 
 .vd-error-txt i {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .vd-untitle-input {

@@ -64,7 +64,7 @@ const NoteCreate = ({ onClose }) => {
               onFocus={() => handleFieldFocus('title')}
               onBlur={handleFieldBlur}
             />
-            <p className="vd-error-txt"><i className="ph-fill ph-warning-circle"></i>Title is required</p>
+            <p className="vd-error-txt"><i class="fa-solid fa-hexagon-exclamation"></i>Title is required</p>
           </div>
         </div>
       </div>

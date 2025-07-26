@@ -90,7 +90,6 @@
   .vaults-menu-three-dot-btn{display: flex;}
   .vaults-menu-item-group{gap: 10px;}
   .profile-label{width: 200px;}
-  .profile-about{height: calc(100vh - 320px);}
   .profile-button-main-cnt{width: 100%;}
   .ContainerCreate{max-width: 100%;}
   .vaults{height: calc(100vh - 90px); border-right: none;}

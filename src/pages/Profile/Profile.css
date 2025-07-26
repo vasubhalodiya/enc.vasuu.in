@@ -430,6 +430,9 @@
 {
     color: var(--text-color);
     font-size: 10px;
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
 }
 
 .profile-about-inspired span

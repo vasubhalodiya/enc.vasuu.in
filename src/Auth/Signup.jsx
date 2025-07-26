@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 import { useState, useRef } from 'react';
-import { db } from '@/firebase';
+import { db, auth } from '@/firebase'; // ✅ auth import added
+import { createUserWithEmailAndPassword } from "firebase/auth"; // ✅ added
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
@@ -78,17 +79,23 @@ const Signup = () => {
     ) return;
 
     try {
+      // ✅ Firebase Auth signup
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+
+      // ✅ Store additional user details in Firestore
       await addDoc(collection(db, 'users'), {
+        uid: userCredential.user.uid,
         username: formData.username,
         email: formData.email,
-        password: formData.password,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });
+
       toast.success('Account created successfully');
       navigate('/login');
     } catch (error) {
       console.error('Error adding document:', error);
+      toast.error(error.message);
     }
   };
 
@@ -113,7 +120,6 @@ const Signup = () => {
         <div className="auth-main-cnt-field">
           {fields.map((field, index) => (
             field.isButton ? (
-              // Full button clickable
               <div
                 key={`${field.key}-${index}`}
                 className={[

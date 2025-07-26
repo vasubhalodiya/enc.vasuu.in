@@ -20,14 +20,19 @@ const Vaults = ({ searchQuery }) => {
   };
 
   useEffect(() => {
-    const q = query(collection(db, 'vaults'), orderBy('createdAt', 'asc'));
+    const userToken = localStorage.getItem('userToken'); // 🔥 new change
+    if (!userToken) return;
+
+    const q = query(
+      collection(db, `users/${userToken}/vaults`), // 🔥 changed path
+      orderBy('createdAt', 'asc')
+    );
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs
-        .filter(doc => doc.id !== 'default')
-        .map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
       setVaultItems(data);
     });
     return () => unsubscribe();

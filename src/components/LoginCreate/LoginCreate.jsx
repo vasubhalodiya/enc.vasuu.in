@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import ContainerCreate from '../ContainerCreate/ContainerCreate';
-import { db, auth } from '@/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { encryptPassword } from '@/utils/encryption';
 import toast from 'react-hot-toast';
+import { db } from '@/firebase';
 
 const LoginCreate = ({ onClose }) => {
   const textareaRef = useRef(null);
@@ -19,6 +19,7 @@ const LoginCreate = ({ onClose }) => {
   const [titleError, setTitleError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
   const editableFields = [
     {
       key: 'email',
@@ -60,7 +61,6 @@ const LoginCreate = ({ onClose }) => {
     },
   ];
 
-
   const handleInput = () => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -100,6 +100,13 @@ const LoginCreate = ({ onClose }) => {
   const handleCreateVault = async () => {
     if (!validateInputs()) return;
 
+    // **NEW**: Get stored user document id
+    const userToken = localStorage.getItem("userToken");
+    if (!userToken) {
+      toast.error("User not found! Please login again.");
+      return;
+    }
+
     const title = titleInputRef.current.value.trim();
     const email = emailInputRef.current.value.trim();
     const username = usernameInputRef.current.value.trim();
@@ -107,8 +114,10 @@ const LoginCreate = ({ onClose }) => {
     const note = textareaRef.current.value.trim();
 
     try {
-      const encryptedPass = encryptPassword(password); // 🔐 updated method
-      const data = {
+      const encryptedPass = encryptPassword(password);
+
+      // **NEW**: Use userToken instead of auth.currentUser.uid
+      await addDoc(collection(db, "users", userToken, "vaults"), {
         vaultId: crypto.randomUUID(),
         type: "login",
         title,
@@ -119,14 +128,13 @@ const LoginCreate = ({ onClose }) => {
         note,
         createdAt: serverTimestamp(),
         lastEditedAt: serverTimestamp()
-      };
+      });
 
-      await addDoc(collection(db, "vaults"), data);
       toast.success("Login credentials saved successfully.");
       onClose();
     } catch (error) {
       console.error("Error saving vault:", error);
-      toast.error("Failed to save login credentials. Please try again.");
+      toast.error("Failed to save login credentials.");
     }
   };
 
@@ -209,7 +217,7 @@ const LoginCreate = ({ onClose }) => {
             {titleError && (
               <div className="vd-error">
                 <p className='vd-error-txt'>
-                  <i class="fa-solid fa-hexagon-exclamation"></i>{titleError}
+                  <i className="fa-solid fa-hexagon-exclamation"></i>{titleError}
                 </p>
               </div>
             )}
@@ -263,13 +271,12 @@ const LoginCreate = ({ onClose }) => {
               {field.error && (
                 <div className="vd-error">
                   <p className="vd-error-txt">
-                    <i class="fa-solid fa-hexagon-exclamation"></i> {field.error}
+                    <i className="fa-solid fa-hexagon-exclamation"></i> {field.error}
                   </p>
                 </div>
               )}
             </div>
 
-            {/* Optional password button */}
             {field.key === 'password' && (
               <div>
                 <button className="vd-pass-generate-icon">

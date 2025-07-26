@@ -2,8 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 import { useState, useRef } from 'react';
 import { db } from '@/firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { query, collection, where, getDocs } from "firebase/firestore";
 import toast from 'react-hot-toast';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -37,7 +39,6 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    // blank check
     let emailErr = '';
     let passErr = '';
 
@@ -50,26 +51,30 @@ const Login = () => {
     if (emailErr || passErr) return;
 
     try {
-      const q = query(
-        collection(db, 'users'),
-        where('email', '==', formData.email)
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
       );
-      const snapshot = await getDocs(q);
 
-      if (!snapshot.empty) {
-        const user = snapshot.docs[0].data();
-        if (user.password === formData.password) {
-          toast.success('Login successfully');
-          navigate('/');
-        } else {
-          setPasswordError('Invalid password');
-        }
+      // **NEW: Get user document id**
+      const q = query(collection(db, "users"), where("email", "==", formData.email));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const userToken = querySnapshot.docs[0].id;  // document id
+        localStorage.setItem("userToken", userToken); // store id in localStorage
       } else {
-        setEmailError('Invalid email');
+        toast.error("User document not found");
       }
+
+      toast.success('Login successfully');
+      navigate('/');
     } catch (error) {
-      console.error(error);
-      setGeneralError('Something went wrong');
+      if (error.code === 'auth/invalid-credential') {
+        setGeneralError('Invalid email or password');
+      } else {
+        setGeneralError('Something went wrong');
+      }
     }
   };
 
@@ -92,7 +97,6 @@ const Login = () => {
         <div className="auth-main-cnt-field">
           {fields.map((field, index) => (
             field.isButton ? (
-              // full button clickable
               <div
                 key={`${field.key}-${index}`}
                 className={[
@@ -146,7 +150,6 @@ const Login = () => {
                         handleLogin();
                       }
                     }}
-
                   />
                   {field.key === 'email' && emailError && (
                     <div className="auth-error">

@@ -28,24 +28,27 @@ const VaultsData = () => {
   useEffect(() => {
     const fetchVault = async () => {
       try {
-        let finalVaultId = vaultId;
-        if (!finalVaultId) {
-          finalVaultId = sessionStorage.getItem('selectedVaultId');
-        }
-
-        if (!finalVaultId) {
-          // check if vaults exist
-          const snapshot = await getDocs(collection(db, 'vaults'));
-          if (snapshot.empty) {
-            setVaultData(null); // no vault at all
-            return;
-          }
-          // vaults exist but no vault selected -> show message
+        const userToken = localStorage.getItem('userToken');  // 🔥 changed
+        if (!userToken) {
           setVaultData(null);
           return;
         }
 
-        const q = query(collection(db, 'vaults'), where('vaultId', '==', finalVaultId));
+        let finalVaultId = vaultId || sessionStorage.getItem('selectedVaultId');
+        if (!finalVaultId) {
+          const snapshot = await getDocs(collection(db, `users/${userToken}/vaults`)); // 🔥 changed
+          if (snapshot.empty) {
+            setVaultData(null);
+            return;
+          }
+          setVaultData(null);
+          return;
+        }
+
+        const q = query(
+          collection(db, `users/${userToken}/vaults`), // 🔥 changed
+          where('vaultId', '==', finalVaultId)
+        );
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
@@ -64,10 +67,7 @@ const VaultsData = () => {
             website: data.website || '',
             note: data.note || ''
           });
-
-          // save this vault as selected
           sessionStorage.setItem('selectedVaultId', finalVaultId);
-
         } else {
           console.log('No vault found with vaultId:', finalVaultId);
           setVaultData(null);
@@ -147,7 +147,8 @@ const VaultsData = () => {
 
   const handleSave = async () => {
     try {
-      const vaultRef = doc(db, 'vaults', vaultData.id);
+      const userToken = localStorage.getItem('userToken'); // 🔥 changed
+      const vaultRef = doc(db, `users/${userToken}/vaults`, vaultData.id); // 🔥 changed
       await updateDoc(vaultRef, {
         email: editedData.email,
         password: editedData.password ? encryptPassword(editedData.password) : '',

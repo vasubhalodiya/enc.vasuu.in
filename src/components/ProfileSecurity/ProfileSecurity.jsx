@@ -62,32 +62,6 @@ const ProfileSecurity = ({ profileTab }) => {
 
                   {showPopup && <Popup onClose={() => setShowPopup(false)} />}
                 </div>
-                <div className="profile-auto-lock">
-                  <h5 className='profile-auto-lock-title'>Auto-lock after</h5>
-                  <div className="profile-auto-lock-dropd">
-                    <div className="profile-auto-lock-select" onClick={() => setOpen(!open)}>
-                      <span>{selected}</span>
-                      <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-
-                    {open && (
-                      <ul className="dropdown-options">
-                        {options.map((opt) => (
-                          <li
-                            key={opt}
-                            className={`dropdown-item ${selected === opt ? 'active' : ''}`}
-                            onClick={() => {
-                              setSelected(opt);
-                              setOpen(false);
-                            }}
-                          >
-                            {opt}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
               </div>
             </div>
           </div>

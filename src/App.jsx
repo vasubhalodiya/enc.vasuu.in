@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import Sidebar from '@/components/Sidebar/Sidebar'
-import Home from './pages/Home/Home'
 import { useLocation } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes'
 import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './Auth/AuthContext';
+import ProtectedRoute from './routes/ProtectedRoute';
+import Profile from './pages/Profile/Profile';
+import Login from './Auth/Login';
+import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
   const location = useLocation();
@@ -17,7 +21,8 @@ const App = () => {
   const isHideSidebar = hideSidebarRoutes.includes(currentPath);
   const isResetLayout = hideSidebarRoutes.includes(location.pathname);
   const [searchQuery, setSearchQuery] = useState('');
-
+  const [sidebarUsername, setSidebarUsername] = useState('');
+  
   useEffect(() => {
     const existingKey = localStorage.getItem("encryptionKey");
     if (!existingKey) {
@@ -33,21 +38,34 @@ const App = () => {
     } else {
       document.body.classList.remove("reset-css");
     }
-
     return () => document.body.classList.remove("reset-css");
   }, [location.pathname, isResetLayout]);
 
   return (
-    <>
-      {!isResetLayout && <Sidebar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />}
+    <AuthProvider>
+      {!isResetLayout && (
+        <Sidebar searchQuery={searchQuery} setSearchQuery={setSearchQuery} username={sidebarUsername} />
+      )}
       <div className="app-layout">
         <main
           className={`main-cnt 
             ${isCustomAlign ? 'custome-align' : ''} 
             ${isHideSidebar ? 'hide-sidebar' : ''}`}
         >
-          <AppRoutes searchQuery={searchQuery} />
-          {/* <Home /> */}
+          <Routes>
+            {/* Your existing routes */}
+            <Route path="/*" element={<AppRoutes searchQuery={searchQuery} setSidebarUsername={setSidebarUsername} />} />
+            {/* Login & Protected Profile route */}
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile setSidebarUsername={setSidebarUsername} />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
           <Toaster
             position="bottom-center"
             toastOptions={{
@@ -60,7 +78,7 @@ const App = () => {
             }} />
         </main>
       </div>
-    </>
+    </AuthProvider>
   )
 }
 

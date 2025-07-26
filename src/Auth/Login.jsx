@@ -1,11 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 import { useState, useRef } from 'react';
-import { db } from '@/firebase';
-import { query, collection, where, getDocs } from "firebase/firestore";
-import toast from 'react-hot-toast';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/firebase';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -51,27 +49,17 @@ const Login = () => {
     if (emailErr || passErr) return;
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
+      // Firebase sign in
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
 
-      // **NEW: Get user document id**
-      const q = query(collection(db, "users"), where("email", "==", formData.email));
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        const userToken = querySnapshot.docs[0].id;  // document id
-        localStorage.setItem("userToken", userToken); // store id in localStorage
-      } else {
-        toast.error("User document not found");
-      }
-
+      // Firebase internally session handle kare chhe (secure)
       toast.success('Login successfully');
       navigate('/');
     } catch (error) {
-      if (error.code === 'auth/invalid-credential') {
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
         setGeneralError('Invalid email or password');
+      } else if (error.code === 'auth/user-not-found') {
+        setGeneralError('User not found');
       } else {
         setGeneralError('Something went wrong');
       }

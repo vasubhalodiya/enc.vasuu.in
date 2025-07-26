@@ -317,6 +317,12 @@
     height: 35px;
 }
 
+.vd-delete-btn {
+    color: var(--error-color) !important;
+    background-color: rgb(255, 117, 117, 0.13) !important;
+    border: 1px solid var(--error-color) !important;
+}
+
 .vd-create {
     display: flex;
     align-items: center;

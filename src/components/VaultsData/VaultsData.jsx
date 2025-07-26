@@ -664,8 +664,8 @@ const VaultsData = ({ onLoaded }) => {
               </div>
             )}
             <div>
-              <button className="vd-three-dot-btn mini-master-btn">
-                <i className="fa-regular fa-ellipsis-vertical"></i>
+              <button className="vd-delete-btn mini-master-btn">
+                <i class="fa-light fa-trash-can"></i>
               </button>
             </div>
           </div>

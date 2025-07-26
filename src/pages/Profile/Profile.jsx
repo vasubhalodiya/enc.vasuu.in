@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from "firebase/auth"; // <-- ADD THIS
 import './Profile.css';
 import ProfileAccount from '../../components/ProfileAccount/ProfileAccount';
 import ProfileSecurity from '../../components/ProfileSecurity/ProfileSecurity';
 import ProfileAboutProject from '../../components/ProfileAboutProject/ProfileAboutProject';
 
-const Profile = () => {
+const Profile = ({ setSidebarUsername }) => {
   const [profileTab, setProfileTab] = useState('account');
   const [dangerZone, setDangerZone] = useState('logout');
   const [openTabDropdown, setOpenTabDropdown] = useState(false);
@@ -12,18 +14,17 @@ const Profile = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dropdownRef = useRef();
 
+  const navigate = useNavigate();
 
   useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setOpenTabDropdown(false);
-    }
-  };
-  document.addEventListener("click", handleClickOutside);
-  return () => document.removeEventListener("click", handleClickOutside);
-}, []);
-
-
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate('/login');
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]);
 
   const tabOptions = [
     { key: 'account', label: 'Account' },
@@ -32,9 +33,17 @@ const Profile = () => {
   ];
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenTabDropdown(false);
+      }
     };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -47,7 +56,6 @@ const Profile = () => {
   return (
     <div className="profile">
       <div className="profile-cnt">
-
         {windowWidth > 575 ? (
           <div className="profile-buttons-section">
             {tabOptions.map(opt => (
@@ -62,14 +70,12 @@ const Profile = () => {
               </button>
             ))}
           </div>
-
         ) : (
           <div className="profile-tab-dropdown" ref={dropdownRef}>
             <div className="profile-tab-select" onClick={() => setOpenTabDropdown(!openTabDropdown)}>
               <span>{selectedTabLabel}</span>
               <i className="fa-solid fa-chevron-down"></i>
             </div>
-
             {openTabDropdown && (
               <ul className="dropdown-options">
                 {tabOptions.map(opt => (
@@ -93,6 +99,7 @@ const Profile = () => {
             profileTab={profileTab}
             dangerZone={dangerZone}
             setDangerZone={setDangerZone}
+            setSidebarUsername={setSidebarUsername}
           />
           <ProfileSecurity profileTab={profileTab} />
           <ProfileAboutProject profileTab={profileTab} />

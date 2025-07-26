@@ -10,7 +10,7 @@ import Error from '@/pages/Error/Error';
 import Login from "../Auth/Login";
 import Signup from "../Auth/Signup";
 
-const AppRoutes = ({ searchQuery }) => {
+const AppRoutes = ({ searchQuery, setSidebarUsername }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const AppRoutes = ({ searchQuery }) => {
 
       <Route path="/generator" element={<PassGenerator />} />
       <Route path="/premium" element={<Premium />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<Profile setSidebarUsername={setSidebarUsername} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="*" element={<Error />} />

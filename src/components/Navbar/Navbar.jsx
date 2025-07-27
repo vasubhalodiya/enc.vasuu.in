@@ -19,7 +19,7 @@ const Navbar = ({ isTablet, onToggle, isOpen, onDrawerSelect, searchQuery, setSe
   const dropdownOptions = [
     { key: 'login', label: 'Login', icon: 'fa-light fa-user' },
     { key: 'credit', label: 'Credit Card', icon: 'fa-light fa-credit-card' },
-    { key: 'secureNote', label: 'Secure Note', icon: 'fa-light fa-notes' },
+    { key: 'secureNote', label: 'Secure Note', icon: 'fa-light fa-notes-sticky' },
   ];
 
   const handleOptionClick = (opt) => {

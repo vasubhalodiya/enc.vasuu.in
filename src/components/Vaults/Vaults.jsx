@@ -116,7 +116,7 @@ const Vaults = ({ searchQuery, onLoaded }) => {
       case 'card':
         return 'fa-light fa-credit-card';
       case 'note':
-        return 'fa-light fa-notes';
+        return 'fa-light fa-notes-sticky';
       default:
         return 'fa-light fa-hexagon-exclamation';
     }

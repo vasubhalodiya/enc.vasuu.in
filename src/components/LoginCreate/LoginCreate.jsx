@@ -4,6 +4,7 @@ import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'fire
 import { encryptPassword } from '@/utils/encryption';
 import toast from 'react-hot-toast';
 import { db, auth } from '@/firebase';
+import { Link } from 'react-router-dom';
 
 const LoginCreate = ({ onClose, onVaultCreated }) => {
   const textareaRef = useRef(null);
@@ -306,13 +307,13 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
               )}
             </div>
 
-            {field.key === 'password' && (
+            {/* {field.key === 'password' && (
               <div>
                 <button className="vd-pass-generate-icon">
                   <i className="fa-light fa-arrows-rotate"></i>
                 </button>
               </div>
-            )}
+            )} */}
           </div>
         ))}
       </div>
@@ -341,7 +342,7 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
       <div className="vd-main-cnt-field">
         <div className={`vd-input-field ${focusedField === 'note' ? 'vd-input-field-focused' : ''}`} onClick={(e) => handleContainerClick(e, 'note')}>
           <div className="vd-icon">
-            <i className="fa-light fa-notes"></i>
+            <i class="fa-light fa-notes-sticky"></i>
           </div>
           <div className="vd-input-section">
             <h6 className="vd-input-title">Note</h6>

@@ -261,7 +261,7 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
           navigate(`/vault/${lastVault.vaultId || lastVault.id}`);
         }
       } else {
-        navigate('/');
+        navigate('/'); // koi vault nathi to home
       }
 
       setVaultData(null);
@@ -278,7 +278,9 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
     { key: 'password', icon: 'fa-key', label: 'Password', isPassword: true },
     { key: 'username', icon: 'fa-user', label: 'Username' },
   ];
-  const visibleFields = fields.filter((field) => (editedData[field.key] || '').trim());
+
+  // Show all fields in edit mode, only filled fields in view mode
+  const fieldsToShow = isEditable ? fields : fields.filter((field) => (editedData[field.key] || '').trim());
 
   return (
     <div className="vaultsData">
@@ -296,7 +298,7 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
                 className="vd-edit-btn"
                 onClick={() => {
                   setIsEditable(true);
-                  setActiveField(visibleFields[0]?.key);
+                  setActiveField(fields[0]?.key);
                   setTimeout(() => {
                     const firstInput = document.querySelector('.vd-main-cnt-field input');
                     firstInput?.focus();
@@ -326,14 +328,15 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
 
       <div className="vaultsData-cnt">
         <div className="vd-main-cnt-field">
-          {visibleFields.map((field, index) => {
+          {fieldsToShow.map((field, index) => {
             const fieldClasses = [
               'vd-input-field',
               'vd-group-box',
               'vd-clickable',
-              index === 0 ? 'vd-top-rounded' : '',
-              index === visibleFields.length - 1 ? 'vd-bottom-rounded' : '',
-              index > 0 && index < visibleFields.length - 1 && 'vd-no-rounded',
+              fieldsToShow.length === 1 ? 'vd-full-rounded' : '',
+              index === 0 && fieldsToShow.length > 1 ? 'vd-top-rounded' : '',
+              index === fieldsToShow.length - 1 && fieldsToShow.length > 1 ? 'vd-bottom-rounded' : '',
+              index > 0 && index < fieldsToShow.length - 1 && 'vd-no-rounded',
               isEditable && activeField === field.key ? 'vd-active-field' : ''
             ].filter(Boolean).join(' ');
 
@@ -361,6 +364,7 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
                     <input
                       type={showPassword ? 'text' : 'password'}
                       className="vd-password-input vd-input"
+                      placeholder={isEditable ? "Enter password" : ""}
                       value={editedData.password}
                       onChange={(e) =>
                         setEditedData((prev) => ({ ...prev, password: e.target.value }))
@@ -406,6 +410,7 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
                   <input
                     type="text"
                     className={`vd-${field.key}-input vd-input`}
+                    placeholder={isEditable ? `Enter ${field.label.toLowerCase()}` : ""}
                     value={editedData[field.key]}
                     onChange={(e) =>
                       setEditedData((prev) => ({ ...prev, [field.key]: e.target.value }))
@@ -418,13 +423,15 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
           })}
         </div>
 
-        {editedData.website && (
+        {/* Website field - show in edit mode or if has data */}
+        {(isEditable || editedData.website) && (
           <div className="vd-main-cnt-field">
             <div
               className={[
                 "vd-input-field",
                 "vd-clickable",
                 "vd-website-field",
+                "vd-full-rounded",
                 isEditable && activeField === "website" ? "vd-active-field" : ""
               ].join(" ")}
               onClick={(e) => {
@@ -445,6 +452,7 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
                 <input
                   type="text"
                   className="vd-website-input vd-input"
+                  placeholder={isEditable ? "https://" : ""}
                   value={editedData.website}
                   onChange={(e) =>
                     setEditedData((prev) => ({ ...prev, website: e.target.value }))
@@ -456,12 +464,14 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
           </div>
         )}
 
-        {editedData.note && (
+        {/* Note field - show in edit mode or if has data */}
+        {(isEditable || editedData.note) && (
           <div className="vd-main-cnt-field">
             <div
               className={[
                 "vd-input-field",
                 "vd-clickable",
+                "vd-full-rounded",
                 isEditable && activeField === "note" ? "vd-active-field" : ""
               ].join(" ")}
               onClick={(e) => {
@@ -475,13 +485,14 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
               }}
             >
               <div className="vd-icon">
-                <i className="fa-light fa-notes"></i>
+                <i class="fa-light fa-notes-sticky"></i>
               </div>
               <div className="vd-input-section">
                 <h6 className="vd-input-title">Note</h6>
                 <input
                   type="text"
                   className="vd-note-input vd-input"
+                  placeholder={isEditable ? "Add note" : ""}
                   value={editedData.note}
                   onChange={(e) =>
                     setEditedData((prev) => ({ ...prev, note: e.target.value }))

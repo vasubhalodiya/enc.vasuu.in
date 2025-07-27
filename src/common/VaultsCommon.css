@@ -277,6 +277,11 @@
     margin-top: -1px;
 }
 
+.vd-top-rounded.vd-bottom-rounded
+{
+    border-radius: 15px;
+}
+
 .vd-input-field.vd-group-box.vd-input-field-focused {
     border: 1px solid var(--accent-color) !important;
     position: relative;
@@ -453,6 +458,10 @@
     border-radius: 15px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+}
+
+.vd-input-field.vd-group-box.vd-clickable.vd-top-rounded.vd-bottom-rounded:hover {
+    border-radius: 15px;
 }
 
 .vd-website-field:hover {

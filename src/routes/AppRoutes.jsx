@@ -10,7 +10,7 @@ import Error from '@/pages/Error/Error';
 import Login from "../Auth/Login";
 import Signup from "../Auth/Signup";
 
-const AppRoutes = ({ searchQuery, setSidebarUsername }) => {
+const AppRoutes = ({ searchQuery, setSidebarUsername, refreshTrigger }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
 
   useEffect(() => {
@@ -36,8 +36,8 @@ const AppRoutes = ({ searchQuery, setSidebarUsername }) => {
         </>
       ) : (
         <>
-          <Route path="/" element={<Home searchQuery={searchQuery} />} />
-          <Route path="/vault/:vaultId" element={<Home searchQuery={searchQuery} />} />
+          <Route path="/" element={<Home searchQuery={searchQuery} refreshTrigger={refreshTrigger} />} />
+          <Route path="/vault/:vaultId" element={<Home searchQuery={searchQuery} refreshTrigger={refreshTrigger} />} />
         </>
       )}
 

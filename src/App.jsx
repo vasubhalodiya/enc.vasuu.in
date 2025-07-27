@@ -22,7 +22,12 @@ const App = () => {
   const isResetLayout = hideSidebarRoutes.includes(location.pathname);
   const [searchQuery, setSearchQuery] = useState('');
   const [sidebarUsername, setSidebarUsername] = useState('');
-  
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const handleVaultCreated = () => {
+    setRefreshTrigger(prev => prev + 1);
+  };
+
   useEffect(() => {
     const existingKey = localStorage.getItem("encryptionKey");
     if (!existingKey) {
@@ -44,7 +49,13 @@ const App = () => {
   return (
     <AuthProvider>
       {!isResetLayout && (
-        <Sidebar searchQuery={searchQuery} setSearchQuery={setSearchQuery} username={sidebarUsername} />
+        <Sidebar 
+          searchQuery={searchQuery} 
+          setSearchQuery={setSearchQuery} 
+          username={sidebarUsername} 
+          setUsername={setSidebarUsername}
+          onVaultCreated={handleVaultCreated}
+        />
       )}
       <div className="app-layout">
         <main
@@ -54,7 +65,12 @@ const App = () => {
         >
           <Routes>
             {/* Your existing routes */}
-            <Route path="/*" element={<AppRoutes searchQuery={searchQuery} setSidebarUsername={setSidebarUsername} />} />
+            <Route path="/*" element={
+              <AppRoutes 
+                searchQuery={searchQuery} 
+                setSidebarUsername={setSidebarUsername} 
+                refreshTrigger={refreshTrigger}/>} 
+              />
             {/* Login & Protected Profile route */}
             <Route path="/login" element={<Login />} />
             <Route

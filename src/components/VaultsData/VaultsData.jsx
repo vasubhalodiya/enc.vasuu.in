@@ -468,10 +468,8 @@ const VaultsData = ({ onLoaded }) => {
   useEffect(() => {
     const fetchVault = async () => {
       try {
-        console.log('Current user in VaultsData:', currentUser); // Debug log
         
         if (!currentUser?.uid) {
-          console.log('No user found in VaultsData');
           setVaultData(null);
           onLoaded?.();
           return;
@@ -493,8 +491,6 @@ const VaultsData = ({ onLoaded }) => {
           onLoaded?.();
           return;
         }
-
-        console.log('Fetching vault with ID:', finalVaultId, 'for user:', userDocId);
 
         const q = query(
           collection(db, `users/${userDocId}/vaults`),
@@ -520,7 +516,6 @@ const VaultsData = ({ onLoaded }) => {
           });
           sessionStorage.setItem('selectedVaultId', finalVaultId);
         } else {
-          console.log('No vault found with vaultId:', finalVaultId);
           setVaultData(null);
         }
         onLoaded?.();

@@ -5,7 +5,7 @@ import { encryptPassword } from '@/utils/encryption';
 import toast from 'react-hot-toast';
 import { db, auth } from '@/firebase';
 
-const LoginCreate = ({ onClose }) => {
+const LoginCreate = ({ onClose, onVaultCreated }) => {
   const textareaRef = useRef(null);
   const titleInputRef = useRef(null);
   const emailInputRef = useRef(null);
@@ -140,6 +140,12 @@ const LoginCreate = ({ onClose }) => {
       });
 
       toast.success("Login credentials saved successfully.");
+      
+      // Trigger the callback to refresh data in parent component
+      if (onVaultCreated) {
+        onVaultCreated();
+      }
+      
       onClose();
     } catch (error) {
       console.error("Error saving vault:", error);

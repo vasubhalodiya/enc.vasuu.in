@@ -10,7 +10,7 @@ import NoteCreate from '../NoteCreate/NoteCreate';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db, auth } from '../../firebase';
 
-const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername }) => {
+const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername, onVaultCreated }) => {
   const location = useLocation();
   const isActive = location.pathname === '/profile';
   const [isOpen, setIsOpen] = useState(false);
@@ -165,13 +165,22 @@ const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername }) => {
           onKeyDown={(e) => { if (e.key === 'Escape') closeSidebar(); }} />
       )}
       {isDrawerOpen && selectedDrawer === 'login' && (
-        <LoginCreate onClose={() => setIsDrawerOpen(false)} />
+        <LoginCreate
+          onClose={() => setIsDrawerOpen(false)}
+          onVaultCreated={onVaultCreated}
+        />
       )}
       {isDrawerOpen && selectedDrawer === 'credit' && (
-        <CardCreate onClose={() => setIsDrawerOpen(false)} />
+        <CardCreate
+          onClose={() => setIsDrawerOpen(false)}
+          onVaultCreated={onVaultCreated}
+        />
       )}
       {isDrawerOpen && selectedDrawer === 'secureNote' && (
-        <NoteCreate onClose={() => setIsDrawerOpen(false)} />
+        <NoteCreate
+          onClose={() => setIsDrawerOpen(false)}
+          onVaultCreated={onVaultCreated}
+        />
       )}
     </>
   )

@@ -14,12 +14,12 @@
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .encrypt-logo
 {
-  width: 120px;
+  width: 100%;
   background: var(--linear-gradient-color);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

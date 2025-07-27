@@ -109,11 +109,7 @@ const Signup = () => {
   return (
     <div className="auth">
       <div className="auth-logo">
-        <Link to="/" className='back-to-home'>
-          <i className="fa-regular fa-arrow-left"></i>
-        </Link>
-        <Link to="/"><h3 className="encrypt-logo">Encrypt</h3></Link>
-        <div></div>
+        <h3 className="encrypt-logo">Encrypt</h3>
       </div>
       <div className="auth-cnt">
         <div className="auth-heading"><h1 className="auth-heading-title">Create Account</h1></div>

@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
 import { db, auth } from '../../firebase';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import '../../pages/Profile/Profile.css';
 
 const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsername }) => {
@@ -9,6 +12,7 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
   const [usernameInput, setUsernameInput] = useState('');
   const [userDocId, setUserDocId] = useState('');
   const inputRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -58,6 +62,18 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating username:', error);
+    }
+  };
+
+  // Handle user logout
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast.success('Logged out successfully');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      toast.error('Failed to logout');
     }
   };
 
@@ -127,7 +143,7 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
                     <h5 className="profile-danger-message">
                       This will logout of your account and end your session. You will need to sign in again to access your data.
                     </h5>
-                    <div className="profile-danger-btn">Logout</div>
+                    <div className="profile-danger-btn" onClick={handleLogout}>Logout</div>
                   </div>
                 </div>
               )}

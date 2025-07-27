@@ -60,10 +60,16 @@ const ProfileSecurity = ({ profileTab }) => {
                     </div>
                   ))}
 
-                  {showPopup && 
+                  {showPopup &&
                     <Popup 
                       onClose={() => setShowPopup(false)}
-                    />}
+                      title="Enter Password"
+                      description="Please confirm your password in order to unregister your current lock."
+                      cancelText="Cancel"
+                      confirmText="Authenticate"
+                      // onConfirm={handleDelete}
+                    />
+                  }
                 </div>
               </div>
             </div>

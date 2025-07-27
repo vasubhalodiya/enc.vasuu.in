@@ -430,12 +430,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import '@/common/VaultsCommon.css';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
-import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, query, where, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { decryptPassword, encryptPassword } from '@/utils/encryption';
 import { useAuth } from '@/Auth/AuthContext'; // Add this import
 
-const VaultsData = ({ onLoaded }) => {
+const VaultsData = ({ onLoaded, onVaultDeleted }) => {
   const { vaultId } = useParams();
   const [vaultData, setVaultData] = useState(undefined);
   const [showPassword, setShowPassword] = useState(false);
@@ -474,9 +474,6 @@ const VaultsData = ({ onLoaded }) => {
           onLoaded?.();
           return;
         }
-
-        // For now, use the existing document ID from your Firestore
-        // You should create a mapping system or migrate your data structure
         const userDocId = 'tnZ2M92DY0Bh4ftGhnNF'; // Temporary hardcoded fix
 
         let finalVaultId = vaultId || sessionStorage.getItem('selectedVaultId');
@@ -635,6 +632,29 @@ const VaultsData = ({ onLoaded }) => {
     }
   };
 
+  const handleDeleteVault = async () => {
+    try {
+      if (!vaultData?.id) return toast.error("Vault not found!");
+
+      // Hardcoded user docId (tame dynamic banavta hovo to better)
+      const userDocId = 'tnZ2M92DY0Bh4ftGhnNF';
+
+      await deleteDoc(doc(db, `users/${userDocId}/vaults`, vaultData.id));
+
+      toast.success("Vault deleted successfully!");
+
+      // Immediately remove UI maathi
+      setVaultData(null);
+
+      // If parent ne info aapvu hoy (vault list refresh mate)
+      onVaultDeleted?.(vaultData.id);
+
+    } catch (error) {
+      console.error("Error deleting vault:", error);
+      toast.error("Failed to delete vault!");
+    }
+  };
+
   const fields = [
     { key: 'email', icon: 'fa-envelope', label: 'Email' },
     { key: 'password', icon: 'fa-key', label: 'Password', isPassword: true },
@@ -675,7 +695,7 @@ const VaultsData = ({ onLoaded }) => {
               </div>
             )}
             <div>
-              <button className="vd-delete-btn mini-master-btn">
+              <button className="vd-delete-btn mini-master-btn" onClick={handleDeleteVault}>
                 <i class="fa-light fa-trash-can"></i>
               </button>
             </div>
@@ -882,3 +902,15 @@ const VaultsData = ({ onLoaded }) => {
 };
 
 export default VaultsData;
+
+
+// {showPopup &&
+//   <Popup
+//     onClose={() => setShowPopup(false)}
+//     title="Delete Account"
+//     description="Are you sure you want to delete your account? This action cannot be undone."
+//     cancelText="No, Keep It"
+//     confirmText="Yes, Delete"
+//     onConfirm={handleDelete}
+//   />
+// }

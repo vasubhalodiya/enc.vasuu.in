@@ -10,6 +10,11 @@ const Home = ({ searchQuery, refreshTrigger }) => {
   const [vaultsLoaded, setVaultsLoaded] = useState(false);
   const [vaultsDataLoaded, setVaultsDataLoaded] = useState(false);
   const [hasData, setHasData] = useState(null);
+  const [internalRefresh, setInternalRefresh] = useState(0);
+
+  const handleVaultDeleted = () => {
+    setInternalRefresh(prev => prev + 1); // 🔹 force refresh
+  };
 
   const isFullyLoaded = vaultsLoaded && vaultsDataLoaded && hasData !== null;
 
@@ -67,7 +72,11 @@ const Home = ({ searchQuery, refreshTrigger }) => {
         ) : hasData ? (
           <div className="home-cnt master-cnt">
             <Vaults searchQuery={searchQuery} key={refreshTrigger} />
-            <VaultsData key={refreshTrigger} />
+            <VaultsData
+              key={refreshTrigger + internalRefresh}
+              onVaultDeleted={handleVaultDeleted}
+              onLoaded={() => setVaultsDataLoaded(true)}
+            />
           </div>
         ) : (
           <div className="home-no-data">

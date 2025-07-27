@@ -1,7 +1,15 @@
 import React, { useRef, useState } from "react";
 import "./Popup.css";
 
-const Popup = ({ onClose }) => {
+const Popup = ({
+  onClose,
+  title = "",
+  description = "",
+  cancelText = "",
+  confirmText = "",
+  onConfirm,
+  showPasswordField = true,
+}) => {
   const inputRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -18,52 +26,55 @@ const Popup = ({ onClose }) => {
       <div className="popup-overlay"></div>
       <div className="popup-wrapper">
         <div className="popup-header">
-          <h2 className="popup-title">Enter Password</h2>
+          <h2 className="popup-title">{title}</h2>
           <button className="popup-close-btn" onClick={onClose}>
             <i className="fa-light fa-xmark"></i>
           </button>
         </div>
-        <p className="popup-desc">
-          Please confirm your password in order to unregister your current lock.
-        </p>
 
-        <div
-          className="auth-input-field auth-group-box auth-clickable"
-          onClick={handleFieldClick}>
-          <div className="auth-icon popup-icon">
-            <i class="fa-light fa-key"></i>
+        <p className="popup-desc">{description}</p>
+
+        {showPasswordField && (
+          <div
+            className="auth-input-field auth-group-box auth-clickable"
+            onClick={handleFieldClick}>
+            <div className="auth-icon popup-icon">
+              <i className="fa-light fa-key"></i>
+            </div>
+            <div className="auth-input-section">
+              <h6 className="auth-input-title">Password</h6>
+              <input
+                ref={inputRef}
+                type={showPassword ? "text" : "password"}
+                className="auth-password-input auth-input"
+                placeholder="Enter your password"
+              />
+            </div>
+            <div className="auth-pass-btns">
+              <button
+                type="button"
+                className="auth-pass-show-icon popup-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePassword();
+                }}>
+                {showPassword ? (
+                  <i className="fa-light fa-eye-slash"></i>
+                ) : (
+                  <i className="fa-light fa-eye"></i>
+                )}
+              </button>
+            </div>
           </div>
-          <div className="auth-input-section">
-            <h6 className="auth-input-title">Password</h6>
-            <input
-              ref={inputRef}
-              type={showPassword ? "text" : "password"}
-              className="auth-password-input auth-input"
-              placeholder="Enter your password"
-            />
-          </div>
-          <div className="auth-pass-btns">
-            <button
-              type="button"
-              className="auth-pass-show-icon popup-icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePassword();
-              }}>
-              {showPassword ? (
-                <i class="fa-light fa-eye-slash"></i>
-              ) : (
-                <i class="fa-light fa-eyes"></i>
-              )}
-            </button>
-          </div>
-        </div>
+        )}
 
         <div className="popup-actions">
           <button className="popup-cancel-btn" onClick={onClose}>
-            Cancel
+            {cancelText}
           </button>
-          <button className="popup-success-btn">Authenticate</button>
+          <button className="popup-success-btn" onClick={onConfirm}>
+            {confirmText}
+          </button>
         </div>
       </div>
     </>

@@ -73,6 +73,14 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
     handleInput();
   }, []);
 
+  useEffect(() => {
+    handleInput();
+    if (titleInputRef.current) {
+      titleInputRef.current.focus();
+      setFocusedField('title');
+    }
+  }, []);
+
   const handleFieldFocus = (fieldId) => {
     setFocusedField(fieldId);
 
@@ -167,6 +175,7 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
     setEmailError('');
     setPasswordError('');
 
+    // Only Title is mandatory
     if (!title) {
       setTitleError('Title is required');
       isValid = false;
@@ -175,39 +184,41 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
       isValid = false;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-      setEmailError('Email is required');
-      isValid = false;
-    } else if (!emailRegex.test(email)) {
-      setEmailError('Enter a valid email');
-      isValid = false;
-    }
+    // Email validation - commented out (made optional)
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!email) {
+    //   setEmailError('Email is required');
+    //   isValid = false;
+    // } else if (!emailRegex.test(email)) {
+    //   setEmailError('Enter a valid email');
+    //   isValid = false;
+    // }
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{1,}$/;
+    // Password validation - commented out (made optional)
+    // const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{1,}$/;
+    // const hasUppercase = /[A-Z]/.test(pass);
+    // const hasNumber = /\d/.test(pass);
+    // const hasSpecialChar = /[^A-Za-z0-9]/.test(pass);
 
-    const hasUppercase = /[A-Z]/.test(pass);
-    const hasNumber = /\d/.test(pass);
-    const hasSpecialChar = /[^A-Za-z0-9]/.test(pass);
-
-    if (!pass) {
-      setPasswordError('Password is required');
-      isValid = false;
-    } else if (!passwordRegex.test(pass)) {
-      setPasswordError(
-        <>
-          <div>
-            Password must have at least:
-            <ul className="password-error-message">
-              <li className={hasUppercase ? 'valid' : 'invalid'}>1 uppercase letter</li>
-              <li className={hasNumber ? 'valid' : 'invalid'}>1 number</li>
-              <li className={hasSpecialChar ? 'valid' : 'invalid'}>1 special character</li>
-            </ul>
-          </div>
-        </>
-      );
-      isValid = false;
-    }
+    // if (!pass) {
+    //   setPasswordError('Password is required');
+    //   isValid = false;
+    // } else if (!passwordRegex.test(pass)) {
+    //   setPasswordError(
+    //     <>
+    //       <div>
+    //         Password must have at least:
+    //         <ul className="password-error-message">
+    //           <li className={hasUppercase ? 'valid' : 'invalid'}>1 uppercase letter</li>
+    //           <li className={hasNumber ? 'valid' : 'invalid'}>1 number</li>
+    //           <li className={hasSpecialChar ? 'valid' : 'invalid'}>1 special character</li>
+    //         </ul>
+    //       </div>
+    //     </>
+    //   );
+    //   isValid = false;
+    // }
+    
     return isValid;
   };
 

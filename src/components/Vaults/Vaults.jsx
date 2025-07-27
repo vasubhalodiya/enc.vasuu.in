@@ -21,7 +21,7 @@ const Vaults = ({ searchQuery, onLoaded }) => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 575);
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -35,52 +35,41 @@ const Vaults = ({ searchQuery, onLoaded }) => {
 
   useEffect(() => {
     if (!currentUser?.uid) {
-      console.log('No user found, setting loading to false');
       setLoading(false);
       return;
     }
 
-    // Find user document by uid and get its document ID
-    const getUserDocId = async () => {
-      const usersQuery = query(collection(db, 'users'), where('uid', '==', currentUser.uid));
-      const usersSnapshot = await getDocs(usersQuery);
-      return usersSnapshot.empty ? null : usersSnapshot.docs[0].id;
-    };
+    const fetchUserVaults = async () => {
+      try {
+        const usersQuery = query(collection(db, 'users'), where('uid', '==', currentUser.uid));
+        const usersSnapshot = await getDocs(usersQuery);
+        if (usersSnapshot.empty) return setLoading(false);
 
-    const setupListener = async () => {
-      const userDocId = await getUserDocId();
-      if (!userDocId) {
+        const userDocId = usersSnapshot.docs[0].id;
+        const q = query(collection(db, `users/${userDocId}/vaults`), orderBy('createdAt', 'asc'));
+
+        return onSnapshot(q, (snapshot) => {
+          const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          setVaultItems(data);
+          setLoading(false);
+          onLoaded?.();
+
+          // auto-select first vault (latest)
+          if ((!vaultId || vaultId === 'null') && data.length > 0) {
+            const recentVault = data[data.length - 1];
+            navigate(`/vault/${recentVault.vaultId || recentVault.id}`);
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching vaults:', error);
         setLoading(false);
-        return;
       }
-
-      const q = query(
-        collection(db, `users/${userDocId}/vaults`),
-        orderBy('createdAt', 'asc')
-      );
-
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const data = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        
-        setVaultItems(data);
-        setLoading(false);
-        onLoaded?.();
-      }, (error) => {
-        console.error('Error fetching vaults:', error); // Error handling
-        setLoading(false);
-      });
-      
-      return unsubscribe;
     };
 
     let unsubscribe;
-    setupListener().then(unsub => unsubscribe = unsub);
-    
+    fetchUserVaults().then((unsub) => (unsubscribe = unsub));
     return () => unsubscribe?.();
-  }, [onLoaded, currentUser]); // Add currentUser to dependency array
+  }, [currentUser, vaultId, navigate, onLoaded]);
 
   const filteredVaults = useMemo(() => {
     if (!searchQuery || searchQuery.trim() === '') {

@@ -7,6 +7,7 @@ import { db } from '@/firebase';
 import { decryptPassword, encryptPassword } from '@/utils/encryption';
 import { useAuth } from '@/Auth/AuthContext'; // Add this import
 import Popup from '../Popup/Popup';
+import { useNavigate } from 'react-router-dom';
 
 const VaultsData = ({ onLoaded, onVaultDeleted }) => {
   const { vaultId } = useParams();
@@ -19,6 +20,7 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
   const passwordRef = useRef(null);
   const { currentUser } = useAuth();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -248,7 +250,20 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
 
       toast.success("Vault deleted successfully!");
 
-      // Immediately remove UI maathi
+      // fetch next vault
+      const snapshot = await getDocs(collection(db, `users/${userDocId}/vaults`));
+      if (!snapshot.empty) {
+        const allVaults = snapshot.docs.map((doc) => doc.data());
+        // sort by createdAt
+        const sorted = allVaults.sort((a, b) => a.createdAt.seconds - b.createdAt.seconds);
+        const lastVault = sorted[sorted.length - 1];
+        if (lastVault) {
+          navigate(`/vault/${lastVault.vaultId || lastVault.id}`);
+        }
+      } else {
+        navigate('/');
+      }
+
       setVaultData(null);
       onVaultDeleted?.(vaultData.id);
 

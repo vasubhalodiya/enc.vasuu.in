@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../pages/Profile/Profile.css';
 import { deleteDoc } from "firebase/firestore";
 import { deleteUser } from "firebase/auth";
+import Popup from '../Popup/Popup';
 
 const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsername }) => {
   const [userData, setUserData] = useState({ email: '', username: '' });
@@ -50,7 +51,8 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
       const user = auth.currentUser;
       if (!user) return;
 
-      await deleteDoc(doc(db, "users", user.uid));
+      // Change this line - use userDocId instead of user.uid
+      await deleteDoc(doc(db, "users", userDocId));
 
       await deleteUser(user);
 

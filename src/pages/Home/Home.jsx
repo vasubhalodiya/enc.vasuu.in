@@ -13,18 +13,18 @@ const Home = ({ searchQuery, refreshTrigger }) => {
 
   const isFullyLoaded = vaultsLoaded && vaultsDataLoaded && hasData !== null;
 
-  // useEffect(() => {
-  //   if (!auth.currentUser) return;
+  useEffect(() => {
+    if (!auth.currentUser) return;
 
-  //   const q = query(collection(db, "users"), where("uid", "==", auth.currentUser.uid));
-  //   const unsubscribe = onSnapshot(q, (snapshot) => {
-  //     if (snapshot.empty) {
-  //       signOut(auth);
-  //     }
-  //   });
+    const q = query(collection(db, "users"), where("uid", "==", auth.currentUser.uid));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      if (snapshot.empty) {
+        signOut(auth);
+      }
+    });
 
-  //   return () => unsubscribe();
-  // }, []);
+    return () => unsubscribe();
+  }, []);
 
   const checkData = async () => {
     if (!auth.currentUser) return setHasData(false);

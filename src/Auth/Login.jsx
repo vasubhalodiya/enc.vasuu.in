@@ -169,7 +169,7 @@ const Login = () => {
         </div>
 
         {generalError && (
-          <div className="auth-error" style={{ marginTop: '10px' }}>
+          <div className="auth-error">
             <p className="auth-error-txt"><i className="fa-solid fa-hexagon-exclamation"></i>{generalError}</p>
           </div>
         )}

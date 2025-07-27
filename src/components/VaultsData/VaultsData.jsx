@@ -232,7 +232,6 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
       if (!vaultData?.id) return toast.error("Vault not found!");
       if (!currentUser?.uid) return toast.error("User not authenticated!");
 
-      // Find user document by uid and get its document ID
       const getUserDocId = async () => {
         const usersQuery = query(collection(db, 'users'), where('uid', '==', currentUser.uid));
         const usersSnapshot = await getDocs(usersQuery);
@@ -251,8 +250,6 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
 
       // Immediately remove UI maathi
       setVaultData(null);
-
-      // If parent ne info aapvu hoy (vault list refresh mate)
       onVaultDeleted?.(vaultData.id);
 
     } catch (error) {

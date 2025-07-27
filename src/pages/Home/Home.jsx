@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
+import { signOut } from "firebase/auth";
 import { db, auth } from '../../firebase';
 import './Home.css';
 import Vaults from '../../components/Vaults/Vaults';
@@ -12,18 +13,31 @@ const Home = ({ searchQuery, refreshTrigger }) => {
 
   const isFullyLoaded = vaultsLoaded && vaultsDataLoaded && hasData !== null;
 
+  // useEffect(() => {
+  //   if (!auth.currentUser) return;
+
+  //   const q = query(collection(db, "users"), where("uid", "==", auth.currentUser.uid));
+  //   const unsubscribe = onSnapshot(q, (snapshot) => {
+  //     if (snapshot.empty) {
+  //       signOut(auth);
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
   const checkData = async () => {
     if (!auth.currentUser) return setHasData(false);
-    
+
     try {
       const usersQuery = query(collection(db, 'users'), where('uid', '==', auth.currentUser.uid));
       const userDocs = await getDocs(usersQuery);
-      
+
       if (userDocs.empty) return setHasData(false);
-      
+
       const vaultsQuery = query(collection(db, 'users', userDocs.docs[0].id, 'vaults'));
       const vaultsDocs = await getDocs(vaultsQuery);
-      
+
       setHasData(!vaultsDocs.empty);
     } catch (error) {
       setHasData(false);
@@ -66,7 +80,7 @@ const Home = ({ searchQuery, refreshTrigger }) => {
           </div>
         )}
       </div>
-      
+
       {/* Hidden components for loading */}
       <div style={{ display: 'none' }}>
         <Vaults searchQuery={searchQuery} onLoaded={() => setVaultsLoaded(true)} key={`hidden-vaults-${refreshTrigger}`} />

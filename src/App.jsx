@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import Sidebar from '@/components/Sidebar/Sidebar'
-import { useLocation } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes'
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from './Auth/AuthContext';
+import { AuthProvider, useAuth } from './Auth/AuthContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Profile from './pages/Profile/Profile';
 import Login from './Auth/Login';
 import { Routes, Route } from 'react-router-dom';
 
-const App = () => {
+const AppContent = () => {
+  const { currentUser } = useAuth(); 
   const location = useLocation();
   const currentPath = location.pathname;
   const isVaultDetailPage = /^\/vault\/[^/]+$/.test(currentPath);
-  const isCustomAlign =
-    currentPath === '/' ||
-    isVaultDetailPage;
+  const isCustomAlign = currentPath === '/' || isVaultDetailPage;
   const hideSidebarRoutes = ["/premium", "/login", "/signup"];
   const isHideSidebar = hideSidebarRoutes.includes(currentPath);
   const isResetLayout = hideSidebarRoutes.includes(location.pathname);
@@ -24,9 +23,7 @@ const App = () => {
   const [sidebarUsername, setSidebarUsername] = useState('');
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  const handleVaultCreated = () => {
-    setRefreshTrigger(prev => prev + 1);
-  };
+  const handleVaultCreated = () => setRefreshTrigger(prev => prev + 1);
 
   useEffect(() => {
     const existingKey = localStorage.getItem("encryptionKey");
@@ -46,8 +43,13 @@ const App = () => {
     return () => document.body.classList.remove("reset-css");
   }, [location.pathname, isResetLayout]);
 
+  // *** ONLY 1 LINE ADDED ***
+  if (!currentUser && location.pathname !== "/login" && location.pathname !== "/signup") {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
-    <AuthProvider>
+    <>
       {!isResetLayout && (
         <Sidebar 
           searchQuery={searchQuery} 
@@ -58,44 +60,36 @@ const App = () => {
         />
       )}
       <div className="app-layout">
-        <main
-          className={`main-cnt 
-            ${isCustomAlign ? 'custome-align' : ''} 
-            ${isHideSidebar ? 'hide-sidebar' : ''}`}
-        >
+        <main className={`main-cnt ${isCustomAlign ? 'custome-align' : ''} ${isHideSidebar ? 'hide-sidebar' : ''}`}>
           <Routes>
-            {/* Your existing routes */}
             <Route path="/*" element={
               <AppRoutes 
                 searchQuery={searchQuery} 
                 setSidebarUsername={setSidebarUsername} 
-                refreshTrigger={refreshTrigger}/>} 
-              />
-            {/* Login & Protected Profile route */}
+                refreshTrigger={refreshTrigger} />
+            }/>
             <Route path="/login" element={<Login />} />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile setSidebarUsername={setSidebarUsername} />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile setSidebarUsername={setSidebarUsername} />
+              </ProtectedRoute>
+            } />
           </Routes>
           <Toaster
             position="bottom-center"
-            toastOptions={{
-              className: 'custom-toast',
-              duration: 3000
-            }}
-            containerStyle={{
-              bottom: '30px',
-              zIndex: 999999999999999n,
-            }} />
+            toastOptions={{ className: 'custom-toast', duration: 3000 }}
+            containerStyle={{ bottom: '30px', zIndex: 999999999999999n }}
+          />
         </main>
       </div>
-    </AuthProvider>
+    </>
   )
 }
 
-export default App
+const App = () => (
+  <AuthProvider>
+    <AppContent />
+  </AuthProvider>
+);
+
+export default App;

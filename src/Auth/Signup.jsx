@@ -21,6 +21,7 @@ const Signup = () => {
   const [usernameError, setUsernameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [generalError, setGeneralError] = useState('');
 
   const inputRefs = useRef({});
 
@@ -79,23 +80,30 @@ const Signup = () => {
     ) return;
 
     try {
-      // ✅ Firebase Auth signup
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
 
-      // ✅ Store additional user details in Firestore
       await addDoc(collection(db, 'users'), {
         uid: userCredential.user.uid,
         username: formData.username,
         email: formData.email,
         createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        updatedAt: serverTimestamp(),
       });
 
+      setGeneralError('');
       toast.success('Account created successfully');
-      navigate('/login');
+      navigate('/');
     } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        setGeneralError('Email already exists. Please login instead.');
+      } else {
+        setGeneralError(error.message);
+      }
       console.error('Error adding document:', error);
-      toast.error(error.message);
     }
   };
 
@@ -194,6 +202,13 @@ const Signup = () => {
             )
           ))}
         </div>
+        {generalError && (
+          <div className="auth-error">
+            <p className="auth-error-txt">
+              <i className="fa-solid fa-hexagon-exclamation"></i> {generalError}
+            </p>
+          </div>
+        )}
         <div className="auth-already-account">
           <p className="auth-already-account-txt">
             Already have an account? <Link to="/login" className="auth-already-account-link">Login</Link>

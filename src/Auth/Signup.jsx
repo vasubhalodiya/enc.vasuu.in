@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 import { useState, useRef } from 'react';
-import { db, auth } from '@/firebase'; // ✅ auth import added
-import { createUserWithEmailAndPassword } from "firebase/auth"; // ✅ added
+import { db, auth } from '@/firebase';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 

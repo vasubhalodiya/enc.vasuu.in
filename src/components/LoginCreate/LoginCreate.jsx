@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import ContainerCreate from '../ContainerCreate/ContainerCreate';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 import { encryptPassword } from '@/utils/encryption';
 import toast from 'react-hot-toast';
-import { db } from '@/firebase';
+import { db, auth } from '@/firebase';
 
 const LoginCreate = ({ onClose }) => {
   const textareaRef = useRef(null);
@@ -100,24 +100,33 @@ const LoginCreate = ({ onClose }) => {
   const handleCreateVault = async () => {
     if (!validateInputs()) return;
 
-    // **NEW**: Get stored user document id
-    const userToken = localStorage.getItem("userToken");
-    if (!userToken) {
+    if (!auth.currentUser) {
       toast.error("User not found! Please login again.");
       return;
     }
-
-    const title = titleInputRef.current.value.trim();
-    const email = emailInputRef.current.value.trim();
-    const username = usernameInputRef.current.value.trim();
-    const website = websiteInputRef.current.value.trim();
-    const note = textareaRef.current.value.trim();
-
     try {
+      const usersQuery = query(
+        collection(db, 'users'),
+        where('uid', '==', auth.currentUser.uid)
+      );
+      const userDocs = await getDocs(usersQuery);
+      
+      if (userDocs.empty) {
+        toast.error("User document not found!");
+        return;
+      }
+
+      const userDocId = userDocs.docs[0].id;
+
+      const title = titleInputRef.current.value.trim();
+      const email = emailInputRef.current.value.trim();
+      const username = usernameInputRef.current.value.trim();
+      const website = websiteInputRef.current.value.trim();
+      const note = textareaRef.current.value.trim();
+
       const encryptedPass = encryptPassword(password);
 
-      // **NEW**: Use userToken instead of auth.currentUser.uid
-      await addDoc(collection(db, "users", userToken, "vaults"), {
+      await addDoc(collection(db, "users", userDocId, "vaults"), {
         vaultId: crypto.randomUUID(),
         type: "login",
         title,

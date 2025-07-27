@@ -23,6 +23,11 @@
     gap: 15px;
 }
 
+.vd-head-title .back-to-home
+{
+    display: none;
+}
+
 .vd-sec {
     display: flex;
     align-items: center;

@@ -1,27 +1,32 @@
 import { useEffect, useState, useRef } from 'react';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { db, auth } from '../../firebase';
 import '../../pages/Profile/Profile.css';
 
 const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsername }) => {
   const [userData, setUserData] = useState({ email: '', username: '' });
   const [isEditing, setIsEditing] = useState(false);
   const [usernameInput, setUsernameInput] = useState('');
+  const [userDocId, setUserDocId] = useState('');
   const inputRef = useRef(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userDocId = localStorage.getItem('userToken');
-        if (!userDocId) return;
+        if (!auth.currentUser) return;
 
-        const docRef = doc(db, 'users', userDocId);
-        const docSnap = await getDoc(docRef);
+        const usersQuery = query(
+          collection(db, 'users'),
+          where('uid', '==', auth.currentUser.uid)
+        );
+        const userDocs = await getDocs(usersQuery);
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
+        if (!userDocs.empty) {
+          const userDoc = userDocs.docs[0];
+          const data = userDoc.data();
           setUserData(data);
           setUsernameInput(data.username);
+          setUserDocId(userDoc.id);
         } else {
           console.log('No such document!');
         }
@@ -43,7 +48,6 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
   // Save username to Firestore
   const handleSaveUsername = async () => {
     try {
-      const userDocId = localStorage.getItem('userToken');
       if (!userDocId) return;
 
       const userRef = doc(db, 'users', userDocId);

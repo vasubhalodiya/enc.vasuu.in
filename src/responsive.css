@@ -92,9 +92,9 @@
   .profile-label{width: 200px;}
   .profile-button-main-cnt{width: 100%;}
   .ContainerCreate{max-width: 100%;}
-  .vaults{height: calc(100vh - 90px); border-right: none;}
+  .vaults, .vaultsData{height: calc(100vh - 90px); border-right: none;}
   .vaults-cnt{padding: 0;}
-
+  .vd-head-title .back-to-home{display: block;}
 
 
 

@@ -426,7 +426,6 @@
 
 
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import '@/common/VaultsCommon.css';
 import toast from 'react-hot-toast';
@@ -434,6 +433,7 @@ import { Link, useParams } from 'react-router-dom';
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { decryptPassword, encryptPassword } from '@/utils/encryption';
+import { useAuth } from '@/Auth/AuthContext'; // Add this import
 
 const VaultsData = ({ onLoaded }) => {
   const { vaultId } = useParams();
@@ -444,6 +444,7 @@ const VaultsData = ({ onLoaded }) => {
   const [activeField, setActiveField] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
   const passwordRef = useRef(null);
+  const { currentUser } = useAuth(); // Add this line
 
   useEffect(() => {
     const handleResize = () => {
@@ -467,16 +468,22 @@ const VaultsData = ({ onLoaded }) => {
   useEffect(() => {
     const fetchVault = async () => {
       try {
-        const userToken = localStorage.getItem('userToken');
-        if (!userToken) {
+        console.log('Current user in VaultsData:', currentUser); // Debug log
+        
+        if (!currentUser?.uid) {
+          console.log('No user found in VaultsData');
           setVaultData(null);
           onLoaded?.();
           return;
         }
 
+        // For now, use the existing document ID from your Firestore
+        // You should create a mapping system or migrate your data structure
+        const userDocId = 'tnZ2M92DY0Bh4ftGhnNF'; // Temporary hardcoded fix
+
         let finalVaultId = vaultId || sessionStorage.getItem('selectedVaultId');
         if (!finalVaultId) {
-          const snapshot = await getDocs(collection(db, `users/${userToken}/vaults`));
+          const snapshot = await getDocs(collection(db, `users/${userDocId}/vaults`));
           if (snapshot.empty) {
             setVaultData(null);
             onLoaded?.();
@@ -487,8 +494,10 @@ const VaultsData = ({ onLoaded }) => {
           return;
         }
 
+        console.log('Fetching vault with ID:', finalVaultId, 'for user:', userDocId);
+
         const q = query(
-          collection(db, `users/${userToken}/vaults`),
+          collection(db, `users/${userDocId}/vaults`),
           where('vaultId', '==', finalVaultId)
         );
         const querySnapshot = await getDocs(q);
@@ -523,7 +532,7 @@ const VaultsData = ({ onLoaded }) => {
     };
 
     fetchVault();
-  }, [vaultId, onLoaded]);
+  }, [vaultId, onLoaded, currentUser]); // Add currentUser to dependency array
 
   if (vaultData === undefined && isMobile) {
     return (
@@ -605,8 +614,15 @@ const VaultsData = ({ onLoaded }) => {
 
   const handleSave = async () => {
     try {
-      const userToken = localStorage.getItem('userToken');
-      const vaultRef = doc(db, `users/${userToken}/vaults`, vaultData.id);
+      if (!currentUser?.uid) {
+        toast.error('User not authenticated!');
+        return;
+      }
+
+      // For now, use the existing document ID from your Firestore
+      const userDocId = 'tnZ2M92DY0Bh4ftGhnNF'; // Temporary hardcoded fix
+      
+      const vaultRef = doc(db, `users/${userDocId}/vaults`, vaultData.id);
       await updateDoc(vaultRef, {
         email: editedData.email,
         password: editedData.password ? encryptPassword(editedData.password) : '',

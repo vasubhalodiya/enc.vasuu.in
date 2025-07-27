@@ -7,8 +7,8 @@ import Navbar from '../Navbar/Navbar';
 import LoginCreate from '../LoginCreate/LoginCreate';
 import CardCreate from '../CardCreate/CardCreate';
 import NoteCreate from '../NoteCreate/NoteCreate';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db, auth } from '../../firebase';
 
 const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername }) => {
   const location = useLocation();
@@ -18,13 +18,23 @@ const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername }) => {
   const [selectedDrawer, setSelectedDrawer] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [fetchedUsername, setFetchedUsername] = useState("");
+
   useEffect(() => {
     const fetchUsername = async () => {
       if (username === "") {
-        const userDocId = localStorage.getItem("userToken");
-        if (!userDocId) return;
-        const docSnap = await getDoc(doc(db, "users", userDocId));
-        if (docSnap.exists()) setFetchedUsername(docSnap.data().username || "...");
+        if (!auth.currentUser) return;
+        try {
+          const usersQuery = query(
+            collection(db, 'users'),
+            where('uid', '==', auth.currentUser.uid)
+          );
+          const userDocs = await getDocs(usersQuery);
+          if (!userDocs.empty) {
+            setFetchedUsername(userDocs.docs[0].data().username || "...");
+          }
+        } catch (error) {
+          console.error('Error fetching username:', error);
+        }
       }
     };
     fetchUsername();
@@ -33,14 +43,16 @@ const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername }) => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const userDocId = localStorage.getItem('userToken');
-        if (!userDocId) return;
+        if (!auth.currentUser) return;
         
-        const userRef = doc(db, 'users', userDocId);
-        const userSnap = await getDoc(userRef);
+        const usersQuery = query(
+          collection(db, 'users'),
+          where('uid', '==', auth.currentUser.uid)
+        );
+        const userDocs = await getDocs(usersQuery);
         
-        if (userSnap.exists() && setUsername) {
-          setUsername(userSnap.data().username || '...');
+        if (!userDocs.empty && setUsername) {
+          setUsername(userDocs.docs[0].data().username || '...');
         }
       } catch (error) {
         console.error('Error fetching username:', error);

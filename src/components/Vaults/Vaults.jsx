@@ -160,11 +160,33 @@
 
 // export default Vaults;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './Vaults.css';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '@/Auth/AuthContext'; // Add this import
 
 const Vaults = ({ searchQuery, onLoaded }) => {
   const vaultsRef = useRef(null);
@@ -175,6 +197,7 @@ const Vaults = ({ searchQuery, onLoaded }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
   const navigate = useNavigate();
   const { vaultId } = useParams();
+  const { currentUser } = useAuth(); // Add this line
 
   // Mobile detection
   useEffect(() => {
@@ -194,11 +217,15 @@ const Vaults = ({ searchQuery, onLoaded }) => {
   };
 
   useEffect(() => {
-    const userToken = localStorage.getItem('userToken');
-    if (!userToken) return;
+    if (!currentUser?.uid) {
+      console.log('No user found, setting loading to false');
+      setLoading(false);
+      return;
+    }
 
+    const userDocId = 'tnZ2M92DY0Bh4ftGhnNF'; // Temporary hardcoded fix
     const q = query(
-      collection(db, `users/${userToken}/vaults`),
+      collection(db, `users/${userDocId}/vaults`),
       orderBy('createdAt', 'asc')
     );
 
@@ -207,12 +234,17 @@ const Vaults = ({ searchQuery, onLoaded }) => {
         id: doc.id,
         ...doc.data()
       }));
+      
       setVaultItems(data);
       setLoading(false);
       onLoaded?.();
+    }, (error) => {
+      console.error('Error fetching vaults:', error); // Error handling
+      setLoading(false);
     });
+    
     return () => unsubscribe();
-  }, [onLoaded]);
+  }, [onLoaded, currentUser]); // Add currentUser to dependency array
 
   const filteredVaults = useMemo(() => {
     if (!searchQuery || searchQuery.trim() === '') {

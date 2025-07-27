@@ -223,7 +223,7 @@ input:-webkit-autofill {
   height: 35px;
   color: var(--light-color);
   background-color: var(--soft-accent-color);
-  font-size: 16px;
+  font-size: 15px;
   border-radius: 10px;
   display: flex;
   align-items: center;

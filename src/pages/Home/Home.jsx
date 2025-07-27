@@ -13,7 +13,15 @@ const Home = ({ searchQuery, refreshTrigger }) => {
   const [internalRefresh, setInternalRefresh] = useState(0);
 
   const handleVaultDeleted = () => {
-    setInternalRefresh(prev => prev + 1); // 🔹 force refresh
+    setInternalRefresh(prev => prev + 1);
+  };
+
+  const handleVaultCreated = () => {
+    setVaultsLoaded(false);
+    setVaultsDataLoaded(false);
+    setHasData(null);
+    setInternalRefresh(prev => prev + 1);
+    checkData();
   };
 
   const isFullyLoaded = vaultsLoaded && vaultsDataLoaded && hasData !== null;
@@ -62,6 +70,13 @@ const Home = ({ searchQuery, refreshTrigger }) => {
     }
   }, [refreshTrigger]);
 
+  useEffect(() => {
+    window.handleVaultCreated = handleVaultCreated;
+    return () => {
+      delete window.handleVaultCreated;
+    };
+  }, []);
+
   return (
     <>
       <div className="home">
@@ -71,9 +86,12 @@ const Home = ({ searchQuery, refreshTrigger }) => {
           </div>
         ) : hasData ? (
           <div className="home-cnt master-cnt">
-            <Vaults searchQuery={searchQuery} key={refreshTrigger} />
+            <Vaults 
+              searchQuery={searchQuery} 
+              key={`vaults-${refreshTrigger}-${internalRefresh}`} 
+            />
             <VaultsData
-              key={refreshTrigger + internalRefresh}
+              key={`vaultsdata-${refreshTrigger}-${internalRefresh}`}
               onVaultDeleted={handleVaultDeleted}
               onLoaded={() => setVaultsDataLoaded(true)}
             />
@@ -92,8 +110,15 @@ const Home = ({ searchQuery, refreshTrigger }) => {
 
       {/* Hidden components for loading */}
       <div style={{ display: 'none' }}>
-        <Vaults searchQuery={searchQuery} onLoaded={() => setVaultsLoaded(true)} key={`hidden-vaults-${refreshTrigger}`} />
-        <VaultsData onLoaded={() => setVaultsDataLoaded(true)} key={`hidden-vaultsdata-${refreshTrigger}`} />
+        <Vaults 
+          searchQuery={searchQuery} 
+          onLoaded={() => setVaultsLoaded(true)} 
+          key={`hidden-vaults-${refreshTrigger}-${internalRefresh}`} 
+        />
+        <VaultsData 
+          onLoaded={() => setVaultsDataLoaded(true)} 
+          key={`hidden-vaultsdata-${refreshTrigger}-${internalRefresh}`} 
+        />
       </div>
     </>
   );

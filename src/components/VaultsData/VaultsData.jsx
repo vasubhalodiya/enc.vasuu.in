@@ -424,8 +424,6 @@
 
 
 
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import '@/common/VaultsCommon.css';
 import toast from 'react-hot-toast';
@@ -434,6 +432,7 @@ import { collection, getDocs, query, where, updateDoc, deleteDoc, doc } from 'fi
 import { db } from '@/firebase';
 import { decryptPassword, encryptPassword } from '@/utils/encryption';
 import { useAuth } from '@/Auth/AuthContext'; // Add this import
+import Popup from '../Popup/Popup';
 
 const VaultsData = ({ onLoaded, onVaultDeleted }) => {
   const { vaultId } = useParams();
@@ -444,13 +443,14 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
   const [activeField, setActiveField] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
   const passwordRef = useRef(null);
-  const { currentUser } = useAuth(); // Add this line
+  const { currentUser } = useAuth();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 575);
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -468,13 +468,25 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
   useEffect(() => {
     const fetchVault = async () => {
       try {
-        
+
         if (!currentUser?.uid) {
           setVaultData(null);
           onLoaded?.();
           return;
         }
-        const userDocId = 'tnZ2M92DY0Bh4ftGhnNF'; // Temporary hardcoded fix
+
+        const getUserDocId = async () => {
+          const usersQuery = query(collection(db, 'users'), where('uid', '==', currentUser.uid));
+          const usersSnapshot = await getDocs(usersQuery);
+          return usersSnapshot.empty ? null : usersSnapshot.docs[0].id;
+        };
+
+        const userDocId = await getUserDocId();
+        if (!userDocId) {
+          setVaultData(null);
+          onLoaded?.();
+          return;
+        }
 
         let finalVaultId = vaultId || sessionStorage.getItem('selectedVaultId');
         if (!finalVaultId) {
@@ -611,9 +623,18 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
         return;
       }
 
-      // For now, use the existing document ID from your Firestore
-      const userDocId = 'tnZ2M92DY0Bh4ftGhnNF'; // Temporary hardcoded fix
-      
+      const getUserDocId = async () => {
+        const usersQuery = query(collection(db, 'users'), where('uid', '==', currentUser.uid));
+        const usersSnapshot = await getDocs(usersQuery);
+        return usersSnapshot.empty ? null : usersSnapshot.docs[0].id;
+      };
+
+      const userDocId = await getUserDocId();
+      if (!userDocId) {
+        toast.error('User document not found!');
+        return;
+      }
+
       const vaultRef = doc(db, `users/${userDocId}/vaults`, vaultData.id);
       await updateDoc(vaultRef, {
         email: editedData.email,
@@ -635,9 +656,20 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
   const handleDeleteVault = async () => {
     try {
       if (!vaultData?.id) return toast.error("Vault not found!");
+      if (!currentUser?.uid) return toast.error("User not authenticated!");
 
-      // Hardcoded user docId (tame dynamic banavta hovo to better)
-      const userDocId = 'tnZ2M92DY0Bh4ftGhnNF';
+      // Find user document by uid and get its document ID
+      const getUserDocId = async () => {
+        const usersQuery = query(collection(db, 'users'), where('uid', '==', currentUser.uid));
+        const usersSnapshot = await getDocs(usersQuery);
+        return usersSnapshot.empty ? null : usersSnapshot.docs[0].id;
+      };
+
+      const userDocId = await getUserDocId();
+      if (!userDocId) {
+        toast.error('User document not found!');
+        return;
+      }
 
       await deleteDoc(doc(db, `users/${userDocId}/vaults`, vaultData.id));
 
@@ -695,8 +727,11 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
               </div>
             )}
             <div>
-              <button className="vd-delete-btn mini-master-btn" onClick={handleDeleteVault}>
-                <i class="fa-light fa-trash-can"></i>
+              <button
+                className="vd-delete-btn mini-master-btn"
+                onClick={() => setShowDeletePopup(true)}
+              >
+                <i className="fa-light fa-trash-can"></i>
               </button>
             </div>
           </div>
@@ -897,20 +932,22 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
           </div>
         </div>
       </div>
+      {showDeletePopup && (
+        <Popup
+          onClose={() => setShowDeletePopup(false)}
+          title="Delete Vault"
+          description="Are you sure you want to delete this vault? This action cannot be undone."
+          cancelText="No, Keep It"
+          confirmText="Yes, Delete"
+          onConfirm={() => {
+            handleDeleteVault();
+            setShowDeletePopup(false);
+          }}
+        />
+      )}
+
     </div>
   );
 };
 
 export default VaultsData;
-
-
-// {showPopup &&
-//   <Popup
-//     onClose={() => setShowPopup(false)}
-//     title="Delete Account"
-//     description="Are you sure you want to delete your account? This action cannot be undone."
-//     cancelText="No, Keep It"
-//     confirmText="Yes, Delete"
-//     onConfirm={handleDelete}
-//   />
-// }

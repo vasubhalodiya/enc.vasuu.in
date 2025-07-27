@@ -141,9 +141,12 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
 
       toast.success("Login credentials saved successfully.");
       
-      // Trigger the callback to refresh data in parent component
       if (onVaultCreated) {
         onVaultCreated();
+      }
+      
+      if (window.handleVaultCreated) {
+        window.handleVaultCreated();
       }
       
       onClose();

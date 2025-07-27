@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './Vaults.css';
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy, getDocs, where } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '@/Auth/AuthContext'; // Add this import
@@ -40,27 +40,46 @@ const Vaults = ({ searchQuery, onLoaded }) => {
       return;
     }
 
-    const userDocId = 'tnZ2M92DY0Bh4ftGhnNF'; // Temporary hardcoded fix
-    const q = query(
-      collection(db, `users/${userDocId}/vaults`),
-      orderBy('createdAt', 'asc')
-    );
+    // Find user document by uid and get its document ID
+    const getUserDocId = async () => {
+      const usersQuery = query(collection(db, 'users'), where('uid', '==', currentUser.uid));
+      const usersSnapshot = await getDocs(usersQuery);
+      return usersSnapshot.empty ? null : usersSnapshot.docs[0].id;
+    };
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+    const setupListener = async () => {
+      const userDocId = await getUserDocId();
+      if (!userDocId) {
+        setLoading(false);
+        return;
+      }
+
+      const q = query(
+        collection(db, `users/${userDocId}/vaults`),
+        orderBy('createdAt', 'asc')
+      );
+
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const data = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        
+        setVaultItems(data);
+        setLoading(false);
+        onLoaded?.();
+      }, (error) => {
+        console.error('Error fetching vaults:', error); // Error handling
+        setLoading(false);
+      });
       
-      setVaultItems(data);
-      setLoading(false);
-      onLoaded?.();
-    }, (error) => {
-      console.error('Error fetching vaults:', error); // Error handling
-      setLoading(false);
-    });
+      return unsubscribe;
+    };
+
+    let unsubscribe;
+    setupListener().then(unsub => unsubscribe = unsub);
     
-    return () => unsubscribe();
+    return () => unsubscribe?.();
   }, [onLoaded, currentUser]); // Add currentUser to dependency array
 
   const filteredVaults = useMemo(() => {

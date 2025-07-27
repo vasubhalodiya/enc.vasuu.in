@@ -23,8 +23,7 @@ const AppRoutes = ({ searchQuery, setSidebarUsername, refreshTrigger }) => {
     <Routes>
       {isMobile ? (
         <>
-          <Route path="/" element={<Navigate to="/vaults" />} />
-          <Route path="/vaults" element={<Vaults searchQuery={searchQuery} />} />
+          <Route path="/" element={<Vaults searchQuery={searchQuery} />} />
           <Route
             path="/vault/:vaultId"
             element={

@@ -14,9 +14,8 @@ const Vaults = ({ searchQuery, onLoaded }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
   const navigate = useNavigate();
   const { vaultId } = useParams();
-  const { currentUser } = useAuth(); // Add this line
+  const { currentUser } = useAuth();
 
-  // Mobile detection
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 575);
@@ -25,6 +24,13 @@ const Vaults = ({ searchQuery, onLoaded }) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    if (isMobile && vaultId) {
+      navigate('/', { replace: true });
+    }
+  }, [isMobile, vaultId, navigate]);
+
 
   const handleVaultClick = (vault) => {
     const urlVaultId = vault.vaultId || vault.id;
@@ -54,8 +60,7 @@ const Vaults = ({ searchQuery, onLoaded }) => {
           setLoading(false);
           onLoaded?.();
 
-          // auto-select first vault (latest)
-          if ((!vaultId || vaultId === 'null') && data.length > 0) {
+          if (!isMobile && (!vaultId || vaultId === 'null') && data.length > 0) {
             const recentVault = data[data.length - 1];
             navigate(`/vault/${recentVault.vaultId || recentVault.id}`);
           }

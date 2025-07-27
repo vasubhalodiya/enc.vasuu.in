@@ -21,46 +21,22 @@ const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername, onVaultCr
 
   useEffect(() => {
     const fetchUsername = async () => {
-      if (username === "") {
-        if (!auth.currentUser) return;
-        try {
-          const usersQuery = query(
-            collection(db, 'users'),
-            where('uid', '==', auth.currentUser.uid)
-          );
-          const userDocs = await getDocs(usersQuery);
-          if (!userDocs.empty) {
-            setFetchedUsername(userDocs.docs[0].data().username || "...");
-          }
-        } catch (error) {
-          console.error('Error fetching username:', error);
-        }
-      }
-    };
-    fetchUsername();
-  }, [username]);
-
-  useEffect(() => {
-    const fetchUsername = async () => {
+      if (!auth.currentUser) return;
       try {
-        if (!auth.currentUser) return;
-        
         const usersQuery = query(
           collection(db, 'users'),
           where('uid', '==', auth.currentUser.uid)
         );
         const userDocs = await getDocs(usersQuery);
-        
-        if (!userDocs.empty && setUsername) {
-          setUsername(userDocs.docs[0].data().username || '...');
+        if (!userDocs.empty) {
+          setUsername(userDocs.docs[0].data().username || "...");
         }
       } catch (error) {
         console.error('Error fetching username:', error);
       }
     };
-    
     fetchUsername();
-  }, [setUsername]);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -81,7 +57,7 @@ const Sidebar = ({ searchQuery, setSearchQuery, username, setUsername, onVaultCr
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
-  
+
   return (
     <>
       <div className={`sidebar desktop-menu ${isTablet && isOpen ? 'open' : ''}`}>

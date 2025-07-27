@@ -77,6 +77,13 @@ const Home = ({ searchQuery, refreshTrigger }) => {
     };
   }, []);
 
+  // **Added - clear last vault for mobile**
+  useEffect(() => {
+    if (window.innerWidth <= 575) {
+      localStorage.removeItem('lastVaultId');
+    }
+  }, []);
+
   return (
     <>
       <div className="home">
@@ -99,8 +106,7 @@ const Home = ({ searchQuery, refreshTrigger }) => {
         ) : (
           <div className="home-no-data">
             <div className="no-data-message">
-              {/* <img src={images.failure} alt="failure" className='failure-img' /> */}
-              <i class="fa-light fa-face-frown-slight"></i>
+              <i className="fa-light fa-face-frown-slight"></i>
               <h3 className='failure-txt'>No Data Found</h3>
               <p className='failure-subtxt'>You haven't created any vaults yet. Start by creating your first vault!</p>
             </div>

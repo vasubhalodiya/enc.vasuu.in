@@ -60,7 +60,10 @@ const ProfileSecurity = ({ profileTab }) => {
                     </div>
                   ))}
 
-                  {showPopup && <Popup onClose={() => setShowPopup(false)} />}
+                  {showPopup && 
+                    <Popup 
+                      onClose={() => setShowPopup(false)}
+                    />}
                 </div>
               </div>
             </div>

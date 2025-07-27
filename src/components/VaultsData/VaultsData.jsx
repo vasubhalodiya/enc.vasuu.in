@@ -544,7 +544,7 @@ const VaultsData = ({ onLoaded }) => {
 
   if (shouldShowNoVault) {
     return <div className="vaultsData">
-      No vault found. Please create one.
+      No vault selected. Please select one.
     </div>;
   }
 

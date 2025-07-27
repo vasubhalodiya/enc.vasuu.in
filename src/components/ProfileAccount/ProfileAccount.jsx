@@ -5,6 +5,8 @@ import { db, auth } from '../../firebase';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import '../../pages/Profile/Profile.css';
+import { deleteDoc } from "firebase/firestore";
+import { deleteUser } from "firebase/auth";
 
 const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsername }) => {
   const [userData, setUserData] = useState({ email: '', username: '' });
@@ -13,6 +15,7 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
   const [userDocId, setUserDocId] = useState('');
   const inputRef = useRef(null);
   const navigate = useNavigate();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -41,6 +44,23 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
 
     fetchUserData();
   }, []);
+
+  const handleDeleteAccount = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      await deleteDoc(doc(db, "users", user.uid));
+
+      await deleteUser(user);
+
+      toast.success("Account deleted successfully");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast.error("Failed to delete account");
+    }
+  };
 
   // Auto focus when edit mode starts
   useEffect(() => {
@@ -153,13 +173,27 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
                     <h5 className="profile-danger-message">
                       This will permanently delete your account and all of its data. You will not be able to reactivate this account.
                     </h5>
-                    <div className="profile-danger-btn">Delete Account</div>
+                    <div className="profile-danger-btn" onClick={() => setShowDeletePopup(true)}>
+                      Delete Account
+                    </div>
                   </div>
                 </div>
               )}
             </div>
           </div>
         </div>
+      )}
+      {showDeletePopup && (
+        <Popup
+          onClose={() => setShowDeletePopup(false)}
+          title="Delete Account"
+          description="Are you sure you want to permanently delete your account? This action cannot be undone."
+          cancelText="Cancel"
+          confirmText="Delete"
+          onConfirm={handleDeleteAccount}
+          mode="danger"
+          showPasswordField={false}
+        />
       )}
     </>
   );

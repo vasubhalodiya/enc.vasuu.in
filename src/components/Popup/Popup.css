@@ -51,10 +51,16 @@
 .popup-desc {
   color: var(--low-light-color);
   background-color: var(--soft-accent-color);
+  border-left: 4px solid var(--accent-color);
   font-size: 13px;
   font-family: 'Int-Regular';
   padding: 10px 12px;
   border-radius: 8px;
+}
+
+.popup-danger-desc {
+  background-color: rgb(255, 117, 117, 0.15);
+  border-left: 4px solid #ff4e4e;
 }
 
 .popup-actions {

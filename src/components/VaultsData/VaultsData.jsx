@@ -536,6 +536,7 @@ const VaultsData = ({ onLoaded, onVaultDeleted }) => {
           description="Are you sure you want to delete this vault? This action cannot be undone."
           cancelText="No, Keep It"
           confirmText="Yes, Delete"
+          mode="danger"
           onConfirm={() => {
             handleDeleteVault();
             setShowDeletePopup(false);

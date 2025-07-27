@@ -67,7 +67,6 @@ const ProfileSecurity = ({ profileTab }) => {
                       description="Please confirm your password in order to unregister your current lock."
                       cancelText="Cancel"
                       confirmText="Authenticate"
-                      // onConfirm={handleDelete}
                     />
                   }
                 </div>

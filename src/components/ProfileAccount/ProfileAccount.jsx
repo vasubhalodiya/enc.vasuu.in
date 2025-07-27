@@ -194,7 +194,6 @@ const ProfileAccount = ({ profileTab, dangerZone, setDangerZone, setSidebarUsern
           confirmText="Delete"
           onConfirm={handleDeleteAccount}
           mode="danger"
-          showPasswordField={false}
         />
       )}
     </>

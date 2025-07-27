@@ -21,7 +21,6 @@ const Popup = ({
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
-  const isDanger = mode === "danger";
 
   return (
     <>
@@ -34,11 +33,11 @@ const Popup = ({
           </button>
         </div>
 
-        <p className={`popup-desc ${isDanger ? "popup-danger-desc" : ""}`}>
+        <p className={`popup-desc ${ mode === "danger" ? "popup-danger-desc" : "" }`} >
           {description}
         </p>
 
-        {showPasswordField && !isDanger && (
+        {showPasswordField && (
           <div
             className="auth-input-field auth-group-box auth-clickable"
             onClick={handleFieldClick}>

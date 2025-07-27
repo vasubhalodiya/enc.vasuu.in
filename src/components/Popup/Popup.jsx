@@ -60,10 +60,10 @@ const Popup = ({ onClose }) => {
         </div>
 
         <div className="popup-actions">
-          <button className="btn-cancel" onClick={onClose}>
+          <button className="popup-cancel-btn" onClick={onClose}>
             Cancel
           </button>
-          <button className="btn-authenticate">Authenticate</button>
+          <button className="popup-success-btn">Authenticate</button>
         </div>
       </div>
     </>

@@ -50,11 +50,41 @@
 
 /* ================================================================== */
 
+.no-data-message
+{
+    width: 100%;
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 
+.no-data-message i
+{
+    font-size: 50px;
+    color: var(--error-color);
+    opacity: 0.6;
+}
 
+.failure-txt
+{
+    color: var(--light-color);
+    font-size: 25px;
+    font-family: 'Int-SemiBold';
+}
 
-
-
+.failure-subtxt
+{
+    width: 40%;
+    color: var(--text-color);
+    font-size: 14px;
+    font-family: 'Int-Medium';
+    text-align: center;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+}
 
 
 

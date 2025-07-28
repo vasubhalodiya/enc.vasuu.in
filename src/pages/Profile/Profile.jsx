@@ -28,7 +28,7 @@ const Profile = ({ setSidebarUsername }) => {
 
   const tabOptions = [
     { key: 'account', label: 'Account' },
-    { key: 'security', label: 'Security' },
+    // { key: 'security', label: 'Security' },
     { key: 'about', label: 'About Project' },
   ];
 

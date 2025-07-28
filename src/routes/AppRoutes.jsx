@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '@/pages/Home/Home';
 import Vaults from '@/components/Vaults/Vaults';
 import VaultsData from '@/components/VaultsData/VaultsData';
-import SessionLogin from '@/components/SessionLogin/SessionLogin';
 import PassGenerator from '@/pages/PassGenerator/PassGenerator';
 import Premium from '@/pages/Premium/Premium';
 import Profile from '@/pages/Profile/Profile';
@@ -46,7 +45,6 @@ const AppRoutes = ({ searchQuery, setSidebarUsername, refreshTrigger }) => {
       <Route path="/profile" element={<Profile setSidebarUsername={setSidebarUsername} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/sessionlogin" element={<SessionLogin />} />
       <Route path="*" element={<Error />} />
     </Routes>
   );

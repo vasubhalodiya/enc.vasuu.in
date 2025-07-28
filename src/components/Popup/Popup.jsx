@@ -63,8 +63,7 @@ const Popup = ({
         {mode === "password" && showPasswordField && (
           <div
             className="auth-input-field auth-group-box auth-clickable"
-            onClick={() => inputRef.current?.focus()}
-          >
+            onClick={() => inputRef.current?.focus()}>
             <div className="auth-icon popup-icon">
               <i className="fa-light fa-key"></i>
             </div>
@@ -84,12 +83,11 @@ const Popup = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowPassword((prev) => !prev);
-                }}
-              >
+                }}>
                 {showPassword ? (
                   <i className="fa-light fa-eye-slash"></i>
                 ) : (
-                  <i className="fa-light fa-eye"></i>
+                  <i className="fa-light fa-eyes"></i>
                 )}
               </button>
             </div>

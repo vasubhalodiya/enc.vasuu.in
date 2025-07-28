@@ -61,8 +61,8 @@ const Vaults = ({ searchQuery, onLoaded }) => {
           onLoaded?.();
 
           if (!isMobile && (!vaultId || vaultId === 'null') && data.length > 0) {
-            const recentVault = data[data.length - 1];
-            navigate(`/vault/${recentVault.vaultId || recentVault.id}`);
+            const firstVault = data[0];
+            navigate(`/vault/${firstVault.vaultId || firstVault.id}`);
           }
         });
       } catch (error) {
@@ -141,11 +141,10 @@ const Vaults = ({ searchQuery, onLoaded }) => {
   return (
     <div className="vaults" ref={vaultsRef}>
       <div className="vaults-cnt">
-        <div className="vaults-add-multiselect">
+        {/* <div className="vaults-add-multiselect">
           <button className="vaults-multiselect"><i className="fa-light fa-check-double"></i>Multiselect</button>
           <button className="vaults-filter"><i className="fa-regular fa-clock"></i>Recent</button>
-        </div>
-
+        </div> */}
         <div className="vaults-list-group">
           <h6 className="vaults-title master-title">Vaults</h6>
           <div className="vaults-menu">

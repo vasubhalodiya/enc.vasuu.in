@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./Popup.css";
 
 const Popup = ({
@@ -9,17 +9,39 @@ const Popup = ({
   confirmText = "",
   onConfirm,
   showPasswordField = true,
-  mode = "default",
+  mode = "default", // "password" | "pin" | "confirm"
 }) => {
   const inputRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [pin, setPin] = useState(["", "", "", "", "", ""]);
 
-  const handleFieldClick = () => {
-    if (inputRef.current) inputRef.current.focus();
+  // Focus first pin box automatically when mode=pin
+  useEffect(() => {
+    if (mode === "pin") {
+      const firstInput = document.getElementById("pin-0");
+      if (firstInput) firstInput.focus();
+    }
+  }, [mode]);
+
+  const handlePinChange = (value, index) => {
+    if (/^[0-9]?$/.test(value)) {
+      const newPin = [...pin];
+      newPin[index] = value;
+      setPin(newPin);
+
+      if (value && index < 5) {
+        document.getElementById(`pin-${index + 1}`).focus();
+      }
+    }
   };
 
-  const togglePassword = () => {
-    setShowPassword((prev) => !prev);
+  const handlePinKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !pin[index] && index > 0) {
+      document.getElementById(`pin-${index - 1}`).focus();
+      const newPin = [...pin];
+      newPin[index - 1] = "";
+      setPin(newPin);
+    }
   };
 
   return (
@@ -33,14 +55,16 @@ const Popup = ({
           </button>
         </div>
 
-        <p className={`popup-desc ${ mode === "danger" ? "popup-danger-desc" : "" }`} >
+        <p className={`popup-desc ${mode === "danger" ? "popup-danger-desc" : ""}`}>
           {description}
         </p>
 
-        {showPasswordField && (
+        {/* Password Mode */}
+        {mode === "password" && showPasswordField && (
           <div
             className="auth-input-field auth-group-box auth-clickable"
-            onClick={handleFieldClick}>
+            onClick={() => inputRef.current?.focus()}
+          >
             <div className="auth-icon popup-icon">
               <i className="fa-light fa-key"></i>
             </div>
@@ -59,8 +83,9 @@ const Popup = ({
                 className="auth-pass-show-icon popup-icon"
                 onClick={(e) => {
                   e.stopPropagation();
-                  togglePassword();
-                }}>
+                  setShowPassword((prev) => !prev);
+                }}
+              >
                 {showPassword ? (
                   <i className="fa-light fa-eye-slash"></i>
                 ) : (
@@ -71,11 +96,34 @@ const Popup = ({
           </div>
         )}
 
+        {/* PIN Mode */}
+        {mode === "pin" && (
+          <div className="pin-input-container">
+            {pin.map((digit, index) => (
+              <input
+                key={index}
+                id={`pin-${index}`}
+                type="password"
+                maxLength={1}
+                className="pin-input"
+                value={digit}
+                onChange={(e) => handlePinChange(e.target.value, index)}
+                onKeyDown={(e) => handlePinKeyDown(e, index)}
+              />
+            ))}
+          </div>
+        )}
+
         <div className="popup-actions">
           <button className="popup-cancel-btn" onClick={onClose}>
             {cancelText}
           </button>
-          <button className="popup-success-btn" onClick={onConfirm}>
+          <button
+            className="popup-success-btn"
+            onClick={() =>
+              onConfirm?.(mode === "pin" ? pin.join("") : undefined)
+            }
+          >
             {confirmText}
           </button>
         </div>
@@ -84,4 +132,4 @@ const Popup = ({
   );
 };
 
-export default Popup;
+export default Popup;   // ✅ PROPER DEFAULT EXPORT

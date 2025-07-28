@@ -16,7 +16,7 @@ const AppContent = () => {
   const currentPath = location.pathname;
   const isVaultDetailPage = /^\/vault\/[^/]+$/.test(currentPath);
   const isCustomAlign = currentPath === '/' || isVaultDetailPage;
-  const hideSidebarRoutes = ["/premium", "/login", "/signup"];
+  const hideSidebarRoutes = ["/premium", "/login", "/signup", "/sessionlogin"];
   const isHideSidebar = hideSidebarRoutes.includes(currentPath);
   const isResetLayout = hideSidebarRoutes.includes(location.pathname);
   const [searchQuery, setSearchQuery] = useState('');

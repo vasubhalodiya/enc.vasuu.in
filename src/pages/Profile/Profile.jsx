@@ -101,7 +101,7 @@ const Profile = ({ setSidebarUsername }) => {
             setDangerZone={setDangerZone}
             setSidebarUsername={setSidebarUsername}
           />
-          <ProfileSecurity profileTab={profileTab} />
+          {/* <ProfileSecurity profileTab={profileTab} /> */}
           <ProfileAboutProject profileTab={profileTab} />
         </div>
       </div>

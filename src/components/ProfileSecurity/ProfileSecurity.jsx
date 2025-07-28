@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../pages/Profile/Profile.css';
 import Popup from '../Popup/Popup';
 
@@ -8,23 +8,74 @@ const unlockOptions = [
   { title: "Password", desc: "Access will always require your ENCRYPT password." }
 ];
 
+const SESSION_KEY = "lockSession";   // sessionStorage key
+const SESSION_DURATION = 1 * 60 * 1000; // 5 minutes
+
 const ProfileSecurity = ({ profileTab }) => {
   const [selectedOption, setSelectedOption] = useState('None');
   const [previousOption, setPreviousOption] = useState('None');
   const [popupType, setPopupType] = useState(null);
+  const [sessionActive, setSessionActive] = useState(false);
 
+  // ---- Load session on mount ----
+  useEffect(() => {
+    const sessionData = sessionStorage.getItem(SESSION_KEY);
+    if (sessionData) {
+      const parsed = JSON.parse(sessionData);
+      if (parsed.expiresAt > Date.now()) {
+        setSelectedOption(parsed.lockType);
+        setSessionActive(parsed.lockType === "password" || parsed.lockType === "pin");
+      } else {
+        sessionStorage.removeItem(SESSION_KEY);
+      }
+    }
+  }, []);
+
+  // ---- Handle option click ----
   const handleSelect = (title) => {
-    setPreviousOption(selectedOption); // Save old active
+    setPreviousOption(selectedOption);
     if (title === "Password") setPopupType("password");
     else if (title === "PIN code") setPopupType("pin");
     else setPopupType("confirm");
-
-    setSelectedOption(title); // Temporarily highlight clicked option
+    setSelectedOption(title);
   };
 
   const handleClose = () => {
-    setSelectedOption(previousOption); // revert to old if cancelled
+    setSelectedOption(previousOption);
     setPopupType(null);
+  };
+
+  const handleConfirm = (data) => {
+    if (popupType === "password") {
+      // Normally validate password with API
+      startSession("password");
+    } else if (popupType === "pin") {
+      // Normally validate / set PIN
+      startSession("pin");
+    } else {
+      clearSession();
+    }
+    setPopupType(null);
+  };
+
+  // ---- Start session ----
+  const startSession = (lockType) => {
+    const expiresAt = Date.now() + SESSION_DURATION;
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ lockType, expiresAt }));
+    setSessionActive(true);
+
+    // Auto expire after time
+    setTimeout(() => {
+      clearSession();
+      alert("Session expired. Please re-authenticate.");
+    }, SESSION_DURATION);
+  };
+
+  // ---- Clear session ----
+  const clearSession = () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    setSessionActive(false);
+    setSelectedOption("None");
   };
 
   return (
@@ -61,6 +112,7 @@ const ProfileSecurity = ({ profileTab }) => {
             <Popup
               mode={popupType}
               onClose={handleClose}
+              onConfirm={handleConfirm}
               title={
                 popupType === "password"
                   ? "Enter Password"
@@ -70,9 +122,9 @@ const ProfileSecurity = ({ profileTab }) => {
               }
               description={
                 popupType === "password"
-                  ? "Please confirm your password in order to unregister your current lock."
+                  ? "Please confirm your password in order to register your lock."
                   : popupType === "pin"
-                    ? "You will use this PIN to unlock ENCRYPT once it auto-locks after a period of inactivity."
+                    ? "You will use this PIN to unlock ENCRYPT once it auto-locks."
                     : "Are you sure you want to disable lock?"
               }
               cancelText="Cancel"
@@ -80,6 +132,12 @@ const ProfileSecurity = ({ profileTab }) => {
               showPasswordField={popupType === "password"}
             />
           )}
+
+          <div style={{ marginTop: "20px" }}>
+            {sessionActive
+              ? <p style={{ color: "green" }}>Session Active: Access granted</p>
+              : <p style={{ color: "red" }}>No active session. Please authenticate.</p>}
+          </div>
         </div>
       )}
     </>

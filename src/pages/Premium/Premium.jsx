@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Premium.css'
 import { Link } from 'react-router-dom'
 import images from '../../utils/Images'
+import toast from 'react-hot-toast' // Toast library import
 
 const Premium = () => {
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
+  const handlePlanClick = (planName) => {
+    if (selectedPlan === planName) return; // Already selected → do nothing
+
+    setSelectedPlan(planName);
+    toast.success(`${planName} plan selected successfully!`);
+  };
   return (
     <>
       <div className="premium">
@@ -23,6 +32,7 @@ const Premium = () => {
             <h2 className='premium-small-txt'>Choose the best plan to enjoy the best movies and series</h2>
           </div>
           <div className="premium-card-group">
+            {/* Personal Plan */}
             <div className="premium-card">
               <div className="premium-card-header">
                 <h3 className='premium-card-header-plan-name'><i className="fa-solid fa-user"></i>Personal</h3>
@@ -55,9 +65,10 @@ const Premium = () => {
                 </ul>
               </div>
               <div className="premium-btn-sec">
-                <button className='premium-btn'>Get Started</button>
+                <button className='premium-btn' onClick={() => handlePlanClick('Personal')}>Get Started</button>
               </div>
             </div>
+            {/* Business Plan */}
             <div className="premium-card">
               <div className="premium-card-header">
                 <h3 className='premium-card-header-plan-name'><i className="fa-solid fa-briefcase"></i>Business</h3>
@@ -90,9 +101,10 @@ const Premium = () => {
                 </ul>
               </div>
               <div className="premium-btn-sec">
-                <button className='premium-btn'>Get Started</button>
+                <button className='premium-btn' onClick={() => handlePlanClick('Business')}>Get Started</button>
               </div>
             </div>
+            {/* Enterprise Plan */}
             <div className="premium-card">
               <div className="premium-card-header">
                 <h3 className='premium-card-header-plan-name'><i className="fa-solid fa-apartment"></i>Enterprise</h3>
@@ -125,7 +137,7 @@ const Premium = () => {
                 </ul>
               </div>
               <div className="premium-btn-sec">
-                <button className='premium-btn'>Get Started</button>
+                <button className='premium-btn' onClick={() => handlePlanClick('Enterprise')}>Get Started</button>
               </div>
             </div>
           </div>

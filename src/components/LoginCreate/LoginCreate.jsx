@@ -185,7 +185,7 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
       isValid = false;
     }
 
-    // Email validation - commented out (made optional)
+    // // Email validation - commented out (made optional)
     // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // if (!email) {
     //   setEmailError('Email is required');
@@ -195,7 +195,7 @@ const LoginCreate = ({ onClose, onVaultCreated }) => {
     //   isValid = false;
     // }
 
-    // Password validation - commented out (made optional)
+    // // Password validation - commented out (made optional)
     // const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{1,}$/;
     // const hasUppercase = /[A-Z]/.test(pass);
     // const hasNumber = /\d/.test(pass);

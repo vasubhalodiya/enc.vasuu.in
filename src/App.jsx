@@ -77,7 +77,7 @@ const AppContent = () => {
           </Routes>
           <Toaster
             position="bottom-center"
-            toastOptions={{ className: 'custom-toast', duration: 3000 }}
+            toastOptions={{ className: 'custom-toast',icon: null,, duration: 3000 }}
             containerStyle={{ bottom: '30px', zIndex: 999999999999999n }}
           />
         </main>
